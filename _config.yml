@@ -33,10 +33,10 @@ kramdown:
 ####################################
 #
 owner:
-  name: Leonids
+  name: Slowbreathing
   avatar: leonids-logo.png
-  job: "A jekyll theme"
-  bio: "A simple and awesome blog theme powered by jekyll."
+  job: "Programmer"
+  bio: "Programming is more than just typeing on the keyboard."
   email:
   disqus-shortname:
   twitter: #username
