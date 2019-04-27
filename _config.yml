@@ -3,9 +3,9 @@
 # Site wide configuration
 ####################################
 #
-title: Leonids
+title: Slowbreathing
 email:
-description: A simple and awesome blog theme powered by jekyll.
+description: Programming is more than just typeing on the keyboard.
 url: # the base hostname & protocol for your site
 keywords: ["blog", "jekyll"]
 
@@ -33,10 +33,10 @@ kramdown:
 ####################################
 #
 owner:
-  name: Slowbreathing
+  name: Leonids
   avatar: leonids-logo.png
-  job: "Programmer"
-  bio: "Programming is more than just typeing on the keyboard."
+  job: "A jekyll theme"
+  bio: "A simple and awesome blog theme powered by jekyll."
   email:
   disqus-shortname:
   twitter: #username
