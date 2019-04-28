@@ -13,15 +13,32 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 Jekyll also offers powerful support for code snippets:
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
+{% highlight python %}
+def _softmax_grad(s):
+    # Take the derivative of softmax element w.r.t the each logit which is usually Wi * X
+    # input s is softmax value of the original input x.
+    # s.shape = (1, n)
+    # i.e. s = np.array([0.3, 0.7]), x = np.array([0, 1])
+    # initialize the 2-D jacobian matrix.
+    jacobian_m = np.diag(s)
+    #print("jacobian_m:",jacobian_m)
+    for i in range(len(jacobian_m)):
+        for j in range(len(jacobian_m)):
+            if i == j:
+                #print("equal:",i,j)
+                jacobian_m[i][j] = s[i] * (1-s[i])
+            else:
+                #print("not equal:",i,j)
+                jacobian_m[i][j] = -s[i]*s[j]
+    #print("jacobian_m:",jacobian_m)
+    return jacobian_m
 {% endhighlight %}
 
 Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
+
+![Smithsonian Image]({{ site.url }}/img/self.png)
+That being me.
+
 
 [jekyll]:      http://jekyllrb.com
 [jekyll-gh]:   https://github.com/jekyll/jekyll
