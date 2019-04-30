@@ -11,7 +11,7 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 <!--more-->
 
-Jekyll also offers powerful support for code snippets:
+Jekyll also offers powerful support for **code snippets**:
 
 {% highlight python %}
 def _softmax_grad(s):
