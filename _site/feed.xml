@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-05-01</pubDate>
-    <lastBuildDate>Wed, 01 May 2019 03:05:51 +0200</lastBuildDate>
+    <pubDate>2019-05-02</pubDate>
+    <lastBuildDate>Thu, 02 May 2019 07:30:13 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -40,11 +40,27 @@
 
 &lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
 
+&lt;p&gt;formulaes::&lt;/p&gt;
+
+&lt;p&gt;$
+\sm(a)=\begin{bmatrix}
+a_1&lt;br /&gt;
+a_2&lt;br /&gt;
+\cdots&lt;br /&gt;
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1&lt;br /&gt;
+S_2&lt;br /&gt;
+\cdots&lt;br /&gt;
+S_N
+\end{bmatrix}
+$&lt;/p&gt;
+
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/self.png&quot; alt=&quot;Smithsonian Image&quot; /&gt;
 That being me.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-05-01</pubDate>
+        <pubDate>2019-05-02</pubDate>
         <link>http://localhost:4000/articles/2015-08/welcome-to-jekyll</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2015-08/welcome-to-jekyll</guid>
         

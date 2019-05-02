@@ -36,8 +36,25 @@ def _softmax_grad(s):
 
 Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
 
+formulaes::
+
+$
+\sm(a)=\begin{bmatrix}
+a_1\\
+a_2\\
+\cdots\\
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1\\
+S_2\\
+\cdots\\
+S_N
+\end{bmatrix}
+$
+
 ![Smithsonian Image]({{ site.url }}/img/self.png)
 That being me.
+
 
 
 [jekyll]:      http://jekyllrb.com
