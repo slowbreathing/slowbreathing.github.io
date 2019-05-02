@@ -8,16 +8,16 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <meta name="description" content="Softmax is essentially a vector function. It takes n inputs and produces and n outputs.And the actual per-element formula is: As one can see the output funct...">
   <meta name="keywords" content="blog and jekyll">
-  <meta name="author" content="Welcome to Jekyll! | Slowbreathing">
+  <meta name="author" content="Softmax and its Gradient | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f5f5">
 
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Welcome to Jekyll! | Slowbreathing">
-  <meta name="twitter:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <meta name="twitter:title" content="Softmax and its Gradient | Slowbreathing">
+  <meta name="twitter:description" content="Softmax is essentially a vector function. It takes n inputs and produces and n outputs.And the actual per-element formula is: As one can see the output funct...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -25,12 +25,12 @@
   <!-- Open Graph Tags -->
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2015-08/welcome-to-jekyll">
-  <meta property="og:title" content="Welcome to Jekyll! | Slowbreathing">
-  <meta property="og:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <meta property="og:title" content="Softmax and its Gradient | Slowbreathing">
+  <meta property="og:description" content="Softmax is essentially a vector function. It takes n inputs and produces and n outputs.And the actual per-element formula is: As one can see the output funct...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
-  <title>Welcome to Jekyll! | Slowbreathing</title>
+  <title>Softmax and its Gradient | Slowbreathing</title>
 
   <!-- CSS files -->
   <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
@@ -101,15 +101,19 @@
 <div class="social-links">
   <ul>
     
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    
+    <li><a href="http://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="http://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
     
     
     
     
-    
-    
-    
-    
-    
+    <li><a href="http://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
     
     
     
@@ -138,11 +142,34 @@
   Home
 </a>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
 
 
 <div id="post">
   <header class="post-header">
-    <h1 title="Welcome to Jekyll!">Welcome to Jekyll!</h1>
+    <h1 title="Softmax and its Gradient">Softmax and its Gradient</h1>
     <span class="post-meta">
       <span class="post-date">
         18 AUG 2015
@@ -151,7 +178,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    1 min read
+    2 mins read
   
 </span>
 
@@ -160,38 +187,61 @@
   </header>
 
   <article class="post-content">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>Softmax is essentially a vector function. It takes n inputs and produces and n outputs.<br />
+<script type="math/tex">softmax(a)=\begin{bmatrix}
+a_1\\
+a_2\\
+\cdots\\
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1\\
+S_2\\
+\cdots\\
+S_N
+\end{bmatrix}</script></p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<p>And the actual per-element formula is: <br />
+<script type="math/tex">softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}</script></p>
 
-<!--more-->
+<p>As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.</p>
 
-<p>Jekyll also offers powerful support for <strong>code snippets</strong>:</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">):</span>
+    <span class="c">#row represents num classes but they may be real numbers</span>
+    <span class="c">#So the shape of input is important</span>
+    <span class="c">#([[1, 3, 5, 7],</span>
+    <span class="c">#  [1,-9, 4, 8]]</span>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">_softmax_grad</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="c"># Take the derivative of softmax element w.r.t the each logit which is usually Wi * X</span>
-    <span class="c"># input s is softmax value of the original input x.</span>
-    <span class="c"># s.shape = (1, n)</span>
-    <span class="c"># i.e. s = np.array([0.3, 0.7]), x = np.array([0, 1])</span>
-    <span class="c"># initialize the 2-D jacobian matrix.</span>
-    <span class="n">jacobian_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="c">#print("jacobian_m:",jacobian_m)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jacobian_m</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jacobian_m</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
-                <span class="c">#print("equal:",i,j)</span>
-                <span class="n">jacobian_m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c">#print("not equal:",i,j)</span>
-                <span class="n">jacobian_m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-    <span class="c">#print("jacobian_m:",jacobian_m)</span>
-    <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
+    <span class="c">#softmax will be for each of the 2 rows</span>
+    <span class="c">#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]</span>
+    <span class="c">#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]</span>
+    <span class="c">#respectively But if the input is Tranposed clearly the answer</span>
+    <span class="c">#will be wrong.</span>
 
-<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://github.com/jekyll/jekyll-help">Jekyll’s dedicated Help repository</a>.</p>
+    <span class="c">#That needs to be converted to probability</span>
+    <span class="c">#column represents the vocabulary size.</span>
 
-<p>formulaes::</p>
+    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">predsl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">logits</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c">#print("inputs:",inputs)</span>
+        <span class="n">predsl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predsl</span><span class="p">)</span></code></pre></figure>
 
-<p>\begin{equation} \begin{bmatrix} x &amp; \dot{x} &amp; \theta &amp; \dot{\theta} &amp; L &amp; m &amp; M \end{bmatrix} \end{equation}</p>
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax</a> implementation.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"x:"</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"softmax:"</span><span class="p">,</span><span class="n">sm</span><span class="p">)</span>
+    <span class="c">#prints out</span>
+    <span class="c">#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01],</span>
+    <span class="c">#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]</span></code></pre></figure>
+
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py">softmaxtest</a> implementation.</p>
+
+<p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.</p>
 
 <p><img src="http://localhost:4000/img/self.png" alt="Smithsonian Image" />
 That being me.</p>

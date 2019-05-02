@@ -1,50 +1,77 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Softmax and its Gradient"
+mathjax: true
 date:   2015-08-18 15:07:19
 categories: [tutorial]
 comments: true
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+Softmax is essentially a vector function. It takes n inputs and produces and n outputs.  
+$$softmax(a)=\begin{bmatrix}
+a_1\\
+a_2\\
+\cdots\\
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1\\
+S_2\\
+\cdots\\
+S_N
+\end{bmatrix}$$
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+And the actual per-element formula is:   
+$$softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}$$
 
-<!--more-->
-
-Jekyll also offers powerful support for **code snippets**:
+As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.
 
 {% highlight python %}
-def _softmax_grad(s):
-    # Take the derivative of softmax element w.r.t the each logit which is usually Wi * X
-    # input s is softmax value of the original input x.
-    # s.shape = (1, n)
-    # i.e. s = np.array([0.3, 0.7]), x = np.array([0, 1])
-    # initialize the 2-D jacobian matrix.
-    jacobian_m = np.diag(s)
-    #print("jacobian_m:",jacobian_m)
-    for i in range(len(jacobian_m)):
-        for j in range(len(jacobian_m)):
-            if i == j:
-                #print("equal:",i,j)
-                jacobian_m[i][j] = s[i] * (1-s[i])
-            else:
-                #print("not equal:",i,j)
-                jacobian_m[i][j] = -s[i]*s[j]
-    #print("jacobian_m:",jacobian_m)
-    return jacobian_m
+def softmax(logits):
+    #row represents num classes but they may be real numbers
+    #So the shape of input is important
+    #([[1, 3, 5, 7],
+    #  [1,-9, 4, 8]]
+
+    #softmax will be for each of the 2 rows
+    #[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]
+    #[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]
+    #respectively But if the input is Tranposed clearly the answer
+    #will be wrong.
+
+    #That needs to be converted to probability
+    #column represents the vocabulary size.
+
+    r, c = logits.shape
+    predsl = []
+    for row in logits:
+        inputs = np.asarray(row)
+        #print("inputs:",inputs)
+        predsl.append(np.exp(inputs) / float(sum(np.exp(inputs))))
+    return np.array(predsl)
 {% endhighlight %}
 
-Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
+Above is a [softmax][softmax] implementation.
+{% highlight python %}
+    x = np.array([[1, 3, 5, 7],
+          [1,-9, 4, 8]])
+    print("x:",x)
+    sm=softmax(x)
+    print("softmax:",sm)
+    #prints out
+    #[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01],
+    #[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]
+{% endhighlight %}
+Above is a [softmaxtest][softmaxtest] implementation.
 
-formulaes::
+The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax's output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.
 
-\begin{equation} \begin{bmatrix} x & \dot{x} & \theta & \dot{\theta} & L & m & M \end{bmatrix} \end{equation}
+
+
+
+
 
 ![Smithsonian Image]({{ site.url }}/img/self.png)
 That being me.
 
 
-
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+[softmax]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py
+[softmaxtest]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py
