@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-05-02</pubDate>
-    <lastBuildDate>Thu, 02 May 2019 09:10:24 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 02 May 2019 09:17:42 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -42,7 +42,7 @@
 
 &lt;p&gt;formulaes::&lt;/p&gt;
 
-&lt;p&gt;\begin{equation} \begin{bmatrix} x &amp;amp; \dot{x} &amp;amp; \theta &amp;amp; \dot{\theta} &amp;amp; L &amp;amp; m &amp;amp; M \end{bmatrix} \end {equation}&lt;/p&gt;
+&lt;p&gt;\begin{equation} \begin{bmatrix} x &amp;amp; \dot{x} &amp;amp; \theta &amp;amp; \dot{\theta} &amp;amp; L &amp;amp; m &amp;amp; M \end{bmatrix} \end{equation}&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/self.png&quot; alt=&quot;Smithsonian Image&quot; /&gt;
 That being me.&lt;/p&gt;

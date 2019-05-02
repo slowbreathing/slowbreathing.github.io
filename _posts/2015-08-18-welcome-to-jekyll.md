@@ -38,7 +38,7 @@ Check out the [Jekyll docs][jekyll] for more info on how to get the most out of 
 
 formulaes::
 
-\begin{equation} \begin{bmatrix} x & \dot{x} & \theta & \dot{\theta} & L & m & M \end{bmatrix} \end {equation}
+\begin{equation} \begin{bmatrix} x & \dot{x} & \theta & \dot{\theta} & L & m & M \end{bmatrix} \end{equation}
 
 ![Smithsonian Image]({{ site.url }}/img/self.png)
 That being me.
