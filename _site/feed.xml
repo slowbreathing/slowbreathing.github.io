@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-05-03</pubDate>
-    <lastBuildDate>Fri, 03 May 2019 09:33:54 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 03 May 2019 09:54:16 +0200</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -164,7 +164,7 @@ softmax_i(1-softmax_j) &amp; i= j\\
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The above is the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py&quot;&gt;softmax grad&lt;/a&gt;
-&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png =750x&quot; alt=&quot;softmax grad&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>2019-05-03</pubDate>

@@ -157,7 +157,7 @@ def _softmax_grad(sm):
 {% endhighlight %}
 
 The above is the [softmax grad][softmax grad]
-![softmax grad]({{ site.url }}/img/softmaxgrad.png)
+![softmax grad]({{ site.url }}/img/softmaxgrad.png =750x)
 
 [softmax]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py
 [softmaxtest]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py
