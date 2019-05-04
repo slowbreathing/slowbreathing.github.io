@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta name="description" content="From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="Softmax and its Gradient | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Softmax and its Gradient | Slowbreathing">
-  <meta name="twitter:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta name="twitter:description" content="From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2019-05/softmax-and-its-gradient">
   <meta property="og:title" content="Softmax and its Gradient | Slowbreathing">
-  <meta property="og:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta property="og:description" content="From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -178,7 +178,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    7 mins read
+    6 mins read
   
 </span>
 
@@ -187,27 +187,12 @@
   </header>
 
   <article class="post-content">
-    <p>Portland in shoreditch Vice, labore typewriter pariatur hoodie fap sartorial Austin. Pinterest literally occupy Schlitz forage. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney’s. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.</p>
-
-<p>Vero laborum commodo occupy. Semiotics voluptate mumblecore pug. Cosby sweater ullamco quinoa ennui assumenda, sapiente occupy delectus lo-fi. Ea fashion axe Marfa cillum aliquip. Retro Bushwick keytar cliche. Before they sold out sustainable gastropub Marfa readymade, ethical Williamsburg skateboard brunch qui consectetur gentrify semiotics. Mustache cillum irony, fingerstache magna pour-over keffiyeh tousled selfies.</p>
-<h2 id="cupidatat-90s-lo-fi-authentic-try-hard">Cupidatat 90’s lo-fi authentic try-hard</h2>
-
-<p>In pug Portland incididunt mlkshk put a bird on it vinyl quinoa. Terry Richardson shabby chic +1, scenester Tonx excepteur tempor fugiat voluptate fingerstache aliquip nisi next level. Farm-to-table hashtag Truffaut, Odd Future ex meggings gentrify single-origin coffee try-hard 90’s.</p>
-
-<ul>
-  <li>Sartorial hoodie</li>
-  <li>Labore viral forage</li>
-  <li>Tote bag selvage</li>
-  <li>DIY exercitation et id ugh tumblr church-key</li>
-</ul>
-
-<p>Incididunt umami sriracha, ethical fugiat VHS ex assumenda yr irure direct trade. Marfa Truffaut bicycle rights, kitsch placeat Etsy kogi asymmetrical. Beard locavore flexitarian, kitsch photo booth hoodie plaid ethical readymade leggings yr.</p>
-
-<p>Aesthetic odio dolore, meggings disrupt qui readymade stumptown brunch Terry Richardson pour-over gluten-free. Banksy american apparel in selfies, biodiesel flexitarian organic meh wolf quinoa gentrify banjo kogi. Readymade tofu ex, scenester dolor umami fingerstache occaecat fashion axe Carles jean shorts minim. Keffiyeh fashion axe nisi Godard mlkshk dolore. Lomo you probably haven’t heard of them eu non, Odd Future Truffaut pug keytar meggings McSweeney’s Pinterest cred. Etsy literally aute esse, eu bicycle rights qui meggings fanny pack. Gentrify leggings pug flannel duis.</p>
+    <p>From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.<br />
+There are many softmax resources available in the internet. Among the many that are availble, I found the link <a href="https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/">here</a> to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code when associated with theory makes the explanation very precise.</p>
 
 <p>Softmax is essentially a vector function. It takes n inputs and produces and n outputs.</p>
 
-<script type="math/tex; mode=display">softmax(a)=\begin{bmatrix}
+<script type="math/tex; mode=display">\Large softmax(a)=\begin{bmatrix}
 a_1\\
 a_2\\
 \cdots\\
@@ -221,7 +206,7 @@ S_N
 
 <p>And the actual per-element formula is:</p>
 
-<script type="math/tex; mode=display">softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}</script>
+<script type="math/tex; mode=display">\Large softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}</script>
 
 <p>As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.</p>
 
@@ -263,7 +248,7 @@ S_N
 
 <p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.</p>
 
-<h2 id="softmax-derivative">Softmax Derivative</h2>
+<h3 id="softmax-derivative">Softmax Derivative</h3>
 <p>Before diving into computing the derivative of softmax, let’s start with some preliminaries from vector calculus.</p>
 
 <p>Softmax is fundamentally a vector function. It takes a vector as input and produces a vector as output; in other words, it has multiple inputs and multiple outputs. Therefore, we cannot just ask for “the derivative of softmax”; We should instead specify:</p>
@@ -274,12 +259,12 @@ S_N
 This is exactly why the notation of vector calculus was developed. What we’re looking for is the partial derivatives:</li>
 </ol>
 
-<script type="math/tex; mode=display">\frac{\partial softmax_i}{\partial a_j}</script>
+<script type="math/tex; mode=display">\Large \frac{\partial softmax_i}{\partial a_j}</script>
 
 <p>This is the partial derivative of the i-th output w.r.t. the j-th input. A shorter way to write it that we’ll be using going forward is:
 Since softmax is a  function, the most general derivative we compute for it is the Jacobian matrix:</p>
 
-<script type="math/tex; mode=display">Dsoftmax=\begin{bmatrix}
+<script type="math/tex; mode=display">\Large Dsoftmax=\begin{bmatrix}
 D_1 softmax_1\:\:\:\:\:  \cdots\:\:\:\:\: D_N softmax_1 \\
 \vdots\:\:\:\:\: \ddots\:\:\:\:\: \vdots \\
 D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
@@ -287,34 +272,36 @@ D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
 
 <p>Let’s compute <script type="math/tex">D_jsoftmax_i</script> for arbitrary i and j:</p>
 
-<p><script type="math/tex">D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}</script>. . . . . . . . . . . . . . . . . . . . . . . Using the quotient rule <script type="math/tex">\Large f(x) = \frac{g(x)}{h(x)}</script><br />
-                                                                                                                                                                                                  <script type="math/tex">\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}</script><br />
-                                                                                                                                                                                in out case <script type="math/tex">\Large g_i = e^{a_i}</script><br />
-                                                                                                                                                                                                  <script type="math/tex">\Large h_i = \sum_{k=1}^{N} e^{a_k}</script></p>
+<p><script type="math/tex">\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}</script><br />
+Using the quotient rule <script type="math/tex">\Large f(x) = \frac{g(x)}{h(x)}</script> , <script type="math/tex">\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}</script> <br />
+in our case <script type="math/tex">\Large g_i = e^{a_i}</script><br />
+                   <script type="math/tex">\Large h_i = \sum_{k=1}^{N} e^{a_k}</script></p>
 
 <p>Note that no matter which <script type="math/tex">a_j</script> we compute the derivative of <script type="math/tex">h_i</script> for, the answer will always be <script type="math/tex">e^{a_j}</script>. This is not the case for <script type="math/tex">g_i</script>, howewer. The derivative of <script type="math/tex">g_i</script> w.r.t. <script type="math/tex">a_j</script> is <script type="math/tex">e^{a_j}</script> only if i=j, because only then <script type="math/tex">g_i</script> has <script type="math/tex">a_j</script> anywhere in it. Otherwise, the derivative is 0.</p>
 
 <ol>
-  <li>Going back to our <script type="math/tex">\frac{\partial softmax_i}{\partial a_j}</script> we’ll start with the <script type="math/tex">\Large i=j</script>  case. Then, using the quotient rule we have:</li>
-</ol>
-
-<p><script type="math/tex">\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{e^{a_i}.\sum-e^{a_j}.e^{a_i}}{\sum^2}</script><br />
+  <li>
+    <p>Going back to our <script type="math/tex">\Large \frac{\partial softmax_i}{\partial a_j}</script> we’ll start with the <script type="math/tex">\Large i=j</script> case. <br />
+Then, using the quotient rule we have:
+<script type="math/tex">\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{e^{a_i}.\sum-e^{a_j}.e^{a_i}}{\sum^2}</script><br />
                          <script type="math/tex">\Large = \frac{e^{a_i}}{\sum}.\frac{\sum-e^{a_j}}{\sum}</script><br />
                          <script type="math/tex">\Large = softmax_i(1-softmax_j)</script></p>
-
-<ol>
-  <li>similarly for <script type="math/tex">\Large i \neq j</script><br />
+  </li>
+  <li>
+    <p>similarly for <script type="math/tex">\Large i \neq j</script><br />
 <script type="math/tex">\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{0- e^{a_j}e^{a_i}}{\sum^2}</script><br />
                          <script type="math/tex">\Large = \frac{- e^{a_j}}{\sum}.\frac{e^{a_i}}{\sum}</script><br />
-                         <script type="math/tex">\Large = {-softmax_j}.{softmax_i}</script></li>
+                         <script type="math/tex">\Large = {-softmax_j}.{softmax_i}</script></p>
+  </li>
 </ol>
 
-<p>To summarize:<br />
-<script type="math/tex">% <![CDATA[
-\Large D_jsoftmax_i=\left\{\begin{matrix}
-softmax_i(1-softmax_j) & i= j\\
+<p>To summarize:</p>
+<h1><a name="eq-1"></a></h1>
+<p><script type="math/tex">% <![CDATA[
+\Large D_jsoftmax_i=\begin{Bmatrix}
+softmax_i(1-softmax_j) & i= j \\
 {-softmax_j}.{softmax_i} & i\neq j
-\end{matrix}\right. %]]></script></p>
+\end{Bmatrix} \:\:\:\: eq(1) %]]></script></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">_softmax_grad</span><span class="p">(</span><span class="n">sm</span><span class="p">):</span>
     <span class="c"># Below is the softmax value for [1, 3, 5, 7]</span>
@@ -357,8 +344,10 @@ softmax_i(1-softmax_j) & i= j\\
 
     <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
 
-<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax grad</a>
-<img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" height="700px" width="1400px" /></p>
+<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax grad</a> code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. this is illustarted in the picture below.
+<img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" hight="1080%" width="1920%" /></p>
+
+<p>As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.</p>
 
 
   </article>
