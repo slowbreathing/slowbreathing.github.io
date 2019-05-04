@@ -14,7 +14,7 @@ keywords: ["blog", "jekyll"]
 # Jekyll configuration
 ####################################
 #
-timezone:          Europe/Paris
+timezone:          India/New Delhi
 markdown:          kramdown
 highlighter:       rouge
 excerpt_separator: <!--more-->

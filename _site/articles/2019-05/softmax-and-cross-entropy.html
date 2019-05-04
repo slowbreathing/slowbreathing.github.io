@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Softmax and cross-entropy | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Softmax and cross-entropy | Slowbreathing">
+  <meta name="twitter:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy">
+  <meta property="og:title" content="Softmax and cross-entropy | Slowbreathing">
+  <meta property="og:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  
+    <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
+  
+  <title>Softmax and cross-entropy | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Slowbreathing</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">Resume</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+         
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on http://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    
+    <li><a href="http://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="http://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    
+    
+    <li><a href="http://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Softmax and cross-entropy">Softmax and cross-entropy</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        3 MAY 2019
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    6 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <p>Softmax is essentially a vector function. It takes n inputs and produces and n outputs.</p>
+
+<script type="math/tex; mode=display">softmax(a)=\begin{bmatrix}
+a_1\\
+a_2\\
+\cdots\\
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1\\
+S_2\\
+\cdots\\
+S_N
+\end{bmatrix}</script>
+
+<p>And the actual per-element formula is:</p>
+
+<script type="math/tex; mode=display">softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}</script>
+
+<p>As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">):</span>
+    <span class="c">#row represents num classes but they may be real numbers</span>
+    <span class="c">#So the shape of input is important</span>
+    <span class="c">#([[1, 3, 5, 7],</span>
+    <span class="c">#  [1,-9, 4, 8]]</span>
+
+    <span class="c">#softmax will be for each of the 2 rows</span>
+    <span class="c">#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]</span>
+    <span class="c">#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]</span>
+    <span class="c">#respectively But if the input is Tranposed clearly the answer</span>
+    <span class="c">#will be wrong.</span>
+
+    <span class="c">#That needs to be converted to probability</span>
+    <span class="c">#column represents the vocabulary size.</span>
+
+    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">predsl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">logits</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c">#print("inputs:",inputs)</span>
+        <span class="n">predsl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predsl</span><span class="p">)</span></code></pre></figure>
+
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax</a> implementation.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"x:"</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"softmax:"</span><span class="p">,</span><span class="n">sm</span><span class="p">)</span>
+    <span class="c">#prints out</span>
+    <span class="c">#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01],</span>
+    <span class="c">#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]</span></code></pre></figure>
+
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py">softmaxtest</a> implementation.</p>
+
+<p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.</p>
+
+<h2 id="softmax-derivative">Softmax Derivative</h2>
+<p>Before diving into computing the derivative of softmax, let’s start with some preliminaries from vector calculus.</p>
+
+<p>Softmax is fundamentally a vector function. It takes a vector as input and produces a vector as output; in other words, it has multiple inputs and multiple outputs. Therefore, we cannot just ask for “the derivative of softmax”; We should instead specify:</p>
+
+<ol>
+  <li>Which component (output element) of softmax we’re seeking to find the derivative of.</li>
+  <li>Since softmax has multiple inputs, with respect to which input element the partial derivative is computed.
+This is exactly why the notation of vector calculus was developed. What we’re looking for is the partial derivatives:</li>
+</ol>
+
+<script type="math/tex; mode=display">\frac{\partial softmax_i}{\partial a_j}</script>
+
+<p>This is the partial derivative of the i-th output w.r.t. the j-th input. A shorter way to write it that we’ll be using going forward is:
+Since softmax is a  function, the most general derivative we compute for it is the Jacobian matrix:</p>
+
+<script type="math/tex; mode=display">Dsoftmax=\begin{bmatrix}
+D_1 softmax_1\:\:\:\:\:  \cdots\:\:\:\:\: D_N softmax_1 \\
+\vdots\:\:\:\:\: \ddots\:\:\:\:\: \vdots \\
+D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
+\end{bmatrix}</script>
+
+<p>Let’s compute <script type="math/tex">D_jsoftmax_i</script> for arbitrary i and j:</p>
+
+<p><script type="math/tex">D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}</script>. . . . . . . . . . . . . . . . . . . . . . . Using the quotient rule <script type="math/tex">\Large f(x) = \frac{g(x)}{h(x)}</script><br />
+                                                                                                                                                                                                  <script type="math/tex">\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}</script><br />
+                                                                                                                                                                                in out case <script type="math/tex">\Large g_i = e^{a_i}</script><br />
+                                                                                                                                                                                                  <script type="math/tex">\Large h_i = \sum_{k=1}^{N} e^{a_k}</script></p>
+
+<p>Note that no matter which <script type="math/tex">a_j</script> we compute the derivative of <script type="math/tex">h_i</script> for, the answer will always be <script type="math/tex">e^{a_j}</script>. This is not the case for <script type="math/tex">g_i</script>, howewer. The derivative of <script type="math/tex">g_i</script> w.r.t. <script type="math/tex">a_j</script> is <script type="math/tex">e^{a_j}</script> only if i=j, because only then <script type="math/tex">g_i</script> has <script type="math/tex">a_j</script> anywhere in it. Otherwise, the derivative is 0.</p>
+
+<ol>
+  <li>Going back to our <script type="math/tex">\frac{\partial softmax_i}{\partial a_j}</script> we’ll start with the <script type="math/tex">\Large i=j</script>  case. Then, using the quotient rule we have:</li>
+</ol>
+
+<p><script type="math/tex">\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{e^{a_i}.\sum-e^{a_j}.e^{a_i}}{\sum^2}</script><br />
+                         <script type="math/tex">\Large = \frac{e^{a_i}}{\sum}.\frac{\sum-e^{a_j}}{\sum}</script><br />
+                         <script type="math/tex">\Large = softmax_i(1-softmax_j)</script></p>
+
+<ol>
+  <li>similarly for <script type="math/tex">\Large i \neq j</script><br />
+<script type="math/tex">\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{0- e^{a_j}e^{a_i}}{\sum^2}</script><br />
+                         <script type="math/tex">\Large = \frac{- e^{a_j}}{\sum}.\frac{e^{a_i}}{\sum}</script><br />
+                         <script type="math/tex">\Large = {-softmax_j}.{softmax_i}</script></li>
+</ol>
+
+<p>To summarize:<br />
+<script type="math/tex">% <![CDATA[
+\Large D_jsoftmax_i=\left\{\begin{matrix}
+softmax_i(1-softmax_j) & i= j\\
+{-softmax_j}.{softmax_i} & i\neq j
+\end{matrix}\right. %]]></script></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">_softmax_grad</span><span class="p">(</span><span class="n">sm</span><span class="p">):</span>
+    <span class="c"># Below is the softmax value for [1, 3, 5, 7]</span>
+    <span class="c"># [2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]</span>
+    <span class="c"># initialize the 2-D jacobian matrix.</span>
+    <span class="n">jacobian_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jacobian_m</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jacobian_m</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"equal:"</span><span class="p">,</span><span class="n">i</span><span class="p">,</span> <span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">],(</span><span class="mi">1</span><span class="o">-</span><span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="c">#equal: 0 0.002144008783584634 0.9978559912164153</span>
+                <span class="c">#equal: 1 0.015842201178506925 0.9841577988214931</span>
+                <span class="c">#equal: 2 0.11705891323853292 0.8829410867614671</span>
+                <span class="c">#equal: 3 0.8649548767993754 0.13504512320062456</span>
+                <span class="n">jacobian_m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"not equal:"</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">sm</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="c">#not equal: 0 1 0.002144008783584634 0.015842201178506925</span>
+                <span class="c">#not equal: 0 2 0.002144008783584634 0.11705891323853292</span>
+                <span class="c">#not equal: 0 3 0.002144008783584634 0.8649548767993754</span>
+
+                <span class="c">#not equal: 1 0 0.015842201178506925 0.002144008783584634</span>
+                <span class="c">#not equal: 1 2 0.015842201178506925 0.11705891323853292</span>
+                <span class="c">#not equal: 1 3 0.015842201178506925 0.8649548767993754</span>
+
+                <span class="c">#not equal: 2 0 0.11705891323853292 0.002144008783584634</span>
+                <span class="c">#not equal: 2 1 0.11705891323853292 0.015842201178506925</span>
+                <span class="c">#not equal: 2 3 0.11705891323853292 0.8649548767993754</span>
+
+                <span class="c">#not equal: 3 0 0.8649548767993754 0.002144008783584634</span>
+                <span class="c">#not equal: 3 1 0.8649548767993754 0.015842201178506925</span>
+                <span class="c">#not equal: 3 2 0.8649548767993754 0.11705891323853292</span>
+                <span class="n">jacobian_m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">sm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+    <span class="c">#finally resulting in</span>
+    <span class="c">#[[ 2.13941201e-03 -3.39658185e-05 -2.50975338e-04 -1.85447085e-03]</span>
+    <span class="c">#[-3.39658185e-05  1.55912258e-02 -1.85447085e-03 -1.37027892e-02]</span>
+    <span class="c">#[-2.50975338e-04 -1.85447085e-03  1.03356124e-01 -1.01250678e-01]</span>
+    <span class="c">#[-1.85447085e-03 -1.37027892e-02 -1.01250678e-01  1.16807938e-01]]</span>
+
+    <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
+
+<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax grad</a>
+<img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" height="700px" width="1400px" /></p>
+
+
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+
+
+        <footer>
+  &copy; 2019 Slowbreathing. Powered by <a href="http://jekyllrb.com/">Jekyll</a>, <a href="http://github.com/renyuanz/leonids/">leonids theme</a> made with <i class="fa fa-heart heart-icon"></i>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+
+</body>
+</html>
