@@ -451,7 +451,7 @@ footer .heart-icon { color: #f83e4b; text-shadow: 0 0 5px #fff, 0 0 10px #f83e4b
   .row .col.offset-l12 { margin-left: 100%; } }
 
 /* ========================================================================== Typography ========================================================================== */
-html { line-height: 1.5; font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; color: rgba(0, 0, 0, 0.87); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-size: 17px; }
+html { line-height: 1.5; font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: normal; color: rgba(0, 0, 0, 0.87); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-size: 18px; }
 
 blockquote { display: block; position: relative; padding-left: 20px; font-style: italic; border-left: 5px solid #8d7edc; }
 
@@ -507,7 +507,7 @@ p { margin: 1.2em 0; word-spacing: 0.05em; line-height: 1.6em; }
 .btn-info:hover { background-color: #fff; color: #09ABF6; border-color: #09ABF6; }
 
 /* ========================================================================== Syntax highlighting ========================================================================== */
-pre, code { font-family: "Roboto Mono", "Courier New", monospace; color: #525252; font-size: 0.9em; background-color: #f8f8f8; font-size: 14px; }
+pre, code { font-family: "Roboto Mono", "Courier New", monospace; color: #525252; font-size: 0.9em; background-color: #f8f8f8; font-size: 15px; }
 
 code { color: #e96900; border-radius: 2px; white-space: nowrap; }
 

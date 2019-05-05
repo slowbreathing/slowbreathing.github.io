@@ -187,22 +187,41 @@
   </header>
 
   <article class="post-content">
-    <p>Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is difined as error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as <script type="math/tex">\Large softmax_j (logits)</script> and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed,</p>
+    <p>Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is difined as error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as <script type="math/tex">\Large softmax_j (logits)</script> and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.</p>
 
-<p><script type="math/tex">\Large E = -y .log ({\hat{Y}})</script><br />
-<script type="math/tex">\Large \hat{Y}=softmax_j (logits)</script></p>
+<script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
+
+<script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
 
 <h3 id="crossentropy-loss-derivative">CrossEntropy Loss Derivative</h3>
 
-<p><script type="math/tex">\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}</script></p>
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}</script>
+
 <h1><a name="eq-2"></a></h1>
-<p><script type="math/tex">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)</script><br />
-For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient/#1">eq-1</a>. Combining <a href="softmax-and-its-gradient/#1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.
-<script type="math/tex">% <![CDATA[
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)</script>
+
+<p>For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient/#1">eq-1</a>. Combining <a href="softmax-and-its-gradient/#1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\
 {-softmax_j}.{softmax_i} & i\neq j
-\end{Bmatrix} %]]></script></p>
+\end{Bmatrix} %]]></script>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\hat{y_t}.(1-\hat{y_t}) + \sum_{i\neq j}(\frac{-y_t}{\hat{y_t}})(-\hat{y_t}\hat{y_t})</script>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -y.(1-\hat{y_t}) + \sum_{i\neq j}y_t.\hat{y_t}</script>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -y+y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t}</script>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t} -y</script>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = \hat{y_t}.(y + \sum_{i\neq j}y_t) -y</script>
+
+<p>Since Y is a one hot vector, the term “<script type="math/tex">\Large (y + \sum_{i\neq j}y_t)</script>” sums up to one.</p>
+
+<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)</script>
 
 
   </article>
