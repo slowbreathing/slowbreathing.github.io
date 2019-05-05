@@ -18,11 +18,7 @@ $$\Large \hat{Y}=softmax_j (logits)$$
 $$\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}$$  
 # <a name="eq-2"></a>
 $$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)$$  
-For calculating $$\Large \frac{\partial {\hat{Y}}}{\partial {logits}}$$ we need to reference [eq-1][eq-1]. Combining [eq-1][eq-1] and [eq-2][eq-2] which is softmax.
-$$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
-softmax_i(1-softmax_j) & i= j \\
-{-softmax_j}.{softmax_i} & i\neq j
-\end{Bmatrix}$$  
+For calculating $$\Large \frac{\partial {\hat{Y}}}{\partial {logits}}$$ we need to reference [eq-1][1]. Combining [eq-1][1] and [eq-2][eq-2] which is softmax.
 $$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\
 {-softmax_j}.{softmax_i} & i\neq j
@@ -30,6 +26,5 @@ softmax_i(1-softmax_j) & i= j \\
 
 
 
-
-[eq-1]: softmax-and-its-gradient/#eq-1
+[1]: softmax-and-its-gradient/#1
 [eq-2]: softmax-and-cross-entropy#eq-2

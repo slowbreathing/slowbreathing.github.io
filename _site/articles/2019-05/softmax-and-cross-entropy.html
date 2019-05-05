@@ -197,12 +197,7 @@
 <p><script type="math/tex">\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}</script></p>
 <h1><a name="eq-2"></a></h1>
 <p><script type="math/tex">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)</script><br />
-For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient/#eq-1">eq-1</a>. Combining <a href="softmax-and-its-gradient/#eq-1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.
-<script type="math/tex">% <![CDATA[
-\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
-softmax_i(1-softmax_j) & i= j \\
-{-softmax_j}.{softmax_i} & i\neq j
-\end{Bmatrix} %]]></script><br />
+For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient/#1">eq-1</a>. Combining <a href="softmax-and-its-gradient/#1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.
 <script type="math/tex">% <![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\
