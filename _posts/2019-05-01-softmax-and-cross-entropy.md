@@ -14,6 +14,24 @@ $$\Large \hat{Y}=softmax_j (logits)$$
 
 $$\Large E = -y .log ({\hat{Y}})$$  
 
+{% highlight python %}
+def loss(pred,labels):
+  """
+  One at a time.
+  args:
+      pred-(seq=1),input_size
+      labels-(seq=1),input_size
+  """
+  return np.multiply(labels, -np.log(pred)).sum(1)
+
+{% endhighlight %}
+
+![CEL]({{ site.url }}/img/cel.jpg){: hight="1080%" width="1920%"}
+Cost is low because, the prediction is closer to the truth.
+
+![CEL]({{ site.url }}/img/cel2.jpg){: hight="1080%" width="1920%"}
+Cost is high because, the prediction is far away from the truth.
+
 
 
 
@@ -25,7 +43,7 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {
 
 $$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)$$  
 
-For calculating $$\Large \frac{\partial {\hat{Y}}}{\partial {logits}}$$ we need to reference [eq-1][1]. Combining [eq-1][1] and [eq-2][eq-2] which is softmax.  
+For calculating $$\Large \frac{\partial {\hat{Y}}}{\partial {logits}}$$ we need to reference [eq-1][eq-1]. Combining [eq-1][eq-1] and [eq-2][eq-2] which is softmax.  
 
 $$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\
@@ -49,5 +67,5 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) 
 
 
 
-[1]: softmax-and-its-gradient#1
+[eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2

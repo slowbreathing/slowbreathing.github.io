@@ -193,6 +193,21 @@
 
 <script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
 
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+  <span class="s">"""
+  One at a time.
+  args:
+      pred-(seq=1),input_size
+      labels-(seq=1),input_size
+  """</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="http://localhost:4000/img/cel.jpg" alt="CEL" hight="1080%" width="1920%" />
+Cost is low because, the prediction is closer to the truth.</p>
+
+<p><img src="http://localhost:4000/img/cel2.jpg" alt="CEL" hight="1080%" width="1920%" />
+Cost is high because, the prediction is far away from the truth.</p>
+
 <h3 id="crossentropy-loss-derivative">CrossEntropy Loss Derivative</h3>
 
 <script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}</script>
@@ -201,7 +216,7 @@
 
 <script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)</script>
 
-<p>For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient#1">eq-1</a>. Combining <a href="softmax-and-its-gradient#1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.</p>
+<p>For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient#eq-1">eq-1</a>. Combining <a href="softmax-and-its-gradient#eq-1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}

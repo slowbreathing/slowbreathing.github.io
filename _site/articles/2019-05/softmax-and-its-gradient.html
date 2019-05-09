@@ -272,7 +272,7 @@ D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
 
 <p>Let’s compute <script type="math/tex">D_jsoftmax_i</script> for arbitrary i and j:</p>
 
-<p><script type="math/tex">\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}</script><br />
+<p><script type="math/tex">\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}</script><br />
 Using the quotient rule <script type="math/tex">\Large f(x) = \frac{g(x)}{h(x)}</script> , <script type="math/tex">\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}</script> <br />
 in our case <script type="math/tex">\Large g_i = e^{a_i}</script><br />
                    <script type="math/tex">\Large h_i = \sum_{k=1}^{N} e^{a_k}</script></p>
@@ -296,7 +296,7 @@ Then, using the quotient rule we have:
 </ol>
 
 <p>To summarize:
-<a name="1"></a><br />
+<a name="eq-1"></a><br />
 <script type="math/tex">% <![CDATA[
 \Large D_jsoftmax_i=\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\

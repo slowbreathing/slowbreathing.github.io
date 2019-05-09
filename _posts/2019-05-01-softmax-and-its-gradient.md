@@ -93,7 +93,7 @@ D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
 
 Let's compute $$D_jsoftmax_i$$ for arbitrary i and j:
 
-$$\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}$$  
+$$\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}$$  
 Using the quotient rule $$\Large f(x) = \frac{g(x)}{h(x)}$$ , $$\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}$$   
 in our case $$\Large g_i = e^{a_i}$$  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$$\Large h_i = \sum_{k=1}^{N} e^{a_k}$$  
@@ -113,7 +113,7 @@ $$\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$$\Large = {-softmax_j}.{softmax_i}$$  
 
 To summarize:
-<a name="1"></a>  
+<a name="eq-1"></a>  
 $$\Large D_jsoftmax_i=\begin{Bmatrix}
 softmax_i(1-softmax_j) & i= j \\
 {-softmax_j}.{softmax_i} & i\neq j

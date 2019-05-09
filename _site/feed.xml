@@ -5,36 +5,65 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-05-05</pubDate>
-    <lastBuildDate>Sun, 05 May 2019 08:33:12 +0000</lastBuildDate>
+    <pubDate>2019-05-09</pubDate>
+    <lastBuildDate>Thu, 09 May 2019 07:24:04 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Softmax and Cross-entropy</title>
-        <description>&lt;p&gt;Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is difined as error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed,&lt;/p&gt;
+        <description>&lt;p&gt;Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is difined as error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;&lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+  One at a time.
+  args:
+      pred-(seq=1),input_size
+      labels-(seq=1),input_size
+  &quot;&quot;&quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/cel.jpg&quot; alt=&quot;CEL&quot; hight=&quot;1080%&quot; width=&quot;1920%&quot; /&gt;
+Cost is low because, the prediction is closer to the truth.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/cel2.jpg&quot; alt=&quot;CEL&quot; hight=&quot;1080%&quot; width=&quot;1920%&quot; /&gt;
+Cost is high because, the prediction is far away from the truth.&lt;/p&gt;
 
 &lt;h3 id=&quot;crossentropy-loss-derivative&quot;&gt;CrossEntropy Loss Derivative&lt;/h3&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt;&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt;
+
 &lt;h1&gt;&lt;a name=&quot;eq-2&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)&lt;/script&gt;&lt;br /&gt;
-For calculating &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt; we need to reference &lt;a href=&quot;softmax-and-its-gradient/#eq-1&quot;&gt;eq-1&lt;/a&gt;. Combining &lt;a href=&quot;softmax-and-its-gradient/#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt; which is softmax.
-&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)&lt;/script&gt;
+
+&lt;p&gt;For calculating &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt; we need to reference &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt;. Combining &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt; which is softmax.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
 softmax_i(1-softmax_j) &amp; i= j \\
 {-softmax_j}.{softmax_i} &amp; i\neq j
-\end{Bmatrix} %]]&gt;&lt;/script&gt;&lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
-\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
-softmax_i(1-softmax_j) &amp; i= j \\
-{-softmax_j}.{softmax_i} &amp; i\neq j
-\end{Bmatrix} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+\end{Bmatrix} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\hat{y_t}.(1-\hat{y_t}) + \sum_{i\neq j}(\frac{-y_t}{\hat{y_t}})(-\hat{y_t}\hat{y_t})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -y.(1-\hat{y_t}) + \sum_{i\neq j}y_t.\hat{y_t}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -y+y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t} -y&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \hat{y_t}.(y + \sum_{i\neq j}y_t) -y&lt;/script&gt;
+
+&lt;p&gt;Since Y is a one hot vector, the term “&lt;script type=&quot;math/tex&quot;&gt;\Large (y + \sum_{i\neq j}y_t)&lt;/script&gt;” sums up to one.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;
 
 </description>
-        <pubDate>2019-05-04</pubDate>
+        <pubDate>2019-05-09</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -130,7 +159,7 @@ D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
 
 &lt;p&gt;Let’s compute &lt;script type=&quot;math/tex&quot;&gt;D_jsoftmax_i&lt;/script&gt; for arbitrary i and j:&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:=\frac{\partial softmax_i}{\partial a_j} = \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}&lt;/script&gt;&lt;br /&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}&lt;/script&gt;&lt;br /&gt;
 Using the quotient rule &lt;script type=&quot;math/tex&quot;&gt;\Large f(x) = \frac{g(x)}{h(x)}&lt;/script&gt; , &lt;script type=&quot;math/tex&quot;&gt;\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}&lt;/script&gt; &lt;br /&gt;
 in our case &lt;script type=&quot;math/tex&quot;&gt;\Large g_i = e^{a_i}&lt;/script&gt;&lt;br /&gt;
                    &lt;script type=&quot;math/tex&quot;&gt;\Large h_i = \sum_{k=1}^{N} e^{a_k}&lt;/script&gt;&lt;/p&gt;
@@ -153,9 +182,9 @@ Then, using the quotient rule we have:
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;To summarize:&lt;/p&gt;
-&lt;h1&gt;&lt;a name=&quot;eq-1&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+&lt;p&gt;To summarize:
+&lt;a name=&quot;eq-1&quot;&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
 \Large D_jsoftmax_i=\begin{Bmatrix}
 softmax_i(1-softmax_j) &amp; i= j \\
 {-softmax_j}.{softmax_i} &amp; i\neq j
@@ -208,7 +237,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-05-04</pubDate>
+        <pubDate>2019-05-09</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
