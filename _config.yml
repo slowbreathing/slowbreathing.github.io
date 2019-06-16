@@ -1,4 +1,4 @@
-#
+  #
 ###################################
 # Site wide configuration
 ####################################
@@ -43,7 +43,7 @@ owner:
   facebook: "mohit.kumar.965"
   google:
     plus: #username
-    analytics:
+    analytics: UA-142206738-1
     verify:
     ad-client:
     ad-slot:
