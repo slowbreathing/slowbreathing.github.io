@@ -155,7 +155,7 @@ td, th { padding: 0; }
 
 .notice { border: 1px solid rgba(115, 115, 115, 0.87); border-radius: 0.4em; padding: 0.5em 1em; }
 
-img { display: block; max-width: 100%; margin-left: auto; margin-right: auto; }
+img { display: block; max-width: 200%; margin-left: auto; margin-right: auto; }
 
 table, th, td { border: none; }
 
