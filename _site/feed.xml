@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-06-17</pubDate>
-    <lastBuildDate>Mon, 17 Jun 2019 05:07:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Jun 2019 05:36:48 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -236,11 +236,8 @@ softmax_i(1-softmax_j) &amp; i= j \\
 
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; hight=&quot;2080px&quot; width=&quot;2920px&quot; /&gt;
-#&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;Smithsonian Image&quot; width=&quot;4000px&quot; /&gt;&lt;/p&gt;
-
 &lt;p&gt;hey there
-&lt;a href=&quot;http://localhost:4000/img/softmaxgrad.png&quot;&gt;&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; width=&quot;3000&quot; height=&quot;2000&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;http://localhost:4000/img/softmaxgrad.png&quot;&gt;&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; height=&quot;200%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>2019-06-17</pubDate>

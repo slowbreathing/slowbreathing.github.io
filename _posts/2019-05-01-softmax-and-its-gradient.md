@@ -169,11 +169,9 @@ The above is the [softmax grad][softmax grad] code. As you can see it initialize
 
 As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.  
 
-![softmax grad]({{ site.url }}/img/softmaxgrad.png){:hight="2080px" width="2920px"}
-#![Smithsonian Image]({{ site.url }}/img/softmaxgrad.png){:width="4000px" }
 
 hey there
-<a href="{{ site.url }}/img/softmaxgrad.png"><img src="{{ site.url }}/img/softmaxgrad.png" width="3000" height="2000"/></a>
+<a href="{{ site.url }}/img/softmaxgrad.png"><img src="{{ site.url }}/img/softmaxgrad.png" height="200%"/></a>
 
 [extsoftmax]: https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/
 [softmax]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py
