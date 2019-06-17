@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-05-09</pubDate>
-    <lastBuildDate>Thu, 09 May 2019 07:24:04 +0000</lastBuildDate>
+    <pubDate>2019-06-17</pubDate>
+    <lastBuildDate>Mon, 17 Jun 2019 05:07:01 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -63,7 +63,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;
 
 </description>
-        <pubDate>2019-05-09</pubDate>
+        <pubDate>2019-06-17</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -232,12 +232,18 @@ softmax_i(1-softmax_j) &amp; i= j \\
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The above is the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py&quot;&gt;softmax grad&lt;/a&gt; code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. this is illustarted in the picture below.
-&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; hight=&quot;1080%&quot; width=&quot;1920%&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; hight=&quot;2080%&quot; width=&quot;2920%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; hight=&quot;2080px&quot; width=&quot;2920px&quot; /&gt;
+#&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;Smithsonian Image&quot; width=&quot;4000px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;hey there
+&lt;a href=&quot;http://localhost:4000/img/softmaxgrad.png&quot;&gt;&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; width=&quot;3000&quot; height=&quot;2000&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
 </description>
-        <pubDate>2019-05-09</pubDate>
+        <pubDate>2019-06-17</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         

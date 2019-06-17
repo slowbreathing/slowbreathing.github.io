@@ -44,6 +44,16 @@
   <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
   <!-- 32x32 -->
   <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+
 </head>
 
 
@@ -87,7 +97,7 @@
     </ul>
   </nav>
   <script type="text/javascript">
-  // based on http://stackoverflow.com/a/10300743/280842
+  // based on https://stackoverflow.com/a/10300743/280842
   function gen_mail_to_link(hs, subject) {
     var lhs,rhs;
     var p = hs.split('@');
@@ -106,14 +116,14 @@
       </li>
     
     
-    <li><a href="http://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
     
-    <li><a href="http://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
-    
-    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
     
     
-    <li><a href="http://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
     
     
     
@@ -178,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    6 mins read
+    7 mins read
   
 </span>
 
@@ -345,9 +355,15 @@ softmax_i(1-softmax_j) & i= j \\
     <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
 
 <p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax grad</a> code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. this is illustarted in the picture below.
-<img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" hight="1080%" width="1920%" /></p>
+<img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" hight="2080%" width="2920%" /></p>
 
 <p>As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.</p>
+
+<p><img src="http://localhost:4000/img/softmaxgrad.png" alt="softmax grad" hight="2080px" width="2920px" />
+#<img src="http://localhost:4000/img/softmaxgrad.png" alt="Smithsonian Image" width="4000px" /></p>
+
+<p>hey there
+<a href="http://localhost:4000/img/softmaxgrad.png"><img src="http://localhost:4000/img/softmaxgrad.png" width="3000" height="2000" /></a></p>
 
 
   </article>
@@ -385,6 +401,17 @@ softmax_i(1-softmax_j) & i= j \\
   </div>
   <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
 
 
 </body>
