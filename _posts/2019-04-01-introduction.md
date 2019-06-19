@@ -17,14 +17,32 @@ In this short post, <strong>which has nothing to do with Artificial Intelligence
 
 ### Importance of understanding standing stuff under-the-hood
 Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.
+{% highlight c %}
+  int main() {
+      long d;
+      multstore(2, 3, &d);
+      printf("2 * 3 --> %ld\n", d);
+      return 0;
+  }
 
-![figure-1]({{ site.url }}/img/introduction/ccode.jpg){: hight="150%" width="130%"}
-Sample the above code.
-![figure-2]({{ site.url }}/img/introduction/x86reg.jpg){: hight="150%" width="130%"}
+  long mult2(long a, long b) {
+      long s = a * b;
+      return s;
+   }
+
+   void multstore(long x, long y, long *dest) {
+       long t = mult2(x, y);
+       *dest = t;
+   }
+{% endhighlight %}
+
+Consider the above code where, "main" calls "multstore" and "multstore" calls "mult2".
+
+![figure-1]({{ site.url }}/img/introduction/x86reg.jpg){: hight="110%" width="110%" name="figure-1"}
 Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.
-<p>caller-saved: If a function A calls function B function B <strong>can</strong> change the values of these registers.</p>
-<p>callee-saved: If a function A calls function B function B <strong>cannot<strong> change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.</p>
+* callee-saved: If a function A calls function B function B <strong>cannot</strong> change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.
+* caller-saved: If a function A calls function B then, it means it can be modified by anyone. Caller-saved because if the caller has some local data in these registers then it is caller's responsibility to save it before making the call.
 
-![softmax grad]({{ site.url }}/img/introduction/ccode.jpg){: hight="150%" width="150%"}
+![softmax grad]({{ site.url }}/img/introduction/assemblercall.jpg){: hight="110%" width="110%"}
 
 The first part demonstrates how x86 registers are used and second demonstrates how to extend the knowledge to a high level language like Java or python.
