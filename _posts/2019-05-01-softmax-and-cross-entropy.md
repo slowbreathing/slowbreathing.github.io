@@ -5,6 +5,7 @@ excerpt: "Demo post displaying the various ways of highlighting code in Markdown
 mathjax: true
 date:   2019-05-03 15:07:19
 categories: [article]
+tags: Artificial-Intelligence Deep-Learning
 comments: true
 ---
 

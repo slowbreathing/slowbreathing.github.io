@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-06-17</pubDate>
-    <lastBuildDate>Mon, 17 Jun 2019 06:35:00 +0000</lastBuildDate>
+    <pubDate>2019-06-19</pubDate>
+    <lastBuildDate>Wed, 19 Jun 2019 06:44:32 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -63,9 +63,13 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;
 
 </description>
-        <pubDate>2019-06-17</pubDate>
+        <pubDate>2019-06-19</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
+        
+        <category>Artificial-Intelligence</category>
+        
+        <category>Deep-Learning</category>
         
         
         <category>article</category>
@@ -237,9 +241,46 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-06-17</pubDate>
+        <pubDate>2019-06-19</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
+        
+        <category>Artificial-Intelligence</category>
+        
+        <category>Deep-Learning</category>
+        
+        
+        <category>article</category>
+        
+      </item>
+    
+      <item>
+        <title>Introduction: Why another technical blog?</title>
+        <description>&lt;p&gt;&lt;strong&gt;Artificial Intelligence especially deep learning employs models which are extremely complex.&lt;/strong&gt; Complexity stems from two major sources. &lt;strong&gt;Firstly&lt;/strong&gt;, Models that have multiple dimensional representation have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also have a time dimension that have to be represented as well adding to the complexity. &lt;strong&gt;Secondly&lt;/strong&gt;, the mathematical model has to be translated to code and executed on CPUs/GPUs. When I illustrate these models in later articles, one realizes the importance of looking at the whole stack or at least have an understanding of the whole stack. This enables, in the very least, easier debugging. At best, one understands the model’s execution and behavior and modifications that require to be done to suit our specific use-case(s).&lt;/p&gt;
+&lt;p&gt;In my experience, for most clients I have work for, the single most important reason why models underperform is because the hyperparameters is not understood well and hence most often mis-configured. If, from hardware to the software model and everything in between is understood well, then Deep Learning become fun and magic. &lt;strong&gt;This blog over the next couple of month will try to lower the barrier to entry.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Being in the Optimisation field for quite some time, I have understood the importance of how  stuff works under-the-hood. I have a microarchitecture background, specifically X86 and vector based architectures. Microarchitecture has been my guiding light.  It has helped me solve many complex optimization problems despite some of them being programmed in high level languages like Java or python.&lt;/p&gt;
+&lt;p&gt;In this short post, &lt;strong&gt;which has nothing to do with Artificial Intelligence just yet&lt;/strong&gt;, I demonstrate the &lt;strong&gt;importance of understanding stuff under-the-hood&lt;/strong&gt; and &lt;strong&gt;thinking in pictures and then linking it to the code&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;importance-of-understanding-standing-stuff-under-the-hood&quot;&gt;Importance of understanding standing stuff under-the-hood&lt;/h3&gt;
+&lt;p&gt;Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/introduction/ccode.jpg&quot; alt=&quot;figure-1&quot; hight=&quot;150%&quot; width=&quot;130%&quot; /&gt;
+Sample the above code.
+&lt;img src=&quot;http://localhost:4000/img/introduction/x86reg.jpg&quot; alt=&quot;figure-2&quot; hight=&quot;150%&quot; width=&quot;130%&quot; /&gt;
+Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.&lt;/p&gt;
+&lt;p&gt;caller-saved: If a function A calls function B function B &lt;strong&gt;can&lt;/strong&gt; change the values of these registers.&lt;/p&gt;
+&lt;p&gt;callee-saved: If a function A calls function B function B &lt;strong&gt;cannot&lt;strong&gt; change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.&amp;lt;/p&amp;gt;
+
+![softmax grad](http://localhost:4000/img/introduction/ccode.jpg){: hight=&quot;150%&quot; width=&quot;150%&quot;}
+
+The first part demonstrates how x86 registers are used and second demonstrates how to extend the knowledge to a high level language like Java or python.
+&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>2019-06-19</pubDate>
+        <link>http://localhost:4000/articles/2019-05/introduction</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
+        
+        <category>Introduction</category>
         
         
         <category>article</category>

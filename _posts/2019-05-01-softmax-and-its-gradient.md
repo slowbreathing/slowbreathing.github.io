@@ -5,6 +5,7 @@ excerpt: "From the perspective of peep neural network, softmax is one the most i
 mathjax: true
 date:   2019-05-01 15:07:19
 categories: [article]
+tags: Artificial-Intelligence Deep-Learning
 comments: true
 ---
 From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.  
