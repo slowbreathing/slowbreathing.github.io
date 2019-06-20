@@ -1,0 +1,22 @@
+{% if include.caption %}
+<figure>
+    {% if include.href %}
+    <a href="{{ include.href }}">
+        <img src="{{ include.src }}" alt="Image: {{ include.caption }}" hight="{{include.hight}}" width="{{include.width}}">
+    </a>
+    {% else %}
+    <img src="{{ include.src }}" alt="Image: {{ include.caption }}" hight="{{include.hight}}" width="{{include.width}}">
+    {% endif %}
+    <figcaption><span><center>{{ include.caption }}</center></span></figcaption>
+</figure>
+{% else %}
+<figure>
+    {% if include.href %}
+    <a href="{{ include.href }}">
+        <img src="{{ include.src }}" alt="Image without caption" hight="{{include.hight}}" width="{{include.width}}">
+    </a>
+    {% else %}
+    <img src="{{ include.src }}" alt="Image without caption" hight="{{include.hight}}" width="{{include.width}}">
+    {% endif %}
+</figure>
+{% endif %}

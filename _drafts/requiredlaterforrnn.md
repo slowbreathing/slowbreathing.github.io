@@ -17,3 +17,6 @@ $$\Large \hat{Y_t}=softmax_j (logits)$$
 
 $$\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y_t}}}.\frac{\partial {\hat{Y_t}}}{\partial {logits}}$$  
 $$\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y_t}{\hat{y_t}}.\frac{\partial {\hat{Y_t}}}{\partial {logits}}$$
+
+
+![figure-1]({{ site.url }}/img/introduction/x86reg.jpg){: hight="110%" width="110%" name="figure-1"}<center>figure-1</center>
