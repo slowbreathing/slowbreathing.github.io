@@ -50,11 +50,16 @@ Consider the above code where, "main" calls "multstore" and "multstore" calls "m
 %}
 
 Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.
-hight="110%" width="110%"
+
 > * callee-saved: If a function A calls function B function B <strong>cannot</strong> change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.
 > * caller-saved: If a function A calls function B then, it means it <strong>can</strong> be modified by anyone. Caller-saved because if the caller has some local data in these registers then it is caller's responsibility to save it before making the call.
 
-![softmax grad]({{ site.url }}/img/introduction/assemblercall.jpg){: hight="110%" width="110%" figcaption="figure-1" }
-<center>figure-2</center>
+{%
+    include image.html
+    src="/img/introduction/assemblercall.jpg"
+    caption="figure-2"
+    hight="110%"
+    width="110%"
+%}
 
-The first part demonstrates how x86 registers are used and second demonstrates how to extend the knowledge to a high level language like Java or python.
+For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.

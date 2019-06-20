@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-06-20</pubDate>
-    <lastBuildDate>Thu, 20 Jun 2019 12:10:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Jun 2019 13:15:09 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -294,11 +294,11 @@ softmax_i(1-softmax_j) &amp; i= j \\
     
     &lt;img src=&quot;/img/introduction/x86reg.jpg&quot; alt=&quot;Image: figure-1&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;span&gt;&lt;center&gt;figure-1&lt;/center&gt;&lt;/span&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.
-hight=”110%” width=”110%”&lt;/p&gt;
+&lt;p&gt;Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.&lt;/p&gt;
+
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;callee-saved: If a function A calls function B function B &lt;strong&gt;cannot&lt;/strong&gt; change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.&lt;/li&gt;
@@ -306,10 +306,14 @@ hight=”110%” width=”110%”&lt;/p&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/introduction/assemblercall.jpg&quot; alt=&quot;softmax grad&quot; hight=&quot;110%&quot; width=&quot;110%&quot; figcaption=&quot;figure-1&quot; /&gt;&lt;/p&gt;
-&lt;center&gt;figure-2&lt;/center&gt;
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/assemblercall.jpg&quot; alt=&quot;Image: figure-2&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
 
-&lt;p&gt;The first part demonstrates how x86 registers are used and second demonstrates how to extend the knowledge to a high level language like Java or python.&lt;/p&gt;
+&lt;p&gt;For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.&lt;/p&gt;
 </description>
         <pubDate>2019-06-20</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>

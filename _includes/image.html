@@ -7,7 +7,7 @@
     {% else %}
     <img src="{{ include.src }}" alt="Image: {{ include.caption }}" hight="{{include.hight}}" width="{{include.width}}">
     {% endif %}
-    <figcaption><span><center>{{ include.caption }}</center></span></figcaption>
+    <figcaption><center><span class="faded_text">{{ include.caption }}</span></center></figcaption>
 </figure>
 {% else %}
 <figure>

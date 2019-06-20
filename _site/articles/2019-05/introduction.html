@@ -235,11 +235,11 @@
     
     <img src="/img/introduction/x86reg.jpg" alt="Image: figure-1" hight="110%" width="110%" />
     
-    <figcaption><span><center>figure-1</center></span></figcaption>
+    <figcaption><center><span class="faded_text">figure-1</span></center></figcaption>
 </figure>
 
-<p>Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.
-hight=”110%” width=”110%”</p>
+<p>Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.</p>
+
 <blockquote>
   <ul>
     <li>callee-saved: If a function A calls function B function B <strong>cannot</strong> change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.</li>
@@ -247,10 +247,14 @@ hight=”110%” width=”110%”</p>
   </ul>
 </blockquote>
 
-<p><img src="http://localhost:4000/img/introduction/assemblercall.jpg" alt="softmax grad" hight="110%" width="110%" figcaption="figure-1" /></p>
-<center>figure-2</center>
+<figure>
+    
+    <img src="/img/introduction/assemblercall.jpg" alt="Image: figure-2" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2</span></center></figcaption>
+</figure>
 
-<p>The first part demonstrates how x86 registers are used and second demonstrates how to extend the knowledge to a high level language like Java or python.</p>
+<p>For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.</p>
 
   </article>
 </div>
