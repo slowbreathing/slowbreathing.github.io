@@ -63,3 +63,211 @@ Compilers have the above convention in mind for x86 register usage. This is usua
 %}
 
 For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.
+
+### Extending the general idea of registers to higher level languages(Java)
+{% highlight Java %}
+private static class Shape{
+      public Shape(List<Point> shape) {
+          for (Point shape1 : shape) {
+              if(this.head==null){
+                  this.head=this.tail=shape1;
+                  size++;
+              }
+              else{
+                  this.tail.next=shape1;
+                  size++;    
+                  this.tail=shape1;
+              }
+          }
+      }
+      Shape next;
+      Point head;
+      Point tail;
+      int size;
+      void movex(int offset){
+          Point tmpnext=this.head;
+          while(tmpnext!=null){
+              tmpnext.x=tmpnext.x+offset;
+              tmpnext=tmpnext.next;
+          }
+      }
+      void movey(int offset){
+          Point tmpnext=this.head;
+          while(tmpnext!=null){
+              tmpnext.y=tmpnext.y+offset;
+              tmpnext=tmpnext.next;
+          }
+      }
+Listing-2
+{% endhighlight %}
+
+Consider the code above, We have a list of points making up a shape and when "movex" or "movey" function gets called with an  offset it simply moves all the points' X or Y coordinates by that offset. Now because it is a list of points that make up the shape, moving through that list going to be expensive because the CPU prefethers cannot "guess" the pattern of load and cannot preload to cache. This results in resource stalls , which the another way of saying that the CPU is sitting idle.
+
+{% highlight Java linenos %}
+  public static void main(String [] args){
+    long start=System.nanoTime();
+    for (int i = 0; i < 1000000; i++) {
+        int totalx=0;
+        int totaly=0;
+        int totalpoints=0;
+        Shape s=shapelist.head;
+        while(s!=null){
+            totalx += s.xsum();
+            totaly += s.ysum();
+            totalpoints += s.numpoints();
+            s=s.next;
+        }
+        int offsetx=totalx/totalpoints;
+        int offsety=totaly/totalpoints;
+        s=shapelist.head;
+        while(s!=null){
+            s.movex(offsetx);
+            s.movey(offsety);
+            s=s.next;
+        }
+    }
+  }
+Listing-3
+{% endhighlight %}
+
+Line 16-21 is where the call is being made to functions "movex" and "movey". The question is can a profiler pinpoint how the java code executes and the resource stalls that this code is going to encounter. Once this is understood, similar analogy can be extended to more complex code.
+Just before we get started a few things to keep in mind.
+> * The profiler being used is <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzer</a> also called <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Solaris Analyzer</a>. Probably one of the best profilers to deep dive into the code at an instruction level. <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> would require a post in itself.
+> * The <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">performance analyzer</a> for this run has be configured to capture resource stalls for the above code.
+> * Despite Java being an interpreted language, in practice it is opmtimized on-the-fly by a <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a>. These are usually profile guided optimizations and topic for another day. The code shown by <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> is <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a> generated. Typically we get this profile when the code has run for some time for it to be JIT compiled.
+
+### Code walk through using Solaris Analyzer
+> * Measuring CPU cycles for the code
+{%
+    include image.html
+    src="/img/introduction/sol1.jpe"
+    caption="figure-3:CPU Cycles for the code in listing 1 and 2."
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-1
+{%
+    include image.html
+    src="/img/introduction/sol2.jpeg"
+    caption="figure-4:Bottom of the screen is the size of the object. "
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-2
+{%
+    include image.html
+    src="/img/introduction/sol3.jpeg"
+    caption="figure-5"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-3
+{%
+    include image.html
+    src="/img/introduction/sol4.jpeg"
+    caption="figure-6"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-4
+{%
+    include image.html
+    src="/img/introduction/sol5.jpeg"
+    caption="figure-7"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-5
+{%
+    include image.html
+    src="/img/introduction/sol6.jpeg"
+    caption="figure-8"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-6
+{%
+    include image.html
+    src="/img/introduction/sol7.jpeg"
+    caption="figure-9"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-7
+{%
+    include image.html
+    src="/img/introduction/sol8.jpeg"
+    caption="figure-10"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-8
+{%
+    include image.html
+    src="/img/introduction/sol9.jpeg"
+    caption="figure-11"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-9
+{%
+    include image.html
+    src="/img/introduction/sol10.jpeg"
+    caption="figure-12"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-10
+{%
+    include image.html
+    src="/img/introduction/sol11.jpeg"
+    caption="figure-13"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-11
+{%
+    include image.html
+    src="/img/introduction/sol12.jpeg"
+    caption="figure-14"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-12
+{%
+    include image.html
+    src="/img/introduction/sol13.jpeg"
+    caption="figure-15"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-13
+{%
+    include image.html
+    src="/img/introduction/sol14.jpeg"
+    caption="figure-16"
+    hight="110%"
+    width="110%"
+%}
+
+> * Walk through:Step-14
+{%
+    include image.html
+    src="/img/introduction/sol15.jpeg"
+    caption="figure-17"
+    hight="110%"
+    width="110%"
+%}

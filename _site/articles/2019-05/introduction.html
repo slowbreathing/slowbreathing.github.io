@@ -188,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    3 mins read
+    9 mins read
   
 </span>
 
@@ -255,6 +255,300 @@
 </figure>
 
 <p>For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.</p>
+
+<h3 id="extending-the-general-idea-of-registers-to-higher-level-languagesjava">Extending the general idea of registers to higher level languages(Java)</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Shape</span><span class="o">{</span>
+      <span class="kd">public</span> <span class="nf">Shape</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">shape</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">for</span> <span class="o">(</span><span class="n">Point</span> <span class="n">shape1</span> <span class="o">:</span> <span class="n">shape</span><span class="o">)</span> <span class="o">{</span>
+              <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">head</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                  <span class="k">this</span><span class="o">.</span><span class="na">head</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="na">tail</span><span class="o">=</span><span class="n">shape1</span><span class="o">;</span>
+                  <span class="n">size</span><span class="o">++;</span>
+              <span class="o">}</span>
+              <span class="k">else</span><span class="o">{</span>
+                  <span class="k">this</span><span class="o">.</span><span class="na">tail</span><span class="o">.</span><span class="na">next</span><span class="o">=</span><span class="n">shape1</span><span class="o">;</span>
+                  <span class="n">size</span><span class="o">++;</span>    
+                  <span class="k">this</span><span class="o">.</span><span class="na">tail</span><span class="o">=</span><span class="n">shape1</span><span class="o">;</span>
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="n">Shape</span> <span class="n">next</span><span class="o">;</span>
+      <span class="n">Point</span> <span class="n">head</span><span class="o">;</span>
+      <span class="n">Point</span> <span class="n">tail</span><span class="o">;</span>
+      <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+      <span class="kt">void</span> <span class="nf">movex</span><span class="o">(</span><span class="kt">int</span> <span class="n">offset</span><span class="o">){</span>
+          <span class="n">Point</span> <span class="n">tmpnext</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="na">head</span><span class="o">;</span>
+          <span class="k">while</span><span class="o">(</span><span class="n">tmpnext</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+              <span class="n">tmpnext</span><span class="o">.</span><span class="na">x</span><span class="o">=</span><span class="n">tmpnext</span><span class="o">.</span><span class="na">x</span><span class="o">+</span><span class="n">offset</span><span class="o">;</span>
+              <span class="n">tmpnext</span><span class="o">=</span><span class="n">tmpnext</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="kt">void</span> <span class="nf">movey</span><span class="o">(</span><span class="kt">int</span> <span class="n">offset</span><span class="o">){</span>
+          <span class="n">Point</span> <span class="n">tmpnext</span><span class="o">=</span><span class="k">this</span><span class="o">.</span><span class="na">head</span><span class="o">;</span>
+          <span class="k">while</span><span class="o">(</span><span class="n">tmpnext</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+              <span class="n">tmpnext</span><span class="o">.</span><span class="na">y</span><span class="o">=</span><span class="n">tmpnext</span><span class="o">.</span><span class="na">y</span><span class="o">+</span><span class="n">offset</span><span class="o">;</span>
+              <span class="n">tmpnext</span><span class="o">=</span><span class="n">tmpnext</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+          <span class="o">}</span>
+      <span class="o">}</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></code></pre></figure>
+
+<p>Consider the code above, We have a list of points making up a shape and when “movex” or “movey” function gets called with an  offset it simply moves all the points’ X or Y coordinates by that offset. Now because it is a list of points that make up the shape, moving through that list going to be expensive because the CPU prefethers cannot “guess” the pattern of load and cannot preload to cache. This results in resource stalls , which the another way of saying that the CPU is sitting idle.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="kt">long</span> <span class="n">start</span><span class="o">=</span><span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1000000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">totalx</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">totaly</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">totalpoints</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+        <span class="n">Shape</span> <span class="n">s</span><span class="o">=</span><span class="n">shapelist</span><span class="o">.</span><span class="na">head</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">s</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">totalx</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="na">xsum</span><span class="o">();</span>
+            <span class="n">totaly</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="na">ysum</span><span class="o">();</span>
+            <span class="n">totalpoints</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="na">numpoints</span><span class="o">();</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">offsetx</span><span class="o">=</span><span class="n">totalx</span><span class="o">/</span><span class="n">totalpoints</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">offsety</span><span class="o">=</span><span class="n">totaly</span><span class="o">/</span><span class="n">totalpoints</span><span class="o">;</span>
+        <span class="n">s</span><span class="o">=</span><span class="n">shapelist</span><span class="o">.</span><span class="na">head</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">s</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">s</span><span class="o">.</span><span class="na">movex</span><span class="o">(</span><span class="n">offsetx</span><span class="o">);</span>
+            <span class="n">s</span><span class="o">.</span><span class="na">movey</span><span class="o">(</span><span class="n">offsety</span><span class="o">);</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">3</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Line 16-21 is where the call is being made to functions “movex” and “movey”. The question is can a profiler pinpoint how the java code executes and the resource stalls that this code is going to encounter. Once this is understood, similar analogy can be extended to more complex code.
+Just before we get started a few things to keep in mind.</p>
+<blockquote>
+  <ul>
+    <li>The profiler being used is <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzer</a> also called <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Solaris Analyzer</a>. Probably one of the best profilers to deep dive into the code at an instruction level. <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> would require a post in itself.</li>
+    <li>The <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">performance analyzer</a> for this run has be configured to capture resource stalls for the above code.</li>
+    <li>Despite Java being an interpreted language, in practice it is opmtimized on-the-fly by a <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a>. These are usually profile guided optimizations and topic for another day. The code shown by <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> is <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a> generated. Typically we get this profile when the code has run for some time for it to be JIT compiled.</li>
+  </ul>
+</blockquote>
+
+<h3 id="code-walk-through-using-solaris-analyzer">Code walk through using Solaris Analyzer</h3>
+<blockquote>
+  <ul>
+    <li>Measuring CPU cycles for the code</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol1.jpe" alt="Image: figure-3:CPU Cycles for the code in listing 1 and 2." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3:CPU Cycles for the code in listing 1 and 2.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-1</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol2.jpeg" alt="Image: figure-4:Bottom of the screen is the size of the object. " hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4:Bottom of the screen is the size of the object. </span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-2</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol3.jpeg" alt="Image: figure-5" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-3</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol4.jpeg" alt="Image: figure-6" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-4</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol5.jpeg" alt="Image: figure-7" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-5</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol6.jpeg" alt="Image: figure-8" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-8</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-6</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol7.jpeg" alt="Image: figure-9" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-9</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-7</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol8.jpeg" alt="Image: figure-10" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-10</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-8</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol9.jpeg" alt="Image: figure-11" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-11</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-9</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol10.jpeg" alt="Image: figure-12" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-12</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-10</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol11.jpeg" alt="Image: figure-13" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-13</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-11</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol12.jpeg" alt="Image: figure-14" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-14</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-12</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol13.jpeg" alt="Image: figure-15" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-15</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-13</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol14.jpeg" alt="Image: figure-16" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-16</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Walk through:Step-14</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/introduction/sol15.jpeg" alt="Image: figure-17" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17</span></center></figcaption>
+</figure>
+
 
   </article>
 </div>
