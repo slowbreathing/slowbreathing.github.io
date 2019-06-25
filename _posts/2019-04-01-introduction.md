@@ -177,7 +177,7 @@ Just before we get started a few things to keep in mind.
 {%
     include image.html
     src="/img/introduction/sol5.jpeg"
-    caption="figure-7"
+    caption="figure-7:This is the big culprit, loading the next pointer. And this will show up as major resource consumer in figure-17."
     hight="110%"
     width="110%"
 %}
@@ -241,7 +241,7 @@ Just before we get started a few things to keep in mind.
 {%
     include image.html
     src="/img/introduction/sol12.jpeg"
-    caption="figure-14"
+    caption="figure-14:This is the big culprit, loading the next pointer except it is for y. This too will show up as major resource consumer in figure-17."
     hight="110%"
     width="110%"
 %}
@@ -274,4 +274,5 @@ Just before we get started a few things to keep in mind.
 %}
 
 ### Summary
-In summary, I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts
+
+In summary then, the figure-17 should clarify the resource stalls exhibited by the code. would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular.
