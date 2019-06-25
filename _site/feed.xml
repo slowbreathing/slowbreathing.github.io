@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-06-22</pubDate>
-    <lastBuildDate>Sat, 22 Jun 2019 10:55:41 +0000</lastBuildDate>
+    <pubDate>2019-06-25</pubDate>
+    <lastBuildDate>Tue, 25 Jun 2019 04:02:50 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -63,7 +63,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;
 
 </description>
-        <pubDate>2019-06-22</pubDate>
+        <pubDate>2019-06-25</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -241,7 +241,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-06-22</pubDate>
+        <pubDate>2019-06-25</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
@@ -486,9 +486,11 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/introduction/sol6.jpeg&quot; alt=&quot;Image: figure-8&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;
+        &lt;img src=&quot;/img/introduction/sol6.jpeg&quot; alt=&quot;Image: figure-8: A &amp;lt;a href='https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766'&amp;gt;JVM safepoint&amp;lt;/a&amp;gt; is a range of execution where the state of the executing thread is well described.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;/a&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: A &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;JVM safepoint&lt;/a&gt; is a range of execution where the state of the executing thread is well described.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -609,7 +611,7 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/figure&gt;
 
 </description>
-        <pubDate>2019-06-22</pubDate>
+        <pubDate>2019-06-25</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
         

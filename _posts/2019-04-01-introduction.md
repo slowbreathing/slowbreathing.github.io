@@ -186,7 +186,8 @@ Just before we get started a few things to keep in mind.
 {%
     include image.html
     src="/img/introduction/sol6.jpeg"
-    caption="figure-8"
+    caption="figure-8: A <a href='https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766'>JVM safepoint</a> is a range of execution where the state of the executing thread is well described."
+    href="https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766"
     hight="110%"
     width="110%"
 %}
