@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-06-25</pubDate>
-    <lastBuildDate>Tue, 25 Jun 2019 07:22:26 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Jun 2019 07:59:27 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -434,9 +434,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/introduction/sol2.jpeg&quot; alt=&quot;Image: figure-4:Bottom of the screen is the size of the object. &quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/introduction/sol2.jpeg&quot; alt=&quot;Image: figure-4:Bottom of the screen is the size of the object using &amp;lt;a href='https://openjdk.java.net/projects/code-tools/jmh/' &amp;gt;JMH&amp;lt;/a&amp;gt;. &quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4:Bottom of the screen is the size of the object. &lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4:Bottom of the screen is the size of the object using &lt;a href=&quot;https://openjdk.java.net/projects/code-tools/jmh/&quot;&gt;JMH&lt;/a&gt;. &lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -610,6 +610,8 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;In summary, I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts&lt;/p&gt;
 </description>
         <pubDate>2019-06-25</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>

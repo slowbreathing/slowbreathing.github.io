@@ -150,7 +150,7 @@ Just before we get started a few things to keep in mind.
 {%
     include image.html
     src="/img/introduction/sol2.jpeg"
-    caption="figure-4:Bottom of the screen is the size of the object. "
+    caption="figure-4:Bottom of the screen is the size of the object using <a href='https://openjdk.java.net/projects/code-tools/jmh/' >JMH</a>. "
     hight="110%"
     width="110%"
 %}
@@ -272,3 +272,6 @@ Just before we get started a few things to keep in mind.
     hight="110%"
     width="110%"
 %}
+
+### Summary
+In summary, I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts
