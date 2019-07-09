@@ -188,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    3 mins read
+    6 mins read
   
 </span>
 
@@ -213,7 +213,24 @@
       pred-(seq=1),input_size
       labels-(seq=1),input_size
   """</span>
-  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">1</span></code></pre></figure>
+
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">loss</a> implementation.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+      <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sm</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c">#prints out 0.145</span>
+<span class="k">print</span><span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">input_one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">)))</span>
+<span class="c">#prints out 17.01</span>
+<span class="k">print</span><span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">sm</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">input_one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">4</span><span class="p">)))</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></code></pre></figure>
+
+<p>As you can see the loss function accepts softmaxed input and one-hot encoded labels.
+The output is illustated in figure-1 and 2 below.</p>
 
 <blockquote>
   <ul>
@@ -241,7 +258,46 @@
     <figcaption><center><span class="faded_text">figure-2:Cost is high because, the prediction is far away from the truth.</span></center></figcaption>
 </figure>
 
-<h3 id="crossentropy-loss-derivative">CrossEntropy Loss Derivative</h3>
+<h3 id="crossentropyloss">CrossEntropyLoss</h3>
+<p>CrossEntropyLoss Function is same loss function above but simplified and adapted for calculating loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">CrossEntropyLoss</a> function that calculates the softmax internally.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">cross_entropy_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+    <span class="s">"""
+    Does an internal softmax before loss calculation.
+    args:
+        pred- batch,seq,input_size
+        labels-batch,seq(has to be transformed before comparision with preds(line-133).)
+    """</span>
+    <span class="n">checkdatadim</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">checkdatadim</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">batch</span><span class="p">,</span><span class="n">seq</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">pred</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">yhat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch</span><span class="p">,</span><span class="n">seq</span><span class="p">,</span><span class="n">size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">batnum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">seqnum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+            <span class="n">yhat</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">]</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">]))</span>
+    <span class="n">lossesa</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch</span><span class="p">,</span><span class="n">seq</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">batnum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">seqnum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+            <span class="n">lossesa</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">]</span><span class="o">=</span><span class="n">loss</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">yhat</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span><span class="n">input_one_hot</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">],</span><span class="n">size</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">yhat</span><span class="p">,</span><span class="n">lossesa</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">3</span></code></pre></figure>
+
+<p>The point to keep in mind is, it accepts it’s 2 inputs in 3(batch,seq,input_size) and 2(batch,seq) dimensions respectively. Batch size usually indicates multiple parallel input sequences, can be ignored for now and be assumed as 1. The shape of pred in our case is batch=1,seq=2,input_size=4. And the shape of labels is batch=1, seq=2. This is illustrated in Listing-3 and Listing-4</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+      <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="c">#prints array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],</span>
+<span class="c">#        [8.94679461e-04, 4.06183847e-08, 1.79701173e-02, 9.81135163e-01]]]),</span>
+<span class="c"># and array([[ 0.14507794, 17.01904505]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">4</span></code></pre></figure>
+
+<p>As illustrated in Listing-3 and Listing-4 <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The Loss must match with</p>
+
+<h3 id="crossentropyloss-derivative">CrossEntropyLoss Derivative</h3>
 <p>One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.</p>
 
 <script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
