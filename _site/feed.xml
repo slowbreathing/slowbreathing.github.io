@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-07-09</pubDate>
-    <lastBuildDate>Tue, 09 Jul 2019 08:25:35 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jul 2019 08:27:40 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -103,13 +103,13 @@ The output is illustated in figure-1 and 2 below.&lt;/p&gt;
       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;#prints array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#prints Softmaxed (array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#        [8.94679461e-04, 4.06183847e-08, 1.79701173e-02, 9.81135163e-01]]]),&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# and array([[ 0.14507794, 17.01904505]]))&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# and LOSS array([[ 0.14507794, 17.01904505]]))&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;As illustrated in Listing-3 and Listing-4 &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The Loss must match with&lt;/p&gt;
+&lt;p&gt;As illustrated in Listing-3 and Listing-4 &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The calculated loss is the same as before while calling the loss function directly.&lt;/p&gt;
 
 &lt;h3 id=&quot;crossentropyloss-derivative&quot;&gt;CrossEntropyLoss Derivative&lt;/h3&gt;
 &lt;p&gt;One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.&lt;/p&gt;

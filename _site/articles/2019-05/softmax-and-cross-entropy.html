@@ -289,13 +289,13 @@ The output is illustated in figure-1 and 2 below.</p>
       <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 
-<span class="c">#prints array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],</span>
+<span class="c">#prints Softmaxed (array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],</span>
 <span class="c">#        [8.94679461e-04, 4.06183847e-08, 1.79701173e-02, 9.81135163e-01]]]),</span>
-<span class="c"># and array([[ 0.14507794, 17.01904505]]))</span>
+<span class="c"># and LOSS array([[ 0.14507794, 17.01904505]]))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
 <span class="n">Listing</span><span class="o">-</span><span class="mi">4</span></code></pre></figure>
 
-<p>As illustrated in Listing-3 and Listing-4 <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The Loss must match with</p>
+<p>As illustrated in Listing-3 and Listing-4 <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The calculated loss is the same as before while calling the loss function directly.</p>
 
 <h3 id="crossentropyloss-derivative">CrossEntropyLoss Derivative</h3>
 <p>One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.</p>

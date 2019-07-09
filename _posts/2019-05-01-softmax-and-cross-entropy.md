@@ -96,14 +96,14 @@ x = np.array([[[1, 3, 5, 7],
       [1,-9, 4, 8]]])
 y = np.array([[3,1]])
 
-#prints array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],
+#prints Softmaxed (array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],
 #        [8.94679461e-04, 4.06183847e-08, 1.79701173e-02, 9.81135163e-01]]]),
-# and array([[ 0.14507794, 17.01904505]]))
+# and LOSS array([[ 0.14507794, 17.01904505]]))
 print(cross_entropy_loss(x,y))
 Listing-4
 {% endhighlight %}
 
-As illustrated in Listing-3 and Listing-4 [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The Loss must match with  
+As illustrated in Listing-3 and Listing-4 [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The calculated loss is the same as before while calling the loss function directly.
 
 
 
