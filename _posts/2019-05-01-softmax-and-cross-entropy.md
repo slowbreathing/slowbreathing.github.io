@@ -101,4 +101,3 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) 
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2
-Heyhey
