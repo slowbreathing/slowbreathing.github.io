@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta name="description" content="The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and ...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="Softmax and Cross-entropy | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Softmax and Cross-entropy | Slowbreathing">
-  <meta name="twitter:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta name="twitter:description" content="The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and ...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy">
   <meta property="og:title" content="Softmax and Cross-entropy | Slowbreathing">
-  <meta property="og:description" content="Demo post displaying the various ways of highlighting code in Markdown.">
+  <meta property="og:description" content="The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and ...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -188,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    1 min read
+    3 mins read
   
 </span>
 
@@ -197,11 +197,14 @@
   </header>
 
   <article class="post-content">
-    <p>Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is difined as error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as <script type="math/tex">\Large softmax_j (logits)</script> and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.</p>
+    <h3 id="introduction">Introduction</h3>
+<p>This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is defined as error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as <script type="math/tex">\Large softmax_j (logits)</script> and logits are weighted sum. One of the reason to choose cross entropy alongside softmax is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.</p>
 
 <script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
 
 <script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
+
+<p>where <script type="math/tex">\Large y</script> is the label and Yhat <script type="math/tex">\Large \hat{Y}</script> the predicted value.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
   <span class="s">"""
@@ -212,13 +215,63 @@
   """</span>
   <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
 
-<p><img src="http://localhost:4000/img/cel.jpg" alt="CEL" hight="1080%" width="1920%" />
-Cost is low because, the prediction is closer to the truth.</p>
+<blockquote>
+  <ul>
+    <li>Loss function: Example-1</li>
+  </ul>
+</blockquote>
 
-<p><img src="http://localhost:4000/img/cel2.jpg" alt="CEL" hight="1080%" width="1920%" />
-Cost is high because, the prediction is far away from the truth.</p>
+<figure>
+    
+    <img src="/img/cel.jpg" alt="Image: figure-1:Cost is low because, the prediction is closer to the truth." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1:Cost is low because, the prediction is closer to the truth.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Loss function: Example-2</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/cel2.jpg" alt="Image: figure-2:Cost is high because, the prediction is far away from the truth." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2:Cost is high because, the prediction is far away from the truth.</span></center></figcaption>
+</figure>
 
 <h3 id="crossentropy-loss-derivative">CrossEntropy Loss Derivative</h3>
+<p>One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.</p>
+
+<script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
+
+<script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
+
+<p>The above equation is writen like so below while calculating the gradients.</p>
+
+<script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
+
+<script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
+
+<blockquote>
+  <ul>
+    <li>Gradient: Example-3</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/cel3.jpg" alt="Image: figure-3:The red arrow follows the gradient." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3:The red arrow follows the gradient.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Deriving the gradients now.</li>
+  </ul>
+</blockquote>
 
 <script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}</script>
 
@@ -226,7 +279,11 @@ Cost is high because, the prediction is far away from the truth.</p>
 
 <script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)</script>
 
-<p>For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> we need to reference <a href="softmax-and-its-gradient#eq-1">eq-1</a>. Combining <a href="softmax-and-its-gradient#eq-1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a> which is softmax.</p>
+<blockquote>
+  <ul>
+    <li>For calculating <script type="math/tex">\Large \frac{\partial {\hat{Y}}}{\partial {logits}}</script> where <script type="math/tex">\Large \hat{y}</script> is the softmax and its derivative is given by <a href="softmax-and-its-gradient#eq-1">eq-1</a>. Combining <a href="softmax-and-its-gradient#eq-1">eq-1</a> and <a href="softmax-and-cross-entropy#eq-2">eq-2</a>.</li>
+  </ul>
+</blockquote>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}

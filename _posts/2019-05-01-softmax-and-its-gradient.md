@@ -1,18 +1,18 @@
 ---
 layout: post
 title:  "Softmax and its Gradient"
-excerpt: "From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient. In this article, I further dumb it down and add code to theory."
+excerpt: "From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient. In this article, I further dumb it down and add code to theory. <strong>But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMTs, BERTs, XLNETs etc.</strong>"
 mathjax: true
 date:   2019-05-01 15:07:19
 categories: [article]
 tags: Artificial-Intelligence Deep-Learning
 comments: true
 ---
-From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.  
-There are many softmax resources available in the internet. Among the many that are availble, I found the link [here][extsoftmax] to be the most complete. In this article, I "dumb" it down further and add code to the theory. Code when associated with theory makes the explanation very precise.
+From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.  
+There are many softmax resources available in the internet. Among the many that are availble, I found the link [here][extsoftmax] to be the most complete. In this article, I "dumb" it down further and add code to the theory. Code when associated with theory makes the explanation very precise. <strong>But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT etc.</strong>
 
 
-Softmax is essentially a vector function. It takes n inputs and produces and n outputs.
+Softmax is essentially a vector function. It takes n inputs and produces and n outputs. <strong>The out can be interpreted as a probabilistic output(summing up to 1). A multiway shootout if you will.<strong>
 
 $$\Large softmax(a)=\begin{bmatrix}
 a_1\\
@@ -97,7 +97,7 @@ Let's compute $$D_jsoftmax_i$$ for arbitrary i and j:
 $$\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}$$  
 Using the quotient rule $$\Large f(x) = \frac{g(x)}{h(x)}$$ , $$\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}$$   
 in our case $$\Large g_i = e^{a_i}$$  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$$\Large h_i = \sum_{k=1}^{N} e^{a_k}$$  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$$\Large h_i = \sum_{k=1}^{N} e^{a_k}$$ simplifying $$\Large \sum$$ for $$\Large \sum_{k=1}^{N} e^{a_k}$$
 
 Note that no matter which $$a_j$$ we compute the derivative of $$h_i$$ for, the answer will always be $$e^{a_j}$$. This is not the case for $$g_i$$, howewer. The derivative of $$g_i$$ w.r.t. $$a_j$$ is $$e^{a_j}$$ only if i=j, because only then $$g_i$$ has $$a_j$$ anywhere in it. Otherwise, the derivative is 0.
 
@@ -120,6 +120,7 @@ softmax_i(1-softmax_j) & i= j \\
 {-softmax_j}.{softmax_i} & i\neq j
 \end{Bmatrix} \:\:\:\: eq(1)$$      
 
+### Softmax Derivative Implementation
 {% highlight python %}
 def _softmax_grad(sm):
     # Below is the softmax value for [1, 3, 5, 7]
@@ -165,8 +166,14 @@ def _softmax_grad(sm):
 
 
 
-The above is the [softmax grad][softmax grad] code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. this is illustarted in the picture below.
-![softmax grad]({{ site.url }}/img/softmaxgrad.png){: hight="150%" width="150%"}
+The above is the [softmax grad][softmax grad] code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.
+{%
+    include image.html
+    src="/img/softmaxgrad.png"
+    caption="figure-1"
+    hight="120%"
+    width="120%"
+%}
 
 As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.  
 

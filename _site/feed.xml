@@ -5,17 +5,20 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-06-27</pubDate>
-    <lastBuildDate>Thu, 27 Jun 2019 09:04:03 +0000</lastBuildDate>
+    <pubDate>2019-07-08</pubDate>
+    <lastBuildDate>Mon, 08 Jul 2019 14:16:39 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Softmax and Cross-entropy</title>
-        <description>&lt;p&gt;Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is difined as error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are weighted sum. One of the reason to choose cross entropy alongside softmx is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.&lt;/p&gt;
+        <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is defined as error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are weighted sum. One of the reason to choose cross entropy alongside softmax is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and Yhat &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; the predicted value.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
@@ -26,13 +29,63 @@
   &quot;&quot;&quot;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/cel.jpg&quot; alt=&quot;CEL&quot; hight=&quot;1080%&quot; width=&quot;1920%&quot; /&gt;
-Cost is low because, the prediction is closer to the truth.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Loss function: Example-1&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/img/cel2.jpg&quot; alt=&quot;CEL&quot; hight=&quot;1080%&quot; width=&quot;1920%&quot; /&gt;
-Cost is high because, the prediction is far away from the truth.&lt;/p&gt;
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel.jpg&quot; alt=&quot;Image: figure-1:Cost is low because, the prediction is closer to the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1:Cost is low because, the prediction is closer to the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Loss function: Example-2&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel2.jpg&quot; alt=&quot;Image: figure-2:Cost is high because, the prediction is far away from the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2:Cost is high because, the prediction is far away from the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
 
 &lt;h3 id=&quot;crossentropy-loss-derivative&quot;&gt;CrossEntropy Loss Derivative&lt;/h3&gt;
+&lt;p&gt;One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;p&gt;The above equation is writen like so below while calculating the gradients.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Gradient: Example-3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel3.jpg&quot; alt=&quot;Image: figure-3:The red arrow follows the gradient.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3:The red arrow follows the gradient.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Deriving the gradients now.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt;
 
@@ -40,7 +93,11 @@ Cost is high because, the prediction is far away from the truth.&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)&lt;/script&gt;
 
-&lt;p&gt;For calculating &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt; we need to reference &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt;. Combining &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt; which is softmax.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For calculating &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{y}&lt;/script&gt; is the softmax and its derivative is given by &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt;. Combining &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
@@ -63,13 +120,13 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;
 
 </description>
-        <pubDate>2019-06-27</pubDate>
+        <pubDate>2019-07-08</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
         <category>Artificial-Intelligence</category>
         
-        <category>Deep-Learning</category>
+        <category>Deep-learning</category>
         
         
         <category>article</category>
@@ -78,10 +135,10 @@ softmax_i(1-softmax_j) &amp; i= j \\
     
       <item>
         <title>Softmax and its Gradient</title>
-        <description>&lt;p&gt;From the perspective of peep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.&lt;br /&gt;
-There are many softmax resources available in the internet. Among the many that are availble, I found the link &lt;a href=&quot;https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/&quot;&gt;here&lt;/a&gt; to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code when associated with theory makes the explanation very precise.&lt;/p&gt;
+        <description>&lt;p&gt;From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.&lt;br /&gt;
+There are many softmax resources available in the internet. Among the many that are availble, I found the link &lt;a href=&quot;https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/&quot;&gt;here&lt;/a&gt; to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code when associated with theory makes the explanation very precise. &lt;strong&gt;But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT etc.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Softmax is essentially a vector function. It takes n inputs and produces and n outputs.&lt;/p&gt;
+&lt;p&gt;Softmax is essentially a vector function. It takes n inputs and produces and n outputs. &lt;strong&gt;The out can be interpreted as a probabilistic output(summing up to 1). A multiway shootout if you will.&lt;strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large softmax(a)=\begin{bmatrix}
 a_1\\
@@ -166,7 +223,7 @@ D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}&lt;/script&gt;&lt;br /&gt;
 Using the quotient rule &lt;script type=&quot;math/tex&quot;&gt;\Large f(x) = \frac{g(x)}{h(x)}&lt;/script&gt; , &lt;script type=&quot;math/tex&quot;&gt;\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}&lt;/script&gt; &lt;br /&gt;
 in our case &lt;script type=&quot;math/tex&quot;&gt;\Large g_i = e^{a_i}&lt;/script&gt;&lt;br /&gt;
-                   &lt;script type=&quot;math/tex&quot;&gt;\Large h_i = \sum_{k=1}^{N} e^{a_k}&lt;/script&gt;&lt;/p&gt;
+                   &lt;script type=&quot;math/tex&quot;&gt;\Large h_i = \sum_{k=1}^{N} e^{a_k}&lt;/script&gt; simplifying &lt;script type=&quot;math/tex&quot;&gt;\Large \sum&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;\Large \sum_{k=1}^{N} e^{a_k}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that no matter which &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; we compute the derivative of &lt;script type=&quot;math/tex&quot;&gt;h_i&lt;/script&gt; for, the answer will always be &lt;script type=&quot;math/tex&quot;&gt;e^{a_j}&lt;/script&gt;. This is not the case for &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt;, howewer. The derivative of &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt; w.r.t. &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; is &lt;script type=&quot;math/tex&quot;&gt;e^{a_j}&lt;/script&gt; only if i=j, because only then &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt; has &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; anywhere in it. Otherwise, the derivative is 0.&lt;/p&gt;
 
@@ -193,6 +250,8 @@ Then, using the quotient rule we have:
 softmax_i(1-softmax_j) &amp; i= j \\
 {-softmax_j}.{softmax_i} &amp; i\neq j
 \end{Bmatrix} \:\:\:\: eq(1) %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;softmax-derivative-implementation&quot;&gt;Softmax Derivative Implementation&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_softmax_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;# Below is the softmax value for [1, 3, 5, 7]&lt;/span&gt;
@@ -235,13 +294,19 @@ softmax_i(1-softmax_j) &amp; i= j \\
 
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The above is the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py&quot;&gt;softmax grad&lt;/a&gt; code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. this is illustarted in the picture below.
-&lt;img src=&quot;http://localhost:4000/img/softmaxgrad.png&quot; alt=&quot;softmax grad&quot; hight=&quot;150%&quot; width=&quot;150%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The above is the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py&quot;&gt;softmax grad&lt;/a&gt; code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/softmaxgrad.png&quot; alt=&quot;Image: figure-1&quot; hight=&quot;120%&quot; width=&quot;120%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
 
 &lt;p&gt;As you can see the softmax gradient producers an nxn matrix for input size of n. But what is the relationship between softmax and cross entropy loss function. more importantly, how are the intimate together. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-06-27</pubDate>
+        <pubDate>2019-07-08</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
@@ -612,9 +677,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
 
-&lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular.&lt;/p&gt;
+&lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, specially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt; . &lt;strong&gt;In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code &lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>2019-06-27</pubDate>
+        <pubDate>2019-07-08</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
         
