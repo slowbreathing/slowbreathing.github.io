@@ -27,20 +27,22 @@ def loss(pred,labels):
       labels-(seq=1),input_size
   """
   return np.multiply(labels, -np.log(pred)).sum(1)
+
 Listing-1
 {% endhighlight %}
 Above is a [loss][loss] implementation.
 
 {% highlight python %}
-x = np.array([[1, 3, 5, 7],
-      [1,-9, 4, 8]])
-y = np.array([3,1])
-sm=softmax(x)
+  x = np.array([[1, 3, 5, 7],
+        [1,-9, 4, 8]])
+  y = np.array([3,1])
+  sm=softmax(x)
 
-#prints out 0.145
-print(loss(sm[0],input_one_hot(y[0],4)))
-#prints out 17.01
-print(loss(sm[1],input_one_hot(y[1],4)))
+  #prints out 0.145
+  print(loss(sm[0],input_one_hot(y[0],4)))
+  #prints out 17.01
+  print(loss(sm[1],input_one_hot(y[1],4)))
+
 Listing-2
 {% endhighlight %}
 As you can see the loss function accepts softmaxed input and one-hot encoded labels.
@@ -64,7 +66,7 @@ The output is illustated in figure-1 and 2 below.
     width="110%"
 %}
 ### CrossEntropyLoss
-CrossEntropyLoss Function is same loss function above but simplified and adapted for calculating loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the [CrossEntropyLoss][CrossEntropyLoss] function that calculates the softmax internally.
+CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the [CrossEntropyLoss][CrossEntropyLoss] function that calculates the softmax internally.
 
 {% highlight python %}
 def cross_entropy_loss(pred,labels):
@@ -92,20 +94,18 @@ Listing-3
 The point to keep in mind is, it accepts it's 2 inputs in 3(batch,seq,input_size) and 2(batch,seq) dimensions respectively. Batch size usually indicates multiple parallel input sequences, can be ignored for now and be assumed as 1. The shape of pred in our case is batch=1,seq=2,input_size=4. And the shape of labels is batch=1, seq=2. This is illustrated in Listing-3 and Listing-4
 
 {% highlight python %}
-x = np.array([[[1, 3, 5, 7],
-      [1,-9, 4, 8]]])
-y = np.array([[3,1]])
+  x = np.array([[[1, 3, 5, 7],
+        [1,-9, 4, 8]]])
+  y = np.array([[3,1]])
 
-#prints Softmaxed (array([[[2.14400878e-03, 1.58422012e-02, 1.17058913e-01, 8.64954877e-01],
-#        [8.94679461e-04, 4.06183847e-08, 1.79701173e-02, 9.81135163e-01]]]),
-# and LOSS array([[ 0.14507794, 17.01904505]]))
-print(cross_entropy_loss(x,y))
+  #prints array([[ 0.14507794, 17.01904505]]))
+  softmaxed,loss=cross_entropy_loss(x,y)
+  print("loss:",loss)
+
 Listing-4
 {% endhighlight %}
 
-As illustrated in Listing-3 and Listing-4 [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally and the Loss. The calculated loss is the same as before while calling the loss function directly.
-
-
+As illustrated in Listing-3 and Listing-4 [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.
 
 ### CrossEntropyLoss Derivative
 One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.  
@@ -157,6 +157,27 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = \hat{y_t}.(y + \sum_{i\neq j}y
 Since Y is a one hot vector, the term "$$\Large (y + \sum_{i\neq j}y_t)$$" sums up to one.  
 
 $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) $$
+
+### CrossEntropyLoss Derivative implementation
+{% highlight python %}
+  softmaxed,loss=cross_entropy_loss(x,y)
+  print("loss:",loss)
+
+  batch,seq,size=x.shape
+  target_one_hot=np.zeros((batch,seq,size))
+  # Adapting the shape of Y
+  for batnum in range(batch):
+    for i in range(seq):
+        target_one_hot[batnum][i]=input_one_hot(y[batnum][i],size)
+  dy = softmaxed.copy()
+  dy = dy - target_one_hot
+  # prints out gradient: [[[ 2.14400878e-03  1.58422012e-02  1.17058913e-01 -1.35045123e-01]
+  #[ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]
+  print("gradient:",dy)
+
+Listing-5
+{% endhighlight %}
+
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2
