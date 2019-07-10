@@ -5,7 +5,7 @@ excerpt: "The marriage of Softmax and CrossEntropy. This is a loss calculating f
 mathjax: true
 date:   2019-05-03 15:07:19
 categories: [article]
-tags: Artificial-Intelligence Deep-learning
+tags: Artificial-Intelligence Deep-Learning
 comments: true
 ---
 
