@@ -34,7 +34,7 @@ Above is a [loss][loss] implementation.
 
 {% highlight python %}
   x = np.array([[1, 3, 5, 7],
-        [1,-9, 4, 8]])
+                [1,-9, 4, 8]])
   y = np.array([3,1])
   sm=softmax(x)
 
@@ -89,13 +89,14 @@ def cross_entropy_loss(pred,labels):
         for seqnum in range(seq):
             lossesa[batnum][seqnum]=loss(np.reshape(yhat[batnum][seqnum],[1,-1]),input_one_hot(labels[batnum][seqnum],size))
     return yhat,lossesa
+
 Listing-3
 {% endhighlight %}
 The point to keep in mind is, it accepts it's 2 inputs in 3(batch,seq,input_size) and 2(batch,seq) dimensions respectively. Batch size usually indicates multiple parallel input sequences, can be ignored for now and be assumed as 1. The shape of pred in our case is batch=1,seq=2,input_size=4. And the shape of labels is batch=1, seq=2. This is illustrated in Listing-3 and Listing-4
 
 {% highlight python %}
   x = np.array([[[1, 3, 5, 7],
-        [1,-9, 4, 8]]])
+                [1,-9, 4, 8]]])
   y = np.array([[3,1]])
 
   #prints array([[ 0.14507794, 17.01904505]]))
@@ -172,7 +173,7 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) 
   dy = softmaxed.copy()
   dy = dy - target_one_hot
   # prints out gradient: [[[ 2.14400878e-03  1.58422012e-02  1.17058913e-01 -1.35045123e-01]
-  #[ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]
+  #                        [ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]
   print("gradient:",dy)
 
 Listing-5

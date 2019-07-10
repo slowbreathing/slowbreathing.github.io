@@ -220,7 +220,7 @@
 <p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">loss</a> implementation.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python">  <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
   <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
   <span class="n">sm</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
@@ -283,12 +283,13 @@ The output is illustated in figure-1 and 2 below.</p>
         <span class="k">for</span> <span class="n">seqnum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
             <span class="n">lossesa</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">]</span><span class="o">=</span><span class="n">loss</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">yhat</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span><span class="n">input_one_hot</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">batnum</span><span class="p">][</span><span class="n">seqnum</span><span class="p">],</span><span class="n">size</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">yhat</span><span class="p">,</span><span class="n">lossesa</span>
+
 <span class="n">Listing</span><span class="o">-</span><span class="mi">3</span></code></pre></figure>
 
 <p>The point to keep in mind is, it accepts it’s 2 inputs in 3(batch,seq,input_size) and 2(batch,seq) dimensions respectively. Batch size usually indicates multiple parallel input sequences, can be ignored for now and be assumed as 1. The shape of pred in our case is batch=1,seq=2,input_size=4. And the shape of labels is batch=1, seq=2. This is illustrated in Listing-3 and Listing-4</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python">  <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]])</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]])</span>
   <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 
   <span class="c">#prints array([[ 0.14507794, 17.01904505]]))</span>
@@ -377,7 +378,7 @@ softmax_i(1-softmax_j) & i= j \\
   <span class="n">dy</span> <span class="o">=</span> <span class="n">softmaxed</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
   <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">-</span> <span class="n">target_one_hot</span>
   <span class="c"># prints out gradient: [[[ 2.14400878e-03  1.58422012e-02  1.17058913e-01 -1.35045123e-01]</span>
-  <span class="c">#[ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]</span>
+  <span class="c">#                        [ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]</span>
   <span class="k">print</span><span class="p">(</span><span class="s">"gradient:"</span><span class="p">,</span><span class="n">dy</span><span class="p">)</span>
 
 <span class="n">Listing</span><span class="o">-</span><span class="mi">5</span></code></pre></figure>
