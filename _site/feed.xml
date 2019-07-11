@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-07-11</pubDate>
-    <lastBuildDate>Thu, 11 Jul 2019 08:04:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jul 2019 09:24:38 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -28,8 +28,8 @@
   &lt;ul&gt;
     &lt;li&gt;The reason why understanding LSTM’s inner working is vital is because it underpins most important models of modern Artificial Intelligence.&lt;/li&gt;
     &lt;li&gt;Underpins &lt;strong&gt;memory augmented&lt;/strong&gt; models and architecture.&lt;/li&gt;
-    &lt;li&gt;Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece inself.&lt;/li&gt;
-    &lt;li&gt;In this multi-part series I get under the cover of an LSTM using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; especially its back propagation when it is a part of a more complex model.&lt;/li&gt;
+    &lt;li&gt;Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece in itself.&lt;/li&gt;
+    &lt;li&gt;In this multi-part series, I get under the cover of an LSTM using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; especially its back propagation when it is a part of a more complex model.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
@@ -119,16 +119,20 @@
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/Softmax-and-Cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/rnn5.jpg&quot; alt=&quot;Image: figure-7:Cost is low because, the prediction is closer to the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/rnn5.jpg&quot; alt=&quot;Image: figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7:Cost is low because, the prediction is closer to the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
+
+&lt;h3 id=&quot;quick-comparision-between-tensorflow-and-deep-breathe&quot;&gt;Quick Comparision between &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;This particular branch of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; has been designed to compare weights with &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; code every step of the way. While there are many reasons, one of the primary reasons for that is understanding. However, this is only possible if both &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; must start with the same initial weights and their Y-multipliers(Wy and By) must also be identical.&lt;/p&gt;
 
 </description>
         <pubDate>2019-07-11</pubDate>

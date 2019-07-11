@@ -214,8 +214,8 @@
   <ul>
     <li>The reason why understanding LSTM’s inner working is vital is because it underpins most important models of modern Artificial Intelligence.</li>
     <li>Underpins <strong>memory augmented</strong> models and architecture.</li>
-    <li>Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece inself.</li>
-    <li>In this multi-part series I get under the cover of an LSTM using <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> especially its back propagation when it is a part of a more complex model.</li>
+    <li>Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece in itself.</li>
+    <li>In this multi-part series, I get under the cover of an LSTM using <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> especially its back propagation when it is a part of a more complex model.</li>
   </ul>
 </blockquote>
 
@@ -305,16 +305,20 @@
 
 <blockquote>
   <ul>
-    <li>Finally <a href="/articles/2019-05/softmax-and-its-gradient">softmax</a> and a <a href="/articles/2019-05/Softmax-and-Cross-entropy">cross_entropy_loss</a>.</li>
+    <li>Finally <a href="/articles/2019-05/softmax-and-its-gradient">softmax</a> and a <a href="/articles/2019-05/softmax-and-cross-entropy">cross_entropy_loss</a>.</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/rnn5.jpg" alt="Image: figure-7:Cost is low because, the prediction is closer to the truth." hight="110%" width="110%" />
+    <img src="/img/rnn/rnn5.jpg" alt="Image: figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-7:Cost is low because, the prediction is closer to the truth.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.</span></center></figcaption>
 </figure>
+
+<h3 id="quick-comparision-between-tensorflow-and-deep-breathe">Quick Comparision between <a href="https://www.tensorflow.org/">Tensorflow</a> and <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a></h3>
+
+<p>This particular branch of <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a> has been designed to compare weights with <a href="https://www.tensorflow.org/">Tensorflow</a> code every step of the way. While there are many reasons, one of the primary reasons for that is understanding. However, this is only possible if both <a href="https://www.tensorflow.org/">Tensorflow</a> and <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a> must start with the same initial weights and their Y-multipliers(Wy and By) must also be identical.</p>
 
 
   </article>
