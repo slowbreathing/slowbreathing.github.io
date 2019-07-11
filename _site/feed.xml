@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-07-11</pubDate>
-    <lastBuildDate>Thu, 11 Jul 2019 08:00:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jul 2019 08:03:50 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -119,7 +119,7 @@
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and a [cross_entropy_loss][cross_entropy_loss].&lt;/li&gt;
+    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and a &lt;a href=&quot;Softmax-and-Cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
