@@ -24,7 +24,7 @@
 
   <!-- Open Graph Tags -->
   <meta property="og:type" content="blog">
-  <meta property="og:url" content="http://localhost:4000/articles/2019-05/LSTMPart-1">
+  <meta property="og:url" content="http://localhost:4000/articles/2019-07/LSTMPart-1">
   <meta property="og:title" content="RNN Series:LSTM internals:Part-1:The Big Picture | Slowbreathing">
   <meta property="og:description" content="LSTMs make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transfor...">
   
@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
   <link rel="stylesheet" href="http://localhost:4000/css/main.css">
 
-  <link rel="canonical" href="http://localhost:4000/articles/2019-05/LSTMPart-1">
+  <link rel="canonical" href="http://localhost:4000/articles/2019-07/LSTMPart-1">
   <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
 
   <!-- Icons -->
@@ -182,13 +182,13 @@
     <h1 title="RNN Series:LSTM internals:Part-1:The Big Picture">RNN Series:LSTM internals:Part-1:The Big Picture</h1>
     <span class="post-meta">
       <span class="post-date">
-        3 MAY 2019
+        9 JUL 2019
       </span>
       •
       <span class="read-time" title="Estimated read time">
   
   
-    1 min read
+    4 mins read
   
 </span>
 
@@ -220,6 +220,93 @@
 </blockquote>
 
 <h3 id="context">Context</h3>
+<p>Start with the simplest word-generation case-study. We train an LSTM network on a short story. Once trained, we ask it to generate new stories giving it a cue of a few starting words. The focus primarily is on the training process here.</p>
+<blockquote>
+  <ul>
+    <li>Picking a starting point in the story that is randomly chosen.</li>
+    <li>The training process is feeding in a sequence of n words from the story and checking if (n+1)th word predicted by the model is correct or not. Back propagating and adjusting the weights of the model.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn.jpeg" alt="Image: figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.</span></center></figcaption>
+</figure>
+
+<h3 id="training-process">Training Process</h3>
+<p>In the next few illustrations we are looking at primary the shape of input, how is the input fed in, when do we check the output before back-propagation happens, etc. All this <strong>without looking inside the LSTM Cell just yet</strong>. Batch=1(for parallelism), sequence=3(3 words in our example), size=10(vocabulary size 10 so our representation is is a one-hot of size 10).</p>
+
+<blockquote>
+  <ul>
+    <li>Sequence of 3 shown below, but that can depend on the use-case.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn.jpg" alt="Image: figure-2: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Functionally dynamic_rnn feeds in the batches of sequences but its code is written using “tf.while_loop” and not one of python’s native loop construct. With any one of python’s native loop construct only the code within an iteration be optimized on a GPU but with “tf.while_loop” the advantage is that the complete loop can be optimed on a GPU.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn1.jpg" alt="Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href='https://github.com/slowbreathing/Deep-Breathe'&gt;DEEP-Breathe's&lt;/a&gt; dynamic_rnn can be found at &lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/rnn.py'&gt;here&lt;/a&gt;." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe's</a> dynamic_rnn can be found at <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/rnn.py">here</a>.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Returns a tuple of <strong>output(H-state across all time steps)</strong> and states(C-state and H-state for the lst time step).</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn2.jpg" alt="Image: figure-4: &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>output(H-state across all time steps)</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Returns a tuple of output(H-state across all time steps) and <strong>states(C-state and H-state for the lst time step)</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn3.jpg" alt="Image: figure-5: &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>states(C-state and H-state for the lst time step)</strong>.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <p>*</p>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/rnn/rnn4.jpg" alt="Image: figure-6:Cost is low because, the prediction is closer to the truth." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6:Cost is low because, the prediction is closer to the truth.</span></center></figcaption>
+</figure>
+
+<figure>
+    
+    <img src="/img/rnn/rnn5.jpg" alt="Image: figure-7:Cost is low because, the prediction is closer to the truth." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7:Cost is low because, the prediction is closer to the truth.</span></center></figcaption>
+</figure>
 
 
   </article>
@@ -229,19 +316,19 @@
   <h6>Share on: </h6>
   <ul>
     <li>
-      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2019-05/LSTMPart-1" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2019-07/LSTMPart-1" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
     </li>
     <li>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2019-05/LSTMPart-1" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2019-07/LSTMPart-1" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
     </li>
     <li>
-      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2019-05/LSTMPart-1" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2019-07/LSTMPart-1" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
     </li>
     <li>
-      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2019-05/LSTMPart-1" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2019-07/LSTMPart-1" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
     </li>
     <li>
-      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2019-05/LSTMPart-1" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2019-07/LSTMPart-1" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
     </li>
   </ul>
 </div><!-- end share-buttons -->
