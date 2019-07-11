@@ -45,7 +45,8 @@ Above is a [loss][loss] implementation.
 
 Listing-2
 {% endhighlight %}
-As you can see the loss function accepts softmaxed input and one-hot encoded labels.
+
+As you can see the loss function accepts softmaxed input and one-hot encoded labels which is being passed in [Listing-2].
 The output is illustated in figure-1 and 2 below.
 
 > * Loss function: Example-1
@@ -106,7 +107,7 @@ The point to keep in mind is, it accepts it's 2 inputs in 3(batch,seq,input_size
 Listing-4
 {% endhighlight %}
 
-As illustrated in Listing-3 and Listing-4 [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.
+As illustrated in [Listing-3] and [Listing-4] [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.
 
 ### CrossEntropyLoss Derivative
 One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.  
@@ -178,11 +179,16 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) 
 
 Listing-5
 {% endhighlight %}
+[Listing-5]
 
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2
-[loss]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py
-[CrossEntropyLoss]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py
+[loss]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L8-L16
+[CrossEntropyLoss]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136
 [softmaxtest]: https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py
+[Listing-2]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L26-L38
+[Listing-3]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136
+[Listing-4]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L41-L50
+[Listing-5]: https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L52-L62
 [Deep-Breathe]: https://github.com/slowbreathing/Deep-Breathe

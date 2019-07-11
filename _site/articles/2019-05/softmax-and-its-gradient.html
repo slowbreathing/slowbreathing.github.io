@@ -243,7 +243,7 @@ S_N
         <span class="n">predsl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">inputs</span><span class="p">))))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predsl</span><span class="p">)</span></code></pre></figure>
 
-<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax</a> implementation.</p>
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L18-L38">softmax</a> implementation.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
           <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
@@ -254,7 +254,7 @@ S_N
     <span class="c">#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01],</span>
     <span class="c">#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]</span></code></pre></figure>
 
-<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/softmaxtest.py">softmaxtest</a> implementation.</p>
+<p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L10-L19">softmaxtest</a> implementation.</p>
 
 <p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.</p>
 
@@ -356,7 +356,7 @@ softmax_i(1-softmax_j) & i= j \\
 
     <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
 
-<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/common.py">softmax grad</a> code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.</p>
+<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L76-L115">softmax grad</a> code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.</p>
 
 <figure>
     
