@@ -188,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    10 mins read
+    11 mins read
   
 </span>
 
@@ -386,11 +386,13 @@
     <li>The pre-initialized weights and biases in line(2) and line(16) utilized as Wy and By in line(26)</li>
     <li>The internal weights of LSTM initialized in line(22-23)</li>
     <li><strong>Tensorflow graph mode is the most non pythonic design done in python</strong>. It sounds crazy but is true. Consider line(21-26), this function gets called multiple times in the training loop and yet the <strong>cell(line(24)) is the same cell instance across multiple iterations</strong>. Tensorflow in the graph mode builds the DAG first and <strong>identifies the cell by the name in that graph</strong>. That is source of confusion to most programmers, especially python programmers.</li>
-    <li>The complete executable <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/tfwordslstm.py">Listing-1</a> and its [execution script][scr-1].</li>
+    <li>The complete executable <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/tfwordslstm.py">Listing-1</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L13">execution script</a>.</li>
   </ul>
 </blockquote>
 
 <h4 id="deep-breathe"><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a></h4>
+
+<p>I could have done without a similar behaviour in <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. <strong>Without building a full fleged graph, I associated the variable name with the corresonding weight, i.e. when the variable name is same it fetches the same set of weights </strong>. This is difficult and not reccomended but, if you care to see, then its demonstrated <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81">here</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112">here</a>. <strong>To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
@@ -443,7 +445,16 @@
 
 <span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></pre></td></tr></tbody></table></code></pre></figure>
 
-<p>[scr-1]:</p>
+<blockquote>
+  <ul>
+    <li>The complete executable <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMainGraph.py">graph-mode</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L15">execution script</a>.</li>
+    <li>The complete executable for <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMain.py">non-graph-version</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L14">execution script</a>. To make Tensorflow more pythonic, they have enabled eager mode and will be the default going forward especially from Tensorflow 2.0 onwards. However, major project as on today is still on the older version.</li>
+  </ul>
+</blockquote>
+
+<h3 id="summary">Summary</h3>
+<p>In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.</p>
+
 
   </article>
 </div>

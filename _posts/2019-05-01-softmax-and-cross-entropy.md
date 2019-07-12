@@ -181,6 +181,8 @@ Listing-5
 {% endhighlight %}
 [Listing-5]
 
+### Summary
+As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss's combined gradient in Listing-5 does the same. 
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2
