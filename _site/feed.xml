@@ -6,7 +6,7 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-07-12</pubDate>
-    <lastBuildDate>Fri, 12 Jul 2019 07:21:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jul 2019 07:27:03 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -73,9 +73,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/rnn1.jpg&quot; alt=&quot;Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe'&amp;gt;DEEP-Breathe's&amp;lt;/a&amp;gt; dynamic_rnn can be found at &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/rnn.py'&amp;gt;here&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/rnn1.jpg&quot; alt=&quot;Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe'&amp;gt;DEEP-Breathe's&amp;lt;/a&amp;gt; &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285'&amp;gt;dynamic_rnn&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe's&lt;/a&gt; dynamic_rnn can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/rnn.py&quot;&gt;here&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe's&lt;/a&gt; &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285&quot;&gt;dynamic_rnn&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
