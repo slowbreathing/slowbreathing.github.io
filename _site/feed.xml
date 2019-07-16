@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-07-15</pubDate>
-    <lastBuildDate>Mon, 15 Jul 2019 14:52:57 +0000</lastBuildDate>
+    <pubDate>2019-07-16</pubDate>
+    <lastBuildDate>Tue, 16 Jul 2019 04:44:10 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -129,109 +129,114 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstm7.jpg&quot; alt=&quot;Image: figure-7: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstm7.jpg&quot; alt=&quot;Image: figure-7: The previous steps already decided what to do, we just need to actually do it.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: The previous steps already decided what to do, we just need to actually do it.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;c-state&lt;sub&gt;t&lt;/sub&gt; is used to calculate the “externally visible” h-state&lt;sub&gt;t&lt;/sub&gt;&lt;/li&gt;
-    &lt;li&gt;Sometimes referred to as c&lt;sub&gt;t&lt;/sub&gt;, h&lt;sub&gt;t&lt;/sub&gt;.&lt;/li&gt;
+    &lt;li&gt;Sometimes referred to as c&lt;sub&gt;t&lt;/sub&gt;, h&lt;sub&gt;t&lt;/sub&gt;, used as the states at the next time step.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstm8.jpg&quot; alt=&quot;Image: figure-8: Conceptually it is the same cell transitioning into the next state. In this case c&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstm8.jpg&quot; alt=&quot;Image: figure-8: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case c&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: Conceptually it is the same cell transitioning into the next state. In this case c&lt;sub&gt;t&lt;/sub&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case c&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;New h-state in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L216&quot;&gt;code&lt;/a&gt;
-*&lt;/li&gt;
+    &lt;li&gt;New h-state in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L216&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;The transition to the next time step is complete with h&lt;sub&gt;t&lt;/sub&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstm9.jpg&quot; alt=&quot;Image: figure-9: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstm9.jpg&quot; alt=&quot;Image: figure-9: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case h&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;h&lt;sub&gt;t&lt;/sub&gt; multiplied by the &lt;strong&gt;“Wy”&lt;/strong&gt; and &lt;strong&gt;“by”&lt;/strong&gt; added to it.&lt;/li&gt;
+    &lt;li&gt;Traditionally we call this value “logits” or “preds”.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm10.jpg&quot; alt=&quot;Image: figure-10: Wy shape is 10X5 multiplied by h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt; which is 5X1 and by added to it which is 10X1 as shown above.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: Wy shape is 10X5 multiplied by h&lt;sub&gt;t&lt;/sub&gt; which is 5X1 and by added to it which is 10X1 as shown above.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Usually this is done in on the client side code because only the clients know the model and when the loss calculation can be done.&lt;/li&gt;
+    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm11.jpg&quot; alt=&quot;Image: figure-11: DEEP-Breathe version of the &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109'&amp;gt;code&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Usually done internally by “cross_entropy_loss” function.&lt;/li&gt;
+    &lt;li&gt;Shown here just so that you get an idea.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm12.jpg&quot; alt=&quot;Image: figure-12: Traditionally called yhat.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: Traditionally called yhat.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Does a combination of softmax(figure-12) and loss calculation(figure-13).&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;Softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt; to jog your memory.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm13.jpg&quot; alt=&quot;Image: figure-13: Similar to logistic regression and its cost function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: Similar to logistic regression and its cost function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
+    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt; and DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstm10.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstm14.jpg&quot; alt=&quot;Image: figure-14: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm11.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm12.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm13.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm14.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;
+&lt;p&gt;In summary then, that was the walk though of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time step advanced. However, Lets not get ahead of ourselves, before we get to a language model, lets look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-15</pubDate>
+        <pubDate>2019-07-16</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-2</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-2</guid>
         
@@ -511,7 +516,7 @@
 &lt;p&gt;In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-15</pubDate>
+        <pubDate>2019-07-16</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-1</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-1</guid>
         
@@ -724,7 +729,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-15</pubDate>
+        <pubDate>2019-07-16</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -911,7 +916,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient &lt;strong&gt;producers an nxn matrix for input size of n&lt;/strong&gt;. Hopefully you got a good idea of softmax and its implementation. Hopefully you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few instances like “&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt;”. More on &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt; in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-15</pubDate>
+        <pubDate>2019-07-16</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
@@ -937,7 +942,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;Being in the Optimisation field for quite some time, I have understood the importance of how  stuff works under-the-hood. I have a microarchitecture background, specifically X86 and vector based architectures. Microarchitecture has been my guiding light.  It has helped me solve many complex optimization problems despite some of them being programmed in high level languages like Java or python.&lt;/p&gt;
 &lt;p&gt;In this short post, &lt;strong&gt;which has nothing to do with Artificial Intelligence just yet&lt;/strong&gt;, I demonstrate the &lt;strong&gt;importance of understanding stuff under-the-hood&lt;/strong&gt; and &lt;strong&gt;thinking in pictures and then linking it to the code&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;importance-of-understanding-standing-stuff-under-the-hood&quot;&gt;Importance of understanding standing stuff under-the-hood&lt;/h3&gt;
+&lt;h3 id=&quot;importance-of-understanding-stuff-under-the-hood&quot;&gt;Importance of understanding stuff under-the-hood&lt;/h3&gt;
 &lt;p&gt;Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1284,7 +1289,7 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, specially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt; . &lt;strong&gt;In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code &lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>2019-07-15</pubDate>
+        <pubDate>2019-07-16</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
         
