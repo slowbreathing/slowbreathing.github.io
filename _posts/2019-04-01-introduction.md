@@ -17,7 +17,7 @@ comments: true
 In this short post, <strong>which has nothing to do with Artificial Intelligence just yet</strong>, I demonstrate the <strong>importance of understanding stuff under-the-hood</strong> and <strong>thinking in pictures and then linking it to the code</strong>.  
 
 
-### Importance of understanding standing stuff under-the-hood
+### Importance of understanding stuff under-the-hood
 Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.
 {% highlight c %}
   int main() {

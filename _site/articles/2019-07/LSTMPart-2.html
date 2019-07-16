@@ -188,7 +188,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    12 mins read
+    5 mins read
   
 </span>
 
@@ -225,6 +225,7 @@
 <blockquote>
   <ul>
     <li>Weights and biases of the LSTM cell.</li>
+    <li>Shapes color coded.</li>
   </ul>
 </blockquote>
 
@@ -238,6 +239,7 @@
 <blockquote>
   <ul>
     <li>Weights, biases of the LSTM cell. Also shown is the cell state (c-state) over and above the h-state of a vanilla RNN.</li>
+    <li>h<sub>t-1</sub> may be initialized by default with zeros.</li>
   </ul>
 </blockquote>
 
@@ -251,6 +253,7 @@
 <blockquote>
   <ul>
     <li>Weights and biases in the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L76">code</a>.</li>
+    <li>Often the code accepts constants as weights for comparision with <a href="https://www.tensorflow.org/">Tensorflow</a></li>
   </ul>
 </blockquote>
 
@@ -264,6 +267,7 @@
 <blockquote>
   <ul>
     <li>Equations of LSTM and their interplay with weights and biases.</li>
+    <li>h<sub>t-1</sub> and c<sub>t-1</sub> may be initialized by default with zeros(Language Model) or some non-zero state for conditional language model.</li>
   </ul>
 </blockquote>
 
@@ -277,6 +281,7 @@
 <blockquote>
   <ul>
     <li>GEMM(General Matrix Multiplication) in <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L210-L214">code</a></li>
+    <li>h and x concatenation is only a performance convenience.</li>
   </ul>
 </blockquote>
 
@@ -290,53 +295,57 @@
 <blockquote>
   <ul>
     <li>The <strong>mathematical reason</strong> why <strong>vanishing gradient</strong> is <strong>mitigated</strong>.</li>
+    <li>There are many theories though. Look into this in detail with back propagation.</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/lstm6.jpg" alt="Image: figure-2: New cell state is a function of old cell state and new candidate state." hight="110%" width="110%" />
+    <img src="/img/rnn/lstm6.jpg" alt="Image: figure-6: New cell state is a function of old cell state and new candidate state." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-2: New cell state is a function of old cell state and new candidate state.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-6: New cell state is a function of old cell state and new candidate state.</span></center></figcaption>
 </figure>
 
 <blockquote>
   <ul>
-    <li>Sequence of 3 shown below, but that can depend on the use-case.</li>
+    <li>New cell state(c-state) in <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L215">code</a></li>
+    <li>This is used in 2 ways as illustrated in figure-8.</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/lstm7.jpg" alt="Image: figure-2: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
+    <img src="/img/rnn/lstm7.jpg" alt="Image: figure-7: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-2: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-7: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
 </figure>
 
 <blockquote>
   <ul>
-    <li>Sequence of 3 shown below, but that can depend on the use-case.</li>
+    <li>c-state<sub>t</sub> is used to calculate the “externally visible” h-state<sub>t</sub></li>
+    <li>Sometimes referred to as c<sub>t</sub>, h<sub>t</sub>.</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/lstm8.jpg" alt="Image: figure-2: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
+    <img src="/img/rnn/lstm8.jpg" alt="Image: figure-8: Conceptually it is the same cell transitioning into the next state. In this case c&lt;sub&gt;t&lt;/sub&gt;" hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-2: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-8: Conceptually it is the same cell transitioning into the next state. In this case c<sub>t</sub></span></center></figcaption>
 </figure>
 
 <blockquote>
   <ul>
-    <li>Sequence of 3 shown below, but that can depend on the use-case.</li>
+    <li>New h-state in <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L216">code</a>
+*</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/lstm9.jpg" alt="Image: figure-2: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
+    <img src="/img/rnn/lstm9.jpg" alt="Image: figure-9: Batch enables parallelism, but for simplicity assumed as one." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-2: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-9: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
 </figure>
 
 <blockquote>
@@ -403,142 +412,6 @@
     
     <figcaption><center><span class="faded_text">figure-2: Batch enables parallelism, but for simplicity assumed as one.</span></center></figcaption>
 </figure>
-
-<h3 id="quick-comparision-between-tensorflow-and-deep-breathe">Quick Comparision between <a href="https://www.tensorflow.org/">Tensorflow</a> and <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a></h3>
-
-<p>This particular branch of <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a> has been designed to compare weights with <a href="https://www.tensorflow.org/">Tensorflow</a> code every step of the way. While there are many reasons, one of the primary reasons for that is understanding. However, this is only possible if both <a href="https://www.tensorflow.org/">Tensorflow</a> and <a href="https://github.com/slowbreathing/Deep-Breathe">DEEP-Breathe</a> must start with the same initial weights and their Y-multipliers(Wy and By) must also be identical. Consider the code below.</p>
-
-<h4 id="tensorflow"><a href="https://www.tensorflow.org/">Tensorflow</a></h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-</pre></td><td class="code"><pre>  <span class="c"># RNN output node weights and biases</span>
-  <span class="n">weights</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.09588283</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.2044923</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.74828255</span><span class="p">,</span>  <span class="mf">0.14180686</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.32083616</span><span class="p">,</span>
-        <span class="o">-</span><span class="mf">0.9444244</span> <span class="p">,</span>  <span class="mf">0.06826905</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9728962</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.18506959</span><span class="p">,</span>  <span class="mf">1.0618515</span> <span class="p">],</span>
-       <span class="p">[</span> <span class="mf">1.156649</span>  <span class="p">,</span>  <span class="mf">3.2738173</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.2556943</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.9079511</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.82127047</span><span class="p">,</span>
-        <span class="o">-</span><span class="mf">1.1448543</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.60807484</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5885713</span> <span class="p">,</span>  <span class="mf">1.0378786</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.7088431</span> <span class="p">],</span>
-       <span class="p">[</span> <span class="mf">1.006477</span>  <span class="p">,</span>  <span class="mf">0.28033388</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1804534</span> <span class="p">,</span>  <span class="mf">0.8093307</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.36991575</span><span class="p">,</span>
-         <span class="mf">0.29115433</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01028167</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7357091</span> <span class="p">,</span>  <span class="mf">0.92254084</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.10753923</span><span class="p">],</span>
-       <span class="p">[</span> <span class="mf">0.19266959</span><span class="p">,</span>  <span class="mf">0.6108299</span> <span class="p">,</span>  <span class="mf">2.2495654</span> <span class="p">,</span>  <span class="mf">1.5288974</span> <span class="p">,</span>  <span class="mf">1.0172302</span> <span class="p">,</span>
-         <span class="mf">1.1311738</span> <span class="p">,</span>  <span class="mf">0.2666629</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.30611828</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01412263</span><span class="p">,</span>  <span class="mf">0.44799015</span><span class="p">],</span>
-       <span class="p">[</span> <span class="mf">0.19266959</span><span class="p">,</span>  <span class="mf">0.6108299</span> <span class="p">,</span>  <span class="mf">2.2495654</span> <span class="p">,</span>  <span class="mf">1.5288974</span> <span class="p">,</span>  <span class="mf">1.0172302</span> <span class="p">,</span>
-         <span class="mf">1.1311738</span> <span class="p">,</span>  <span class="mf">0.2666629</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.30611828</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01412263</span><span class="p">,</span>  <span class="mf">0.44799015</span><span class="p">]]</span>
-
-        <span class="p">)</span>
-  <span class="p">}</span>
-  <span class="n">biases</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'out'</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">([</span> <span class="mf">0.1458478</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.3660951</span> <span class="p">,</span> <span class="o">-</span><span class="mf">2.1647317</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.9633691</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.24532059</span><span class="p">,</span>
-        <span class="mf">0.14005205</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0961286</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.43737876</span><span class="p">,</span>  <span class="mf">0.7028531</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.8481724</span> <span class="p">]</span>
-    <span class="p">)</span>
-  <span class="p">}</span>
-  <span class="k">def</span> <span class="nf">RNN</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">biases</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span>
-            <span class="s">"other"</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span> <span class="k">as</span> <span class="n">vs</span><span class="p">:</span>
-        <span class="n">cell</span> <span class="o">=</span> <span class="n">rnn_cell</span><span class="o">.</span><span class="n">LayerNormBasicLSTMCell</span><span class="p">(</span><span class="n">n_hidden</span><span class="p">,</span> <span class="n">layer_norm</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="n">outputs</span><span class="p">,</span> <span class="n">states</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">weights</span><span class="p">[</span><span class="s">'out'</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">biases</span><span class="p">[</span><span class="s">'out'</span><span class="p">],</span><span class="n">outputs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">states</span><span class="p">,</span><span class="n">weights</span><span class="p">[</span><span class="s">'out'</span><span class="p">],</span><span class="n">biases</span><span class="p">[</span><span class="s">'out'</span><span class="p">]</span>
-  <span class="n">pred</span><span class="p">,</span><span class="n">output</span><span class="p">,</span><span class="n">state</span><span class="p">,</span><span class="n">weights_out</span><span class="p">,</span><span class="n">biases_out</span> <span class="o">=</span> <span class="n">RNN</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">biases</span><span class="p">)</span>
-
-<span class="n">Listing</span><span class="o">-</span><span class="mi">1</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<blockquote>
-  <ul>
-    <li>The pre-initialized weights and biases in line(2) and line(16) utilized as Wy and By in line(26)</li>
-    <li>The internal weights of LSTM initialized in line(22-23)</li>
-    <li><strong>Tensorflow graph mode is the most non pythonic design done in python</strong>. It sounds crazy but is true. Consider line(21-26), this function gets called multiple times in the training loop and yet the <strong>cell(line(24)) is the same cell instance across multiple iterations</strong>. Tensorflow in the graph mode builds the DAG first and <strong>identifies the cell by the name in that graph</strong>. That is source of confusion to most programmers, especially python programmers.</li>
-    <li>The complete executable <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/tfwordslstm.py">Listing-1</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L13">execution script</a>.</li>
-  </ul>
-</blockquote>
-
-<h4 id="deep-breathe"><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a></h4>
-
-<p>I could have done without a similar behaviour in <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. <strong>Without building a full fleged graph, I associated the variable name with the corresonding weight, i.e. when the variable name is same it fetches the same set of weights </strong>. This is difficult and not reccomended but, if you care to see, then its demonstrated <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81">here</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112">here</a>. <strong>To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">RNN</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">biases</span><span class="p">):</span>
-  <span class="k">with</span> <span class="n">WeightsInitializer</span><span class="p">(</span><span class="n">initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span> <span class="k">as</span> <span class="n">vs</span><span class="p">:</span>
-      <span class="n">cell</span> <span class="o">=</span> <span class="n">LSTMCell</span><span class="p">(</span><span class="n">n_hidden</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-      <span class="n">result</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">symbols_in_keys</span><span class="p">)</span>
-  <span class="s">"Dense in this case should be out of WeightsInitializer scope because we are passing constants"</span>
-  <span class="n">out_l</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">kernel_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">out_weights</span><span class="p">),</span><span class="n">bias_initializer</span><span class="o">=</span><span class="n">init_ops</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">out_biases</span><span class="p">))</span>
-  <span class="k">return</span> <span class="n">out_l</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">LOSS</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
-  <span class="n">pred</span><span class="o">=</span><span class="n">RNN</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">out_weights</span><span class="p">,</span><span class="n">out_biases</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">vocab_size</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">target</span><span class="p">]]))</span>
-
-<span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="n">training_iters</span><span class="p">:</span>
-  <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">end_offset</span><span class="p">):</span>
-      <span class="n">offset</span> <span class="o">=</span> <span class="n">rnd</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_input</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"offset:"</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
-  <span class="n">symbols_in_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_one_hot</span><span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">])],</span><span class="n">vocab_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">n_input</span><span class="p">)]</span>
-  <span class="n">symbols_in_keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">symbols_in_keys</span><span class="p">),</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_input</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">])</span>
-  <span class="k">print</span><span class="p">(</span><span class="s">"symbols_in_keys:"</span><span class="p">,</span><span class="n">symbols_in_keys</span><span class="p">)</span>
-  <span class="n">target</span><span class="o">=</span><span class="n">dictionary</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="n">n_input</span><span class="p">])]</span>
-  <span class="n">yhat</span><span class="p">,</span><span class="n">cel</span><span class="o">=</span><span class="n">LOSS</span><span class="p">(</span><span class="n">symbols_in_keys</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
-
-
-<span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></pre></td></tr></tbody></table></code></pre></figure>
-
-<blockquote>
-  <ul>
-    <li>The complete executable <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMainGraph.py">graph-mode</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L15">execution script</a>.</li>
-    <li>The complete executable for <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMain.py">non-graph-version</a> and its <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L14">execution script</a>. To make Tensorflow more pythonic, they have enabled eager mode and will be the default going forward especially from Tensorflow 2.0 onwards. However, major project as on today is still on the older version.</li>
-  </ul>
-</blockquote>
 
 <h3 id="summary">Summary</h3>
 <p>In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.</p>
