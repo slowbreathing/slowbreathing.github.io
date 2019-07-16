@@ -6,13 +6,13 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
     <pubDate>2019-07-16</pubDate>
-    <lastBuildDate>Tue, 16 Jul 2019 11:17:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jul 2019 11:23:53 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>RNN Series:LSTM internals:Part-2:The Forward pass</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; we look inside LSTM forward pass.&lt;/strong&gt; Read the &lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1’s&lt;/a&gt; before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; we look inside LSTM forward pass.&lt;/strong&gt; If you havent already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
 &lt;blockquote&gt;
@@ -258,7 +258,7 @@
       <item>
         <title>RNN Series:LSTM internals:Part-1:The Big Picture</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. &lt;strong&gt;This is a multi-part series that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT,BERT,NTM,DNC, etc. I do this using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; approach for which I have pure python implementation (&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;) of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. &lt;strong&gt;This is a &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT,BERT,NTM,DNC, etc. I do this using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; approach for which I have pure python implementation (&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;) of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
 &lt;blockquote&gt;
