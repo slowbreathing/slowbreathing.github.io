@@ -158,6 +158,7 @@ $$\Large \frac{\partial {E}}{\partial {logits}} = \hat{y_t}.(y + \sum_{i\neq j}y
 
 Since Y is a one hot vector, the term "$$\Large (y + \sum_{i\neq j}y_t)$$" sums up to one.  
 
+# <a name="eq-3"></a>
 $$\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3) $$
 
 ### CrossEntropyLoss Derivative implementation
@@ -182,7 +183,7 @@ Listing-5
 [Listing-5]
 
 ### Summary
-As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss's combined gradient in Listing-5 does the same. 
+As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss's combined gradient in Listing-5 does the same.
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2

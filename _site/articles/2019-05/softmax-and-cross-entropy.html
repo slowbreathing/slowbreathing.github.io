@@ -362,7 +362,8 @@ softmax_i(1-softmax_j) & i= j \\
 
 <p>Since Y is a one hot vector, the term “<script type="math/tex">\Large (y + \sum_{i\neq j}y_t)</script>” sums up to one.</p>
 
-<script type="math/tex; mode=display">\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)</script>
+<h1 id="-1"><a name="eq-3"></a></h1>
+<p><script type="math/tex">\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)</script></p>
 
 <h3 id="crossentropyloss-derivative-implementation">CrossEntropyLoss Derivative implementation</h3>
 
