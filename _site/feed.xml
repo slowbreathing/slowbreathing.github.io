@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-07-22</pubDate>
-    <lastBuildDate>Mon, 22 Jul 2019 09:19:04 +0000</lastBuildDate>
+    <pubDate>2019-07-23</pubDate>
+    <lastBuildDate>Tue, 23 Jul 2019 02:43:19 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -520,10 +520,10 @@
 
   &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;What we went through in this article is “hell”. But if you have it so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. In a later article well demystify the multilayer LSTMcells and Bidirection LSTMCells.&lt;/p&gt;
+&lt;p&gt;What we went through in this article is “hell”. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers(DNC) &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-) .In a later article well demystify the multilayer LSTMcells and Bidirection LSTMCells.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-3</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-3</guid>
         
@@ -795,7 +795,7 @@
 &lt;p&gt;In summary then, that was the walk though of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time step advanced. However, Lets not get ahead of ourselves, before we get to a language model, lets look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-2</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-2</guid>
         
@@ -1075,7 +1075,7 @@
 &lt;p&gt;In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-1</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-1</guid>
         
@@ -1289,7 +1289,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -1476,7 +1476,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient &lt;strong&gt;producers an nxn matrix for input size of n&lt;/strong&gt;. Hopefully you got a good idea of softmax and its implementation. Hopefully you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few instances like “&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt;”. More on &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt; in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
@@ -1849,7 +1849,7 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, specially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt; . &lt;strong&gt;In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code &lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>2019-07-22</pubDate>
+        <pubDate>2019-07-23</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
         
