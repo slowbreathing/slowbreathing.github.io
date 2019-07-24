@@ -5,8 +5,8 @@
     <description>Programming is more than just typing.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>2019-07-23</pubDate>
-    <lastBuildDate>Tue, 23 Jul 2019 03:24:43 +0000</lastBuildDate>
+    <pubDate>2019-07-24</pubDate>
+    <lastBuildDate>Wed, 24 Jul 2019 09:16:19 +0000</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -27,7 +27,7 @@
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;Using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; we picturize the Backward Propagation.&lt;/li&gt;
-    &lt;li&gt;Then we a heady mixture of intuition, Logic, and programming to prove mathematical results.&lt;/li&gt;
+    &lt;li&gt;Then we use a heady mixture of intuition, Logic, and programming to prove mathematical results.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
@@ -169,7 +169,7 @@
   &lt;ul&gt;
     &lt;li&gt;&lt;strong&gt;“DBy”&lt;/strong&gt; is straight forward, once the gradients for pred is clear in the previous step.&lt;/li&gt;
     &lt;li&gt;This is just gradient calculation, the weights aren’t  adjusted just yet. They will be adjusted together in the end as a matter of convenience by an optimizer such as GradientDescentOptimizer.&lt;/li&gt;
-    &lt;li&gt;The complete code listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/core.py#L157-L170&quot;&gt;code-1&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;The Complete code of listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/core.py#L157-L170&quot;&gt;code-1&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
@@ -183,7 +183,7 @@
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;&lt;strong&gt;“DWy”&lt;/strong&gt; is straight forward too, once the gradients for pred is clear in the previous step(figure-5).&lt;/li&gt;
-    &lt;li&gt;The complete code listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/rnn.py#L444&quot;&gt;code-2&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;The Complete code of listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/rnn.py#L444&quot;&gt;code-2&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
@@ -240,15 +240,15 @@
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;Complete code &lt;strong&gt;DHt&lt;/strong&gt; can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L445&quot;&gt;code-3&lt;/a&gt;,&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L492-L499&quot;&gt;code-4&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L295-L299&quot;&gt;code-5&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;Complete code of &lt;strong&gt;DHt&lt;/strong&gt; can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L445&quot;&gt;code-3&lt;/a&gt;,&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L492-L499&quot;&gt;code-4&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L295-L299&quot;&gt;code-5&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback10.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback10.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -259,9 +259,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback11.jpg&quot; alt=&quot;Image: figure-11: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt; Shape is the same as h, for this example it is (5X1).&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback11.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt; Shape is the same as h, for this example it is (5X1).&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: &lt;strong&gt;DHt&lt;/strong&gt; Shape is the same as h, for this example it is (5X1).&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;DHt&lt;/strong&gt; Shape is the same as h, for this example it is (5X1).&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-7&quot;&gt;&lt;a name=&quot;DOt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -276,9 +276,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback12.jpg&quot; alt=&quot;Image: figure-12: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback12.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: &lt;strong&gt;DOt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;DOt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -289,9 +289,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback13.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback13.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;DOt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;DOt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -303,9 +303,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback14.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;DWo&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;DBo&amp;lt;/strong&amp;gt; and there shapes&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback14.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;DWo&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;DBo&amp;lt;/strong&amp;gt; and there shapes&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;DOt&lt;/strong&gt;, &lt;strong&gt;DWo&lt;/strong&gt; and &lt;strong&gt;DBo&lt;/strong&gt; and there shapes&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;DOt&lt;/strong&gt;, &lt;strong&gt;DWo&lt;/strong&gt; and &lt;strong&gt;DBo&lt;/strong&gt; and there shapes&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-8&quot;&gt;&lt;a name=&quot;DCt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -320,9 +320,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback15.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback15.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -333,9 +333,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback16.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback16.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;DCt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;DCt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-9&quot;&gt;&lt;a name=&quot;DCprojt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -349,9 +349,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback17.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback17.jpg&quot; alt=&quot;Image: figure-20: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;DCprojt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-20: &lt;strong&gt;DCprojt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -362,9 +362,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback18.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback18.jpg&quot; alt=&quot;Image: figure-21: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;DCprojt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-21: &lt;strong&gt;DCprojt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -376,9 +376,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback19.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback19.jpg&quot; alt=&quot;Image: figure-22: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;DCprojt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-22: &lt;strong&gt;DCprojt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-10&quot;&gt;&lt;a name=&quot;DFt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -392,9 +392,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback20.jpg&quot; alt=&quot;Image: figure-20: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback20.jpg&quot; alt=&quot;Image: figure-23: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-20: &lt;strong&gt;DFt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-23: &lt;strong&gt;DFt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -405,9 +405,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback21.jpg&quot; alt=&quot;Image: figure-21: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback21.jpg&quot; alt=&quot;Image: figure-24: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-21: &lt;strong&gt;DFt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-24: &lt;strong&gt;DFt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -419,9 +419,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback22.jpg&quot; alt=&quot;Image: figure-22: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback22.jpg&quot; alt=&quot;Image: figure-25: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-22: &lt;strong&gt;DFt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-25: &lt;strong&gt;DFt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-11&quot;&gt;&lt;a name=&quot;DIt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -435,9 +435,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback23.jpg&quot; alt=&quot;Image: figure-23: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback23.jpg&quot; alt=&quot;Image: figure-26: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-23: &lt;strong&gt;DIt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-26: &lt;strong&gt;DIt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -448,9 +448,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback24.jpg&quot; alt=&quot;Image: figure-24: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback24.jpg&quot; alt=&quot;Image: figure-27: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-24: &lt;strong&gt;DIt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-27: &lt;strong&gt;DIt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -462,9 +462,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback25.jpg&quot; alt=&quot;Image: figure-25: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback25.jpg&quot; alt=&quot;Image: figure-28: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-25: &lt;strong&gt;DIt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-28: &lt;strong&gt;DIt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-12&quot;&gt;&lt;a name=&quot;DHX&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -478,9 +478,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback26.jpg&quot; alt=&quot;Image: figure-26: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback26.jpg&quot; alt=&quot;Image: figure-29: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-26: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-29: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;blockquote&gt;
@@ -491,9 +491,9 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback27.jpg&quot; alt=&quot;Image: figure-27: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback27.jpg&quot; alt=&quot;Image: figure-30: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-27: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-30: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h1 id=&quot;-13&quot;&gt;&lt;a name=&quot;DCt_recur&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
@@ -507,23 +507,23 @@
 
 &lt;figure&gt;
     
-    &lt;img src=&quot;/img/rnn/lstmback28.jpg&quot; alt=&quot;Image: figure-28: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;img src=&quot;/img/rnn/lstmback28.jpg&quot; alt=&quot;Image: figure-31: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-28: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-31: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;There you go, a complete documentation of LSTMCell’s backward propagation. Also when using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; you could enable forward or backward logging using&lt;/p&gt;
+&lt;p&gt;There you go, a complete documentation of LSTMCell’s backward propagation. Also when using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; you could enable forward or backward logging like so&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backpassdebug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bias_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backpassdebug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;What we went through in this article is “hell”. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers(DNC) &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-) .In a later article well demystify the multilayer LSTMcells and Bidirection LSTMCells.&lt;/p&gt;
+&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-) .In a later article well demystify the multilayer LSTMcells and Bidirection LSTMCells.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-3</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-3</guid>
         
@@ -795,7 +795,7 @@
 &lt;p&gt;In summary then, that was the walk though of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time step advanced. However, Lets not get ahead of ourselves, before we get to a language model, lets look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-2</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-2</guid>
         
@@ -1075,7 +1075,7 @@
 &lt;p&gt;In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-07/LSTMPart-1</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-07/LSTMPart-1</guid>
         
@@ -1289,7 +1289,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</guid>
         
@@ -1476,7 +1476,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;As you can see the softmax gradient &lt;strong&gt;producers an nxn matrix for input size of n&lt;/strong&gt;. Hopefully you got a good idea of softmax and its implementation. Hopefully you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few instances like “&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt;”. More on &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt; in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.&lt;/p&gt;
 
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/softmax-and-its-gradient</guid>
         
@@ -1849,7 +1849,7 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 
 &lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, specially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt; . &lt;strong&gt;In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code &lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>2019-07-23</pubDate>
+        <pubDate>2019-07-24</pubDate>
         <link>http://localhost:4000/articles/2019-05/introduction</link>
         <guid isPermaLink="true">http://localhost:4000/articles/2019-05/introduction</guid>
         
