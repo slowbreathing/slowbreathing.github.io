@@ -63,20 +63,20 @@ layout: default
 </div><!-- end share-buttons -->
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-
-<div id="gitment-comments"></div>
 <script>
 const gitment = new Gitment({
     id: '<%= page.title.replace(/[^\w\s]/gi, '').substring(0, 49) %>',
     owner: 'slowbreathing',
     repo: 'slowbreathing.github.io',
     oauth: {
-        client_id: '<%= gitment.clientId %>',
-        client_secret: '<%= gitment.clientSecret %>'
+        client_id: '<%= .gitment.clientId %>',
+        client_secret: '<%= .gitment.clientSecret %>'
     }
 });
 gitment.render(document.getElementById('gitment-comments'));
 </script>
+<div id="gitment-comments"></div>
+
 
 {% if site.owner.disqus-shortname and page.comments == true %}
 <div id="disqus_thread"></div>
