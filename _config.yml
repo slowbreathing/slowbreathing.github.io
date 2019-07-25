@@ -70,9 +70,10 @@ owner:
   reddit: #username
   telegram: #username
 
-gitment:
-  enable: true
-  github_user: slowbreathing  # MUST HAVE, Your Github Username
-  github_repo: slowbreathing.github.io  # MUST HAVE, The name of the repo you use to store Gitment comments
-  client_id: b21a8e20116d0dc86ead  # MUST HAVE, Github client id for the Gitment
-  client_secret: 9be8cca218a4ab40097735ecabebe30dcd8113b3  # EITHER this or proxy_gateway, Github access secret token for the Gitment
+comments:
+  gitment:
+    enable: true
+    github_user: slowbreathing  # MUST HAVE, Your Github Username
+    github_repo: slowbreathing.github.io  # MUST HAVE, The name of the repo you use to store Gitment comments
+    client_id: b21a8e20116d0dc86ead  # MUST HAVE, Github client id for the Gitment
+    client_secret: 9be8cca218a4ab40097735ecabebe30dcd8113b3  # EITHER this or proxy_gateway, Github access secret token for the Gitment

@@ -414,6 +414,7 @@ softmax_i(1-softmax_j) & i= j \\
   </ul>
 </div><!-- end share-buttons -->
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<div id="gitment-comments"></div>
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 const gitment = new Gitment({
@@ -421,13 +422,13 @@ const gitment = new Gitment({
     owner: 'slowbreathing',
     repo: 'slowbreathing.github.io',
     oauth: {
-        client_id: '<%= .gitment.clientId %>',
-        client_secret: '<%= .gitment.clientSecret %>'
+        client_id: '<%= gitment.clientId %>',
+        client_secret: '<%= gitment.clientSecret %>'
     }
 });
 gitment.render(document.getElementById('gitment-comments'));
 </script>
-<div id="gitment-comments"></div>
+
 
 
 
