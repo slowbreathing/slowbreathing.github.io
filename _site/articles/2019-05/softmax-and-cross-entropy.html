@@ -413,21 +413,7 @@ softmax_i(1-softmax_j) & i= j \\
     </li>
   </ul>
 </div><!-- end share-buttons -->
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<div id="gitment-comments"></div>
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-const gitment = new Gitment({
-    id: '<%= page.title.replace(/[^\w\s]/gi, '').substring(0, 49) %>',
-    owner: 'slowbreathing',
-    repo: 'slowbreathing.github.io',
-    oauth: {
-        client_id: '<%= gitment.clientId %>',
-        client_secret: '<%= gitment.clientSecret %>'
-    }
-});
-gitment.render(document.getElementById('gitment-comments'));
-</script>
+
 
         <footer>
   <strong>MIT License</strong> &copy; 2019 Mohit Kumar.

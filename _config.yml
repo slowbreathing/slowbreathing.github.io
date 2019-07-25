@@ -27,6 +27,9 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
+staticman:
+  api: "https://staticman3.herokuapp.com/v3/entry/github/vincenttam/TestStaticmanLab/master/comments"
+  path: "_data/comments/test-slug"
 #
 ###################################
 # Site Owner configuration
@@ -69,11 +72,3 @@ owner:
   codepen: #username
   reddit: #username
   telegram: #username
-
-comments:
-  gitment:
-    enable: true
-    github_user: slowbreathing  # MUST HAVE, Your Github Username
-    github_repo: slowbreathing.github.io  # MUST HAVE, The name of the repo you use to store Gitment comments
-    client_id: b21a8e20116d0dc86ead  # MUST HAVE, Github client id for the Gitment
-    client_secret: 9be8cca218a4ab40097735ecabebe30dcd8113b3  # EITHER this or proxy_gateway, Github access secret token for the Gitment
