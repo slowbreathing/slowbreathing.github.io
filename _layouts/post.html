@@ -62,8 +62,9 @@ layout: default
   </ul>
 </div><!-- end share-buttons -->
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<div id="gitment-comments"></div>
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<div id="gitment-comments"></div>
+
 <script>
 const gitment = new Gitment({
     id: '<%= page.title.replace(/[^\w\s]/gi, '').substring(0, 49) %>',
@@ -79,7 +80,5 @@ gitment.render(document.getElementById('gitment-comments'));
 
 
 
-{% if site.owner.disqus-shortname and page.comments == true %}
-<div id="disqus_thread"></div>
-{% include disqus.html %}
+
 {% endif %}
