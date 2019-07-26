@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-26T09:10:57+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">RNN Series:LSTM internals:Part-3: The Backward Propagation</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-3" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-3: The Backward Propagation" /><published>2019-07-15T15:07:19+00:00</published><updated>2019-07-15T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-3</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-3">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; we look inside LSTM forward pass.&lt;/strong&gt; If you havent already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-2&quot;&gt;part-2&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore LSTM’s Backward Propagation. This would usually involve &lt;strong&gt;lots of math&lt;/strong&gt;. I am &lt;strong&gt;not a trained mathematician&lt;/strong&gt;, however I have decent &lt;strong&gt;intuition&lt;/strong&gt;. But just intuition can only get you so far. So I used my &lt;strong&gt;programming skills&lt;/strong&gt; to validate pure theoretical results often cited by &lt;strong&gt;pure mathematician.&lt;/strong&gt; &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;”&lt;/p&gt;
+
+&lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This article will not talk about the conceptual model of LSTM, on which there are some great existing material &lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html&quot;&gt;here&lt;/a&gt; in thye order of difficulty.&lt;/li&gt;
+    &lt;li&gt;This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if somewhat &lt;a href=&quot;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&quot;&gt;difficult post&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts &lt;a href=&quot;https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577&quot;&gt;here&lt;/a&gt; in the order of difficulty&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;what-this-article-is-about&quot;&gt;What this article is about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; we picturize the Backward Propagation.&lt;/li&gt;
+    &lt;li&gt;Then we use a heady mixture of intuition, Logic, and programming to prove mathematical results.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;context&quot;&gt;Context&lt;/h3&gt;
+&lt;p&gt;This is the same example and the context is the same as described in &lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;. &lt;strong&gt;The focus however, this time is on LSTM cell.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;lstm-cell-backward-propagation&quot;&gt;LSTM Cell Backward Propagation&lt;/h3&gt;
+&lt;p&gt;While there are many variations to the LSTM cell. In the current article we are looking at &lt;a href=&quot;https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/LayerNormBasicLSTMCell&quot;&gt;LayerNormBasicLSTMCell&lt;/a&gt;. The next section is devided into 3 parts.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#LSTM Cell Forward Propagation(Summary)&quot;&gt;LSTM Cell Forward Propagation(Summary)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#LSTM Cell Backward Propagation(Summary)&quot;&gt;LSTM Cell Backward Propagation(Summary)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#LSTM Cell Backward Propagation(Detailed)&quot;&gt;LSTM Cell Backward Propagation(Detailed)&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1&gt;&lt;a name=&quot;LSTM Cell Forward Propagation(Summary)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;1-lstm-cell-forward-propagationsummary&quot;&gt;1. LSTM Cell Forward Propagation(Summary)&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Forward propagation:Summary with weights&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmcelltemplate5.jpg&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Forward propagation:Summary with weights.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Forward propagation:Summary with weights.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Forward propagation:Summary as flow diagram&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmforward.jpg&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;Forward propagation:Summary as simple flow diagram.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;Forward propagation:Summary as simple flow diagram.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Forward propagation: The complete picture&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback1.jpg&quot; alt=&quot;Image: figure-3: Forward propagation: The complete picture.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Forward propagation: The complete picture.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-1&quot;&gt;&lt;a name=&quot;LSTM Cell Backward Propagation(Summary)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;2-lstm-cell-backward-propagationsummary&quot;&gt;2. LSTM Cell Backward Propagation(Summary)&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Backward Propagation through time or BPTT is shown here in 2 steps.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Step-1&lt;/strong&gt; in depicted in &lt;strong&gt;Figure-4&lt;/strong&gt; where it backward propagates through the &lt;strong&gt;Feed forward network&lt;/strong&gt; calculating Wy and By&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback2.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Step-1:&amp;lt;/strong&amp;gt;&amp;lt;strong&amp;gt;Wy&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;By&amp;lt;/strong&amp;gt; first.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Step-1:&lt;/strong&gt;&lt;strong&gt;Wy&lt;/strong&gt; and &lt;strong&gt;By&lt;/strong&gt; first.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Step-2&lt;/strong&gt; in depicted in &lt;strong&gt;Figure-5&lt;/strong&gt;, &lt;strong&gt;Figure-6&lt;/strong&gt; and &lt;strong&gt;Figure-7&lt;/strong&gt; where it backward propagates through the LSTMCell. This is time step-3 or the last one. BPTT is carried out in reverse order.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback3.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt;&amp;lt;strong&amp;gt;3rd&amp;lt;/strong&amp;gt; time step &amp;lt;strong&amp;gt;W&amp;lt;sub&amp;gt;f&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;i&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;c&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;o&amp;lt;/sub&amp;gt;&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;B&amp;lt;sub&amp;gt;f&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;i&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;c&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;o&amp;lt;/sub&amp;gt;&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;Step-2:&lt;/strong&gt;&lt;strong&gt;3rd&lt;/strong&gt; time step &lt;strong&gt;W&lt;sub&gt;f&lt;/sub&gt;,W&lt;sub&gt;i&lt;/sub&gt;,W&lt;sub&gt;c&lt;/sub&gt;,W&lt;sub&gt;o&lt;/sub&gt;&lt;/strong&gt; and &lt;strong&gt;B&lt;sub&gt;f&lt;/sub&gt;,B&lt;sub&gt;i&lt;/sub&gt;,B&lt;sub&gt;c&lt;/sub&gt;,B&lt;sub&gt;o&lt;/sub&gt;&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Step-2&lt;/strong&gt; LSTMCell BPTT in a simple reverse flow diagram.
+      &lt;h1 id=&quot;-2&quot;&gt;&lt;a name=&quot;figure-6&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmbackcell.jpg&quot; alt=&quot;Image: figure-6: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt;LSTMCell BPTT in a simple reverse flow diagram.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: &lt;strong&gt;Step-2:&lt;/strong&gt;LSTMCell BPTT in a simple reverse flow diagram.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Step-2&lt;/strong&gt; Repeat for remaining time steps in the sequence.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback4.jpg&quot; alt=&quot;Image: figure-7: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt; Repeat for remaining time steps in the sequence&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: &lt;strong&gt;Step-2:&lt;/strong&gt; Repeat for remaining time steps in the sequence&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-3&quot;&gt;&lt;a name=&quot;LSTM Cell Backward Propagation(Detailed)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;3-lstm-cell-backward-propagationdetailed&quot;&gt;3. LSTM Cell Backward Propagation(Detailed)&lt;/h4&gt;
+&lt;p&gt;The gradient calculation through the complete network is devided into 2 parts&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#Feed-Forward Network layer(Step-1)&quot;&gt;Feed-Forward Network layer(Step-1)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#Backward propagation through LSTMCell(Step-2)&quot;&gt;Backward propagation through LSTMCell(Step-2)&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;-4&quot;&gt;&lt;a name=&quot;Feed-Forward Network layer(Step-1)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h5 id=&quot;feed-forward-network-layerstep-1&quot;&gt;Feed-Forward Network layer(Step-1)&lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We have already done this derivation for “&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt;” and “&lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;”.&lt;/li&gt;
+    &lt;li&gt;The final derived form in &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy#eq-3&quot;&gt;eq-3&lt;/a&gt;. Which in turn depends on &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt;. &lt;strong&gt;We are calling it “pred” instead of “logits” in figure-5&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback5.jpg&quot; alt=&quot;Image: figure-8: &amp;lt;strong&amp;gt;The proof, intuition and program implementation&amp;lt;/strong&amp;gt; of the derivation can be found at&amp;lt;strong&amp;gt;&amp;lt;a href='/articles/2019-05/softmax-and-its-gradient'&amp;gt;softmax&amp;lt;/a&amp;gt;&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;&amp;lt;a href='/articles/2019-05/softmax-and-cross-entropy'&amp;gt;cross_entropy_loss&amp;lt;/a&amp;gt;&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: &lt;strong&gt;The proof, intuition and program implementation&lt;/strong&gt; of the derivation can be found at&lt;strong&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;“DBy”&lt;/strong&gt; is straight forward, once the gradients for pred is clear in the previous step.&lt;/li&gt;
+    &lt;li&gt;This is just gradient calculation, the weights aren’t  adjusted just yet. They will be adjusted together in the end as a matter of convenience by an optimizer such as GradientDescentOptimizer.&lt;/li&gt;
+    &lt;li&gt;The Complete code of listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/core.py#L157-L170&quot;&gt;code-1&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback6.jpg&quot; alt=&quot;Image: figure-9: &amp;lt;strong&amp;gt;DBy&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: &lt;strong&gt;DBy&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;“DWy”&lt;/strong&gt; is straight forward too, once the gradients for pred is clear in the previous step(figure-5).&lt;/li&gt;
+    &lt;li&gt;The Complete code of listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/3fc68956eeaa082b59af2d181ff66e3932f49415/org/mk/training/dl/rnn.py#L444&quot;&gt;code-2&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback7.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;DWy&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;DWy&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;“DWy”&lt;/strong&gt; and &lt;strong&gt;“Dby”&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback8.jpg&quot; alt=&quot;Image: figure-11: &amp;lt;strong&amp;gt;DWy&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;Dby&amp;lt;/strong&amp;gt;. Only the gradients are calculated, the weights are adjusted once in the end.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: &lt;strong&gt;DWy&lt;/strong&gt; and &lt;strong&gt;Dby&lt;/strong&gt;. Only the gradients are calculated, the weights are adjusted once in the end.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-5&quot;&gt;&lt;a name=&quot;Backward propagation through LSTMCell(Step-2)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h5 id=&quot;backward-propagation-through-lstmcellstep-2&quot;&gt;Backward propagation through LSTMCell(Step-2)&lt;/h5&gt;
+&lt;p&gt;There are several gradient we are calculting, &lt;a href=&quot;LSTMPart-3#figure-6&quot;&gt;figure-6&lt;/a&gt; has a complete list.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DHt&quot;&gt;DHt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DOt&quot;&gt;DOt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DCt&quot;&gt;DCt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DCprojt&quot;&gt;DCprojt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DFt&quot;&gt;DFt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DIt&quot;&gt;DIt&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DHX&quot;&gt;DHX&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LSTMPart-3#DCt&quot;&gt;DCt&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;-6&quot;&gt;&lt;a name=&quot;DHt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dht&quot;&gt;DHt&lt;/h6&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Probably the most confusing step backward propagation because there is an element of time.&lt;/li&gt;
+    &lt;li&gt;There were 2 recursive elements h-state, c-state, similarly there 2 recursive elements while deriving the gradient backwards. We call it dh_next and dc_next, as you will see later both and many other gradients are derived from &lt;strong&gt;dHt&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback9.jpg&quot; alt=&quot;Image: figure-12: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Complete code of &lt;strong&gt;DHt&lt;/strong&gt; can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L445&quot;&gt;code-3&lt;/a&gt;,&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L492-L499&quot;&gt;code-4&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L295-L299&quot;&gt;code-5&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback10.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;dHt&lt;/strong&gt; schematically.&lt;strong&gt;Shape is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback11.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt; Shape is the same as h, for this example it is (5X1).&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;DHt&lt;/strong&gt; Shape is the same as h, for this example it is (5X1).&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-7&quot;&gt;&lt;a name=&quot;DOt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dot&quot;&gt;DOt&lt;/h6&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Shape of &lt;strong&gt;DOt&lt;/strong&gt; is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;The complete listing is at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L328&quot;&gt;code-6&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback12.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;DOt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DOt&lt;/strong&gt; schematically.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback13.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;DOt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DOt&lt;/strong&gt;, &lt;strong&gt;DWo&lt;/strong&gt; and &lt;strong&gt;DBo&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L329-L331&quot;&gt;code-7&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback14.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;DWo&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;DBo&amp;lt;/strong&amp;gt; and there shapes&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;DOt&lt;/strong&gt;, &lt;strong&gt;DWo&lt;/strong&gt; and &lt;strong&gt;DBo&lt;/strong&gt; and there shapes&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-8&quot;&gt;&lt;a name=&quot;DCt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dct&quot;&gt;DCt&lt;/h6&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Shape of &lt;strong&gt;DCt&lt;/strong&gt; is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;The complete listing is at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L309&quot;&gt;code-8&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback15.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DCt&lt;/strong&gt; schematically.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback16.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;DCt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-9&quot;&gt;&lt;a name=&quot;DCprojt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dcprojt&quot;&gt;DCprojt&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Shape of &lt;strong&gt;DCprojt&lt;/strong&gt; is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;The complete listing is at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L323&quot;&gt;code-9&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback17.jpg&quot; alt=&quot;Image: figure-20: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-20: &lt;strong&gt;DCprojt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DCprojt&lt;/strong&gt; schematically.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback18.jpg&quot; alt=&quot;Image: figure-21: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-21: &lt;strong&gt;DCprojt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DCprojt&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L324-L326&quot;&gt;code-10&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback19.jpg&quot; alt=&quot;Image: figure-22: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-22: &lt;strong&gt;DCprojt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-10&quot;&gt;&lt;a name=&quot;DFt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dft&quot;&gt;DFt&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Shape of &lt;strong&gt;DFt&lt;/strong&gt; is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;The complete listing is at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L313&quot;&gt;code-11&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback20.jpg&quot; alt=&quot;Image: figure-23: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-23: &lt;strong&gt;DFt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DFt&lt;/strong&gt; schematically.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback21.jpg&quot; alt=&quot;Image: figure-24: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-24: &lt;strong&gt;DFt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DFt&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L314-L316&quot;&gt;code-12&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback22.jpg&quot; alt=&quot;Image: figure-25: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-25: &lt;strong&gt;DFt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-11&quot;&gt;&lt;a name=&quot;DIt&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dit&quot;&gt;DIt&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Shape of &lt;strong&gt;DIt&lt;/strong&gt; is the same as h, for this example it is (5X1)&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;The complete listing is at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L318&quot;&gt;code-13&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback23.jpg&quot; alt=&quot;Image: figure-26: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-26: &lt;strong&gt;DIt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DIt&lt;/strong&gt; schematically.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback24.jpg&quot; alt=&quot;Image: figure-27: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-27: &lt;strong&gt;DIt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DIt&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L320-L321&quot;&gt;code-14&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback25.jpg&quot; alt=&quot;Image: figure-28: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-28: &lt;strong&gt;DIt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-12&quot;&gt;&lt;a name=&quot;DHX&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dhx&quot;&gt;DHX&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L333-L344&quot;&gt;code-15&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback26.jpg&quot; alt=&quot;Image: figure-29: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-29: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Many models like Neural Machine Translators(NMT), Bidirectional Encoder Representation from Transformers(BERT) use word embeddings as their inputs(Xs) which often times need learrning and that is where we need &lt;strong&gt;dxt&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback27.jpg&quot; alt=&quot;Image: figure-30: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-30: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-13&quot;&gt;&lt;a name=&quot;DCt_recur&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h6 id=&quot;dct_recur&quot;&gt;DCt_recur&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;DCt&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;Complete listing can be found at &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L342&quot;&gt;code-16&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmback28.jpg&quot; alt=&quot;Image: figure-31: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-31: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;There you go, a complete documentation of LSTMCell’s backward propagation. Also when using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; you could enable forward or backward logging like so&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backpassdebug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bias_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backpassdebug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-) .In a later article well demystify the multilayer LSTMcells and Bidirection LSTMCells.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2) we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am not a trained mathematician. However, I have decent intuition and intuition by itself can only get you so far. So I used my programming skills to validate pure theoretical results often cited by pure/trained mathematicians. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-1:The Big Picture</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-1" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-1:The Big Picture" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-1</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-1">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. &lt;strong&gt;This is a &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT,BERT,NTM,DNC, etc. I do this using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; approach for which I have pure python implementation (&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;) of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This article will not talk about the conceptual model of LSTM, on which there are some great existing material &lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html&quot;&gt;here&lt;/a&gt; in thye order of difficulty.&lt;/li&gt;
+    &lt;li&gt;This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome, if somewhat &lt;a href=&quot;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&quot;&gt;difficult post&lt;/a&gt;, by Andrej .&lt;/li&gt;
+    &lt;li&gt;This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts &lt;a href=&quot;https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577&quot;&gt;here&lt;/a&gt; in the order of difficulty&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;what-this-article-is-about&quot;&gt;What this article is about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The reason why understanding LSTM’s inner working is vital is because it underpins most important models of modern Artificial Intelligence.&lt;/li&gt;
+    &lt;li&gt;Underpins &lt;strong&gt;memory augmented&lt;/strong&gt; models and architecture.&lt;/li&gt;
+    &lt;li&gt;Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece in itself.&lt;/li&gt;
+    &lt;li&gt;In this multi-part series, I get under the cover of an LSTM using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; especially its back propagation when it is a part of a more complex model.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;context&quot;&gt;Context&lt;/h3&gt;
+&lt;p&gt;Start with the simplest word-generation case-study. We train an LSTM network on a short story. Once trained, we ask it to generate new stories giving it a cue of a few starting words. &lt;strong&gt;The focus primarily is on the training process here.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Picking a starting point in the story that is randomly chosen.&lt;/li&gt;
+    &lt;li&gt;The training process is feeding in a sequence of n words from the story and checking if (n+1)th word predicted by the model is correct or not. Back propagating and adjusting the weights of the model.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn.jpeg&quot; alt=&quot;Image: figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;training-process&quot;&gt;Training Process&lt;/h3&gt;
+&lt;p&gt;In the next few illustrations we are looking at primary the shape of input, how is the input fed in, when do we check the output before back-propagation happens, etc. All this &lt;strong&gt;without looking inside the LSTM Cell just yet&lt;/strong&gt;. Batch=1(for parallelism), sequence=3(3 words in our example), size=10(vocabulary size 10 so our representation is is a one-hot of size 10).&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Functionally dynamic_rnn feeds in the batches of sequences but its code is written using “tf.while_loop” and not one of python’s native loop construct. With any one of python’s native loop construct only the code within an iteration be optimized on a GPU but with “tf.while_loop” the advantage is that the complete loop can be optimed on a GPU.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn1.jpg&quot; alt=&quot;Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe'&amp;gt;DEEP-Breathe's&amp;lt;/a&amp;gt; &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285'&amp;gt;dynamic_rnn&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe's&lt;/a&gt; &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285&quot;&gt;dynamic_rnn&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Returns a tuple of &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt; and states(C-state and H-state for the lst time step).&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn2.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;output(H-state across all time steps)&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Returns a tuple of output(H-state across all time steps) and &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn3.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;states(C-state and H-state for the lst time step)&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Multiplier Wy and By which among other things shape last h into shape of X(10) so a comparision can be made.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn4.jpg&quot; alt=&quot;Image: figure-6: So the shape of &amp;lt;strong&amp;gt;pred&amp;lt;/strong&amp;gt;(the first return from 'RNN()' function should be that of &amp;lt;strong&amp;gt;X&amp;lt;/strong&amp;gt;)&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: So the shape of &lt;strong&gt;pred&lt;/strong&gt;(the first return from 'RNN()' function should be that of &lt;strong&gt;X&lt;/strong&gt;)&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/rnn5.jpg&quot; alt=&quot;Image: figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;quick-comparision-between-tensorflow-and-deep-breathe&quot;&gt;Quick Comparision between &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;This particular branch of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; has been designed to compare weights with &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; code every step of the way. While there are many reasons, one of the primary reasons for that is understanding. However, this is only possible if both &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; must start with the same initial weights and their Y-multipliers(Wy and By) must also be identical. Consider the code below.&lt;/p&gt;
+
+&lt;h4 id=&quot;tensorflow&quot;&gt;&lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt;&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;c&quot;&gt;# RNN output node weights and biases&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.09588283&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.2044923&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.74828255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.14180686&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.32083616&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9444244&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.06826905&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9728962&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.18506959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0618515&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.156649&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;3.2738173&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.2556943&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9079511&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.82127047&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.1448543&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.60807484&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5885713&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0378786&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7088431&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.006477&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.28033388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1804534&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.8093307&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.36991575&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;mf&quot;&gt;0.29115433&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01028167&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7357091&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.92254084&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.10753923&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.19266959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.6108299&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;2.2495654&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.5288974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0172302&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;mf&quot;&gt;1.1311738&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.2666629&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.30611828&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01412263&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.44799015&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.19266959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.6108299&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;2.2495654&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.5288974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0172302&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         &lt;span class=&quot;mf&quot;&gt;1.1311738&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.2666629&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.30611828&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01412263&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.44799015&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1458478&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3660951&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.1647317&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.9633691&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.24532059&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;mf&quot;&gt;0.14005205&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0961286&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.43737876&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.7028531&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.8481724&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variable_scope&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;variable_scope&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constant_initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rnn_cell&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerNormBasicLSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;layer_norm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dynamic_rnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expand_dims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matmul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;states&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weights_out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;biases_out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The pre-initialized weights and biases in line(2) and line(16) utilized as Wy and By in line(26)&lt;/li&gt;
+    &lt;li&gt;The internal weights of LSTM initialized in line(22-23)&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Tensorflow graph mode is the most non pythonic design done in python&lt;/strong&gt;. It sounds crazy but is true. Consider line(21-26), this function gets called multiple times in the training loop and yet the &lt;strong&gt;cell(line(24)) is the same cell instance across multiple iterations&lt;/strong&gt;. Tensorflow in the graph mode builds the DAG first and &lt;strong&gt;identifies the cell by the name in that graph&lt;/strong&gt;. That is source of confusion to most programmers, especially python programmers.&lt;/li&gt;
+    &lt;li&gt;The complete executable &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/tfwordslstm.py&quot;&gt;Listing-1&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L13&quot;&gt;execution script&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;deep-breathe&quot;&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;I could have done without a similar behaviour in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. &lt;strong&gt;Without building a full fleged graph, I associated the variable name with the corresonding weight, i.e. when the variable name is same it fetches the same set of weights &lt;/strong&gt;. This is difficult and not reccomended but, if you care to see, then its demonstrated &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76&quot;&gt;here&lt;/a&gt;,&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255&quot;&gt;here&lt;/a&gt;,&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112&quot;&gt;here&lt;/a&gt;. &lt;strong&gt;To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WeightsInitializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dynamic_rnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;Dense in this case should be out of WeightsInitializer scope because we are passing constants&quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bias_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LOSS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;training_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end_offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;offset:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;symbols_in_keys:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LOSS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The complete executable &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMainGraph.py&quot;&gt;graph-mode&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L15&quot;&gt;execution script&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;The complete executable for &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMain.py&quot;&gt;non-graph-version&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L14&quot;&gt;execution script&lt;/a&gt;. To make Tensorflow more pythonic, they have enabled eager mode and will be the default going forward especially from Tensorflow 2.0 onwards. However, major project as on today is still on the older version.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">LSTMs make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. This is a multi-part series that will unravel the mystery behind LSTMs. Especially it's gradient calculation when participating in a more complex model like NMT,BERT,NTM,DNC, etc. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-2:The Forward pass</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-2" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-2:The Forward pass" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-2</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-2">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; we look inside LSTM forward pass.&lt;/strong&gt; If you havent already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This article will not talk about the conceptual model of LSTM, on which there are some great existing material &lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html&quot;&gt;here&lt;/a&gt; in thye order of difficulty.&lt;/li&gt;
+    &lt;li&gt;This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if somewhat &lt;a href=&quot;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&quot;&gt;difficult post&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts &lt;a href=&quot;https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577&quot;&gt;here&lt;/a&gt; in the order of difficulty&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;what-this-article-is-about&quot;&gt;What this article is about?&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; we picturize the forward pass of an LSTM cell.&lt;/li&gt;
+    &lt;li&gt;Then we associate code with picture to make our understanding more concrete&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;context&quot;&gt;Context&lt;/h3&gt;
+&lt;p&gt;This is the same example and the context is the same as described in &lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;. &lt;strong&gt;The focus however, this time is on LSTM cell.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;lstm-cell&quot;&gt;LSTM Cell&lt;/h3&gt;
+&lt;p&gt;While there are many variations to the LSTM cell. In the current article we are looking at &lt;a href=&quot;https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/LayerNormBasicLSTMCell&quot;&gt;LayerNormBasicLSTMCell&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Weights and biases of the LSTM cell.&lt;/li&gt;
+    &lt;li&gt;Shapes color coded.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm1.jpg&quot; alt=&quot;Image: figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Weights, biases of the LSTM cell. Also shown is the cell state (c-state) over and above the h-state of a vanilla RNN.&lt;/li&gt;
+    &lt;li&gt;h&lt;sub&gt;t-1&lt;/sub&gt; may be initialized by default with zeros.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm2.jpg&quot; alt=&quot;Image: figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). Shape of these &amp;lt;strong&amp;gt;weights&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X15&amp;lt;/strong&amp;gt; individually and stacked vertically as shown they measure &amp;lt;strong&amp;gt;20X15&amp;lt;/strong&amp;gt;. Shape of the &amp;lt;strong&amp;gt;biases&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X1&amp;lt;/strong&amp;gt; individually and stacked up &amp;lt;strong&amp;gt;20X1&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). Shape of these &lt;strong&gt;weights&lt;/strong&gt; are &lt;strong&gt;5X15&lt;/strong&gt; individually and stacked vertically as shown they measure &lt;strong&gt;20X15&lt;/strong&gt;. Shape of the &lt;strong&gt;biases&lt;/strong&gt; are &lt;strong&gt;5X1&lt;/strong&gt; individually and stacked up &lt;strong&gt;20X1&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Weights and biases in the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L76&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;Often the code accepts constants as weights for comparision with &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm3.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&amp;lt;/strong&amp;gt;. Making it &amp;lt;strong&amp;gt;20X16&amp;lt;/strong&amp;gt;, biases allocated with weights is a matter of convenience and performance.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&lt;/strong&gt;. Making it &lt;strong&gt;20X16&lt;/strong&gt;, biases allocated with weights is a matter of convenience and performance.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Equations of LSTM and their interplay with weights and biases.&lt;/li&gt;
+    &lt;li&gt;h&lt;sub&gt;t-1&lt;/sub&gt; and c&lt;sub&gt;t-1&lt;/sub&gt; may be initialized by default with zeros(Language Model) or some non-zero state for conditional language model.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm4.jpg&quot; alt=&quot;Image: figure-4: Equations of LSTM and their interplay with weights and biases.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: Equations of LSTM and their interplay with weights and biases.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;GEMM(General Matrix Multiplication) in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L210-L214&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;h and x concatenation is only a performance convenience.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm5.jpg&quot; alt=&quot;Image: figure-5: GEMM and running them though various gates.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: GEMM and running them though various gates.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;strong&gt;mathematical reason&lt;/strong&gt; why &lt;strong&gt;vanishing gradient&lt;/strong&gt; is &lt;strong&gt;mitigated&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;There are many theories though. Look into this in detail with back propagation.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm6.jpg&quot; alt=&quot;Image: figure-6: New cell state is a function of old cell state and new candidate state.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: New cell state is a function of old cell state and new candidate state.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;New cell state(c-state) in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L215&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;This is used in 2 ways as illustrated in figure-8.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm7.jpg&quot; alt=&quot;Image: figure-7: The previous steps already decided what to do, we just need to actually do it.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: The previous steps already decided what to do, we just need to actually do it.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;c-state&lt;sub&gt;t&lt;/sub&gt; is used to calculate the “externally visible” h-state&lt;sub&gt;t&lt;/sub&gt;&lt;/li&gt;
+    &lt;li&gt;Sometimes referred to as c&lt;sub&gt;t&lt;/sub&gt;, h&lt;sub&gt;t&lt;/sub&gt;, used as the states at the next time step.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm8.jpg&quot; alt=&quot;Image: figure-8: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case c&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case c&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;New h-state in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L216&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;The transition to the next time step is complete with h&lt;sub&gt;t&lt;/sub&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm9.jpg&quot; alt=&quot;Image: figure-9: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case h&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;h&lt;sub&gt;t&lt;/sub&gt; multiplied by the &lt;strong&gt;“Wy”&lt;/strong&gt; and &lt;strong&gt;“by”&lt;/strong&gt; added to it.&lt;/li&gt;
+    &lt;li&gt;Traditionally we call this value “logits” or “preds”.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm10.jpg&quot; alt=&quot;Image: figure-10: Wy shape is 10X5 multiplied by h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt; which is 5X1 and by added to it which is 10X1 as shown above.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: Wy shape is 10X5 multiplied by h&lt;sub&gt;t&lt;/sub&gt; which is 5X1 and by added to it which is 10X1 as shown above.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Usually this is done in on the client side code because only the clients know the model and when the loss calculation can be done.&lt;/li&gt;
+    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm11.jpg&quot; alt=&quot;Image: figure-11: DEEP-Breathe version of the &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109'&amp;gt;code&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Usually done internally by “cross_entropy_loss” function.&lt;/li&gt;
+    &lt;li&gt;Shown here just so that you get an idea.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm12.jpg&quot; alt=&quot;Image: figure-12: Traditionally called yhat.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: Traditionally called yhat.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Does a combination of softmax(figure-12) and loss calculation(figure-13).&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;Softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt; to jog your memory.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm13.jpg&quot; alt=&quot;Image: figure-13: Similar to logistic regression and its cost function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: Similar to logistic regression and its cost function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Summary with weights&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmcelltemplate5.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;Summary with weights.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;Summary with weights.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Summary as flow diagram&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstmforward.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;Summary as simple flow diagram.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;Summary as simple flow diagram.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
+    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt; and DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/rnn/lstm14.jpg&quot; alt=&quot;Image: figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;In summary then, that was the walk though of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time step advanced. However, Lets not get ahead of ourselves, before we get to a language model, lets look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">Softmax and Cross-entropy</title><link href="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" rel="alternate" type="text/html" title="Softmax and Cross-entropy" /><published>2019-05-03T15:07:19+00:00</published><updated>2019-05-03T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is defined as error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are weighted sum. One of the reason to choose cross entropy alongside softmax is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and Yhat &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; the predicted value.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+  One at a time.
+  args:
+      pred-(seq=1),input_size
+      labels-(seq=1),input_size
+  &quot;&quot;&quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Above is a &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L8-L16&quot;&gt;loss&lt;/a&gt; implementation.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;#prints out 0.145&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;#prints out 17.01&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As you can see the loss function accepts softmaxed input and one-hot encoded labels which is being passed in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L26-L38&quot;&gt;Listing-2&lt;/a&gt;.
+The output is illustated in figure-1 and 2 below.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Loss function: Example-1&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel.jpg&quot; alt=&quot;Image: figure-1:Cost is low because, the prediction is closer to the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1:Cost is low because, the prediction is closer to the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Loss function: Example-2&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel2.jpg&quot; alt=&quot;Image: figure-2:Cost is high because, the prediction is far away from the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2:Cost is high because, the prediction is far away from the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;crossentropyloss&quot;&gt;CrossEntropyLoss&lt;/h3&gt;
+&lt;p&gt;CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136&quot;&gt;CrossEntropyLoss&lt;/a&gt; function that calculates the softmax internally.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    Does an internal softmax before loss calculation.
+    args:
+        pred- batch,seq,input_size
+        labels-batch,seq(has to be transformed before comparision with preds(line-133).)
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;checkdatadim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;checkdatadim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lossesa&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;lossesa&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seqnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lossesa&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The point to keep in mind is, it accepts it’s 2 inputs in 3(batch,seq,input_size) and 2(batch,seq) dimensions respectively. Batch size usually indicates multiple parallel input sequences, can be ignored for now and be assumed as 1. The shape of pred in our case is batch=1,seq=2,input_size=4. And the shape of labels is batch=1, seq=2. This is illustrated in Listing-3 and Listing-4&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]])&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;#prints array([[ 0.14507794, 17.01904505]]))&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;softmaxed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;loss:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As illustrated in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136&quot;&gt;Listing-3&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Listing-4&lt;/a&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.&lt;/p&gt;
+
+&lt;h3 id=&quot;crossentropyloss-derivative&quot;&gt;CrossEntropyLoss Derivative&lt;/h3&gt;
+&lt;p&gt;One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;p&gt;The above equation is writen like so below while calculating the gradients.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Gradient: Example-3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/cel3.jpg&quot; alt=&quot;Image: figure-3:The red arrow follows the gradient.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3:The red arrow follows the gradient.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Deriving the gradients now.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \frac{\partial {E}}{\partial {\hat{Y}}}.\frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt;
+
+&lt;h1&gt;&lt;a name=&quot;eq-2&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\frac{\partial {\hat{Y}}}{\partial {logits}} \:\:\:\: eq(2)&lt;/script&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For calculating &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {\hat{Y}}}{\partial {logits}}&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{y}&lt;/script&gt; is the softmax and its derivative is given by &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt;. Combining &lt;a href=&quot;softmax-and-its-gradient#eq-1&quot;&gt;eq-1&lt;/a&gt; and &lt;a href=&quot;softmax-and-cross-entropy#eq-2&quot;&gt;eq-2&lt;/a&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\begin{Bmatrix}
+softmax_i(1-softmax_j) &amp; i= j \\
+{-softmax_j}.{softmax_i} &amp; i\neq j
+\end{Bmatrix} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -\frac{y}{\hat{y}}.\hat{y_t}.(1-\hat{y_t}) + \sum_{i\neq j}(\frac{-y_t}{\hat{y_t}})(-\hat{y_t}\hat{y_t})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -y.(1-\hat{y_t}) + \sum_{i\neq j}y_t.\hat{y_t}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = -y+y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = y.\hat{y_t} + \sum_{i\neq j}y_t.\hat{y_t} -y&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = \hat{y_t}.(y + \sum_{i\neq j}y_t) -y&lt;/script&gt;
+
+&lt;p&gt;Since Y is a one hot vector, the term “&lt;script type=&quot;math/tex&quot;&gt;\Large (y + \sum_{i\neq j}y_t)&lt;/script&gt;” sums up to one.&lt;/p&gt;
+
+&lt;h1 id=&quot;-1&quot;&gt;&lt;a name=&quot;eq-3&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial {E}}{\partial {logits}} = (\hat{y_t} -y) \:\:\:\: eq(3)&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;crossentropyloss-derivative-implementation&quot;&gt;CrossEntropyLoss Derivative implementation&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;n&quot;&gt;softmaxed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;loss:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;target_one_hot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;# Adapting the shape of Y&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;target_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;softmaxed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target_one_hot&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;# prints out gradient: [[[ 2.14400878e-03  1.58422012e-02  1.17058913e-01 -1.35045123e-01]&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;#                        [ 8.94679461e-04 -9.99999959e-01  1.79701173e-02  9.81135163e-01]]]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;gradient:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L52-L62&quot;&gt;Listing-5&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><summary type="html">The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat).</summary></entry><entry><title type="html">Introduction: Why another technical blog?</title><link href="http://localhost:4000/articles/2019-05/introduction" rel="alternate" type="text/html" title="Introduction: Why another technical blog?" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/introduction</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/introduction">&lt;p&gt;&lt;strong&gt;Artificial Intelligence especially deep learning employs models which are extremely complex.&lt;/strong&gt; Complexity stems from two major sources.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Firstly&lt;/strong&gt;, Models that have multiple dimensional representation have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also have a time dimension that have to be represented as well adding to the complexity.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Secondly&lt;/strong&gt;, the mathematical model has to be translated to code and executed on CPUs/GPUs. When I illustrate these models in later articles, one realizes the importance of looking at the whole stack or at least have an understanding of the whole stack. This enables, in the very least, easier debugging. At best, one understands the model’s execution and behavior and modifications that require to be done to suit our specific use-case(s).&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In my experience, for most clients I have work for, the single most important reason why models underperform is because the hyperparameters is not understood well and hence most often mis-configured. If, from hardware to the software model and everything in between is understood well, then Deep Learning become fun and magic. &lt;strong&gt;This blog over the next couple of month will try to lower the barrier to entry.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Being in the Optimisation field for quite some time, I have understood the importance of how  stuff works under-the-hood. I have a microarchitecture background, specifically X86 and vector based architectures. Microarchitecture has been my guiding light.  It has helped me solve many complex optimization problems despite some of them being programmed in high level languages like Java or python.&lt;/p&gt;
+&lt;p&gt;In this short post, &lt;strong&gt;which has nothing to do with Artificial Intelligence just yet&lt;/strong&gt;, I demonstrate the &lt;strong&gt;importance of understanding stuff under-the-hood&lt;/strong&gt; and &lt;strong&gt;thinking in pictures and then linking it to the code&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;importance-of-understanding-stuff-under-the-hood&quot;&gt;Importance of understanding stuff under-the-hood&lt;/h3&gt;
+&lt;p&gt;Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;multstore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2 * 3 --&amp;gt; %ld&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mult2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+   &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multstore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mult2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+       &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Consider the above code where, “main” calls “multstore” and “multstore” calls “mult2”.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/x86reg.jpg&quot; alt=&quot;Image: figure-1&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Compilers have the above convention in mind for x86 register usage. This is usually done so that software written by different people and often compiled by different compilers can interact with each other.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;callee-saved: If a function A calls function B function B &lt;strong&gt;cannot&lt;/strong&gt; change the values of these registers. This can be done by either not changing values at all or pushing values from these registers to the stack on entry and restoring them on exit.&lt;/li&gt;
+    &lt;li&gt;caller-saved: If a function A calls function B then, it means it &lt;strong&gt;can&lt;/strong&gt; be modified by anyone. Caller-saved because if the caller has some local data in these registers then it is caller’s responsibility to save it before making the call.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/assemblercall.jpg&quot; alt=&quot;Image: figure-2&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.&lt;/p&gt;
+
+&lt;h3 id=&quot;extending-the-general-idea-of-registers-to-higher-level-languagesjava&quot;&gt;Extending the general idea of registers to higher level languages(Java)&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+                  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;    
+                  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;Shape&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;movex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;movey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpnext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Consider the code above, We have a list of points making up a shape and when “movex” or “movey” function gets called with an  offset it simply moves all the points’ X or Y coordinates by that offset. Now because it is a list of points that make up the shape, moving through that list going to be expensive because the CPU prefethers cannot “guess” the pattern of load and cannot preload to cache. This results in resource stalls , which the another way of saying that the CPU is sitting idle.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;nanoTime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totaly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Shape&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shapelist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;totalx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;xsum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;totaly&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ysum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;totalpoints&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;numpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offsetx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offsety&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totaly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;totalpoints&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shapelist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;movex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offsetx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;movey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offsety&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Line 16-21 is where the call is being made to functions “movex” and “movey”. The question is can a profiler pinpoint how the java code executes and the resource stalls that this code is going to encounter. Once this is understood, similar analogy can be extended to more complex code.
+Just before we get started a few things to keep in mind.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The profiler being used is &lt;a href=&quot;https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html&quot;&gt;Performance Analyzer&lt;/a&gt; also called &lt;a href=&quot;https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html&quot;&gt;Solaris Analyzer&lt;/a&gt;. Probably one of the best profilers to deep dive into the code at an instruction level. &lt;a href=&quot;https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html&quot;&gt;Performance Analyzers&lt;/a&gt; would require a post in itself.&lt;/li&gt;
+    &lt;li&gt;The &lt;a href=&quot;https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html&quot;&gt;performance analyzer&lt;/a&gt; for this run has be configured to capture resource stalls for the above code.&lt;/li&gt;
+    &lt;li&gt;Despite Java being an interpreted language, in practice it is opmtimized on-the-fly by a &lt;a href=&quot;https://en.wikipedia.org/wiki/Just-in-time_compilation&quot;&gt;JIT compiler&lt;/a&gt;. These are usually profile guided optimizations and topic for another day. The code shown by &lt;a href=&quot;https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html&quot;&gt;Performance Analyzers&lt;/a&gt; is &lt;a href=&quot;https://en.wikipedia.org/wiki/Just-in-time_compilation&quot;&gt;JIT compiler&lt;/a&gt; generated. Typically we get this profile when the code has run for some time for it to be JIT compiled.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;code-walk-through-using-solaris-analyzer&quot;&gt;Code walk through using Solaris Analyzer&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Measuring CPU cycles for the code&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol1.jpe&quot; alt=&quot;Image: figure-3:CPU Cycles for the code in listing 1 and 2.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3:CPU Cycles for the code in listing 1 and 2.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-1&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol2.jpeg&quot; alt=&quot;Image: figure-4:Bottom of the screen is the size of the object using &amp;lt;a href='https://openjdk.java.net/projects/code-tools/jmh/' &amp;gt;JMH&amp;lt;/a&amp;gt;. &quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4:Bottom of the screen is the size of the object using &lt;a href=&quot;https://openjdk.java.net/projects/code-tools/jmh/&quot;&gt;JMH&lt;/a&gt;. &lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-2&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol3.jpeg&quot; alt=&quot;Image: figure-5&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol4.jpeg&quot; alt=&quot;Image: figure-6&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-4&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol5.jpeg&quot; alt=&quot;Image: figure-7:This is the big culprit, loading the next pointer. And this will show up as major resource consumer in figure-17.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7:This is the big culprit, loading the next pointer. And this will show up as major resource consumer in figure-17.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-5&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;
+        &lt;img src=&quot;/img/introduction/sol6.jpeg&quot; alt=&quot;Image: figure-8: A &amp;lt;a href='https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766'&amp;gt;JVM safepoint&amp;lt;/a&amp;gt; is a range of execution where the state of the executing thread is well described.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    &lt;/a&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: A &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;JVM safepoint&lt;/a&gt; is a range of execution where the state of the executing thread is well described.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-6&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol7.jpeg&quot; alt=&quot;Image: figure-9&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-7&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol8.jpeg&quot; alt=&quot;Image: figure-10&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-8&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol9.jpeg&quot; alt=&quot;Image: figure-11&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-9&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol10.jpeg&quot; alt=&quot;Image: figure-12&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-10&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol11.jpeg&quot; alt=&quot;Image: figure-13&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-11&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol12.jpeg&quot; alt=&quot;Image: figure-14:This is the big culprit, loading the next pointer except it is for y. This too will show up as major resource consumer in figure-17.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14:This is the big culprit, loading the next pointer except it is for y. This too will show up as major resource consumer in figure-17.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-12&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol13.jpeg&quot; alt=&quot;Image: figure-15&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-13&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol14.jpeg&quot; alt=&quot;Image: figure-16&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Walk through:Step-14&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/introduction/sol15.jpeg&quot; alt=&quot;Image: figure-17&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, specially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt; . &lt;strong&gt;In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code &lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><category term="Introduction" /><summary type="html">Pictures say a thousand words is a cliche, but I believe in it. I have made career out of it. Complex programming or logical concepts should be understood with the help of pictures .</summary></entry><entry><title type="html">Softmax and its Gradient</title><link href="http://localhost:4000/articles/2019-05/softmax-and-its-gradient" rel="alternate" type="text/html" title="Softmax and its Gradient" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/softmax-and-its-gradient">&lt;p&gt;From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.&lt;br /&gt;
+There are many softmax resources available in the internet. Among the many that are availble, I found the link &lt;a href=&quot;https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/&quot;&gt;here&lt;/a&gt; to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code when associated with theory makes the explanation very precise. &lt;strong&gt;But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT etc.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Softmax is essentially a vector function. It takes n inputs and produces and n outputs. &lt;strong&gt;The out can be interpreted as a probabilistic output(summing up to 1). A multiway shootout if you will.&lt;strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large softmax(a)=\begin{bmatrix}
+a_1\\
+a_2\\
+\cdots\\
+a_N
+\end{bmatrix}\rightarrow \begin{bmatrix}
+S_1\\
+S_2\\
+\cdots\\
+S_N
+\end{bmatrix}&lt;/script&gt;
+
+&lt;p&gt;And the actual per-element formula is:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}&lt;/script&gt;
+
+&lt;p&gt;As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#row represents num classes but they may be real numbers&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#So the shape of input is important&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#([[1, 3, 5, 7],&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#  [1,-9, 4, 8]]&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;#softmax will be for each of the 2 rows&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#respectively But if the input is Tranposed clearly the answer&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#will be wrong.&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;#That needs to be converted to probability&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#column represents the vocabulary size.&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;predsl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;#print(&quot;inputs:&quot;,inputs)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;predsl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predsl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Above is a &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L18-L38&quot;&gt;softmax&lt;/a&gt; implementation.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;softmax:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#prints out&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[[2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01],&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[8.94679461e-04 4.06183847e-08 1.79701173e-02 9.81135163e-01]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Above is a &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L10-L19&quot;&gt;softmaxtest&lt;/a&gt; implementation.&lt;/p&gt;
+
+&lt;p&gt;The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.&lt;/p&gt;
+
+&lt;h3 id=&quot;softmax-derivative&quot;&gt;Softmax Derivative&lt;/h3&gt;
+&lt;p&gt;Before diving into computing the derivative of softmax, let’s start with some preliminaries from vector calculus.&lt;/p&gt;
+
+&lt;p&gt;Softmax is fundamentally a vector function. It takes a vector as input and produces a vector as output; in other words, it has multiple inputs and multiple outputs. Therefore, we cannot just ask for “the derivative of softmax”; We should instead specify:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Which component (output element) of softmax we’re seeking to find the derivative of.&lt;/li&gt;
+  &lt;li&gt;Since softmax has multiple inputs, with respect to which input element the partial derivative is computed.
+This is exactly why the notation of vector calculus was developed. What we’re looking for is the partial derivatives:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \frac{\partial softmax_i}{\partial a_j}&lt;/script&gt;
+
+&lt;p&gt;This is the partial derivative of the i-th output w.r.t. the j-th input. A shorter way to write it that we’ll be using going forward is:
+Since softmax is a  function, the most general derivative we compute for it is the Jacobian matrix:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large Dsoftmax=\begin{bmatrix}
+D_1 softmax_1\:\:\:\:\:  \cdots\:\:\:\:\: D_N softmax_1 \\
+\vdots\:\:\:\:\: \ddots\:\:\:\:\: \vdots \\
+D_1 softmax_N\:\:\:\:\: \cdots\:\:\:\:\: D_N softmax_N
+\end{bmatrix}&lt;/script&gt;
+
+&lt;p&gt;Let’s compute &lt;script type=&quot;math/tex&quot;&gt;D_jsoftmax_i&lt;/script&gt; for arbitrary i and j:&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\large D_jsoftmax_i=\Large \:\:\frac{\partial softmax_i}{\partial a_j}\:\:= \frac{\partial \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j}&lt;/script&gt;&lt;br /&gt;
+Using the quotient rule &lt;script type=&quot;math/tex&quot;&gt;\Large f(x) = \frac{g(x)}{h(x)}&lt;/script&gt; , &lt;script type=&quot;math/tex&quot;&gt;\Large f'(x) = \frac{g'(x)h(x) - h'(x)g(x)}{h(x)^2}&lt;/script&gt; &lt;br /&gt;
+in our case &lt;script type=&quot;math/tex&quot;&gt;\Large g_i = e^{a_i}&lt;/script&gt;&lt;br /&gt;
+                   &lt;script type=&quot;math/tex&quot;&gt;\Large h_i = \sum_{k=1}^{N} e^{a_k}&lt;/script&gt; simplifying &lt;script type=&quot;math/tex&quot;&gt;\Large \sum&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;\Large \sum_{k=1}^{N} e^{a_k}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that no matter which &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; we compute the derivative of &lt;script type=&quot;math/tex&quot;&gt;h_i&lt;/script&gt; for, the answer will always be &lt;script type=&quot;math/tex&quot;&gt;e^{a_j}&lt;/script&gt;. This is not the case for &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt;, howewer. The derivative of &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt; w.r.t. &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; is &lt;script type=&quot;math/tex&quot;&gt;e^{a_j}&lt;/script&gt; only if i=j, because only then &lt;script type=&quot;math/tex&quot;&gt;g_i&lt;/script&gt; has &lt;script type=&quot;math/tex&quot;&gt;a_j&lt;/script&gt; anywhere in it. Otherwise, the derivative is 0.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Going back to our &lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial softmax_i}{\partial a_j}&lt;/script&gt; we’ll start with the &lt;script type=&quot;math/tex&quot;&gt;\Large i=j&lt;/script&gt; case. &lt;br /&gt;
+Then, using the quotient rule we have:
+&lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{e^{a_i}.\sum-e^{a_j}.e^{a_i}}{\sum^2}&lt;/script&gt;&lt;br /&gt;
+                         &lt;script type=&quot;math/tex&quot;&gt;\Large = \frac{e^{a_i}}{\sum}.\frac{\sum-e^{a_j}}{\sum}&lt;/script&gt;&lt;br /&gt;
+                         &lt;script type=&quot;math/tex&quot;&gt;\Large = softmax_i(1-softmax_j)&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;similarly for &lt;script type=&quot;math/tex&quot;&gt;\Large i \neq j&lt;/script&gt;&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\Large \frac{\partial\frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}}{\partial a_j} = \frac{0- e^{a_j}e^{a_i}}{\sum^2}&lt;/script&gt;&lt;br /&gt;
+                         &lt;script type=&quot;math/tex&quot;&gt;\Large = \frac{- e^{a_j}}{\sum}.\frac{e^{a_i}}{\sum}&lt;/script&gt;&lt;br /&gt;
+                         &lt;script type=&quot;math/tex&quot;&gt;\Large = {-softmax_j}.{softmax_i}&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To summarize:
+&lt;a name=&quot;eq-1&quot;&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\Large D_jsoftmax_i=\begin{Bmatrix}
+softmax_i(1-softmax_j) &amp; i= j \\
+{-softmax_j}.{softmax_i} &amp; i\neq j
+\end{Bmatrix} \:\:\:\: eq(1) %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;softmax-derivative-implementation&quot;&gt;Softmax Derivative Implementation&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_softmax_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Below is the softmax value for [1, 3, 5, 7]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# [2.14400878e-03 1.58422012e-02 1.17058913e-01 8.64954877e-01]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# initialize the 2-D jacobian matrix.&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;equal:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#equal: 0 0.002144008783584634 0.9978559912164153&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#equal: 1 0.015842201178506925 0.9841577988214931&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#equal: 2 0.11705891323853292 0.8829410867614671&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#equal: 3 0.8649548767993754 0.13504512320062456&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;not equal:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 0 1 0.002144008783584634 0.015842201178506925&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 0 2 0.002144008783584634 0.11705891323853292&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 0 3 0.002144008783584634 0.8649548767993754&lt;/span&gt;
+
+                &lt;span class=&quot;c&quot;&gt;#not equal: 1 0 0.015842201178506925 0.002144008783584634&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 1 2 0.015842201178506925 0.11705891323853292&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 1 3 0.015842201178506925 0.8649548767993754&lt;/span&gt;
+
+                &lt;span class=&quot;c&quot;&gt;#not equal: 2 0 0.11705891323853292 0.002144008783584634&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 2 1 0.11705891323853292 0.015842201178506925&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 2 3 0.11705891323853292 0.8649548767993754&lt;/span&gt;
+
+                &lt;span class=&quot;c&quot;&gt;#not equal: 3 0 0.8649548767993754 0.002144008783584634&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 3 1 0.8649548767993754 0.015842201178506925&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;#not equal: 3 2 0.8649548767993754 0.11705891323853292&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;#finally resulting in&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[[ 2.13941201e-03 -3.39658185e-05 -2.50975338e-04 -1.85447085e-03]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[-3.39658185e-05  1.55912258e-02 -1.85447085e-03 -1.37027892e-02]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[-2.50975338e-04 -1.85447085e-03  1.03356124e-01 -1.01250678e-01]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#[-1.85447085e-03 -1.37027892e-02 -1.01250678e-01  1.16807938e-01]]&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacobian_m&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The above is the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L76-L115&quot;&gt;softmax grad&lt;/a&gt; code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/softmaxgrad.png&quot; alt=&quot;Image: figure-1&quot; hight=&quot;120%&quot; width=&quot;120%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;As you can see the softmax gradient &lt;strong&gt;producers an nxn matrix for input size of n&lt;/strong&gt;. Hopefully you got a good idea of softmax and its implementation. Hopefully you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few instances like “&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt;”. More on &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py&quot;&gt;Attention&lt;/a&gt; in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><summary type="html">From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient. In this article, I further dumb it down and add code to theory. But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMTs, BERTs, XLNETs etc.</summary></entry></feed>
