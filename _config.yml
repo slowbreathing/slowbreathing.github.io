@@ -27,6 +27,8 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
+plugins:
+  - jekyll-feed
 #
 ###################################
 # Site Owner configuration
@@ -69,4 +71,3 @@ owner:
   codepen: #username
   reddit: #username
   telegram: #username
-  
