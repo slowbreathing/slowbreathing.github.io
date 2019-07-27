@@ -29,7 +29,7 @@ kramdown:
 
 staticman:
   #api: "https://api.staticman.net/v3/entry/github/slowbreathing/slowbreathing/master/comments"
-  api: "https://staticman3.herokuapp.com/v3/entry/github/slowbreathing/slowbreathing/master/"
+  api: "https://staticman3.herokuapp.com/v3/entry/github/slowbreathing/slowbreathing/master/comments"
   path: "_data/comments/test-slug"
 
 plugins:
