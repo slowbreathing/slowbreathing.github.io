@@ -27,6 +27,10 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
+staticman:
+  api: "https://api.staticman.net/v3/entry/github/slowbreathing/slowbreathing/master/comments"
+  path: "_data/comments/test-slug"
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
