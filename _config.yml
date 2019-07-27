@@ -27,6 +27,10 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 #
 ###################################
 # Site Owner configuration
