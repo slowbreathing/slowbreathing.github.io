@@ -735,6 +735,15 @@
 <script src="https://apis.google.com/js/plusone.js">
 </script>
 
+<form method="POST" action="https://api.staticman.net/v3/entry/github/slowbreathing/slowbreathing/master/comments">
+  <input name="options[redirect]" type="hidden" value="http://localhost:4000">
+  <input name="options[slug]" type="hidden" value="test-slug">
+  <label>Name: <input name="fields[name]" type="text"></label><br>
+  <label>Email: <input name="fields[email]" type="email"></label><br>
+  <label>Message: <br><textarea name="fields[message]" rows="12" cols="36"></textarea></label><br>
+  <input type="submit" value="Submit">
+</form>
+
 
 
         <footer>
