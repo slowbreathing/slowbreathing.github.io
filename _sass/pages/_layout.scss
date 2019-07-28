@@ -114,6 +114,9 @@ footer {
         background: #444;
         box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
         margin-bottom: 0em;
+        @include media-query($medium-screen) {
+          margin:auto;
+        }
     }
     .newsletter-container * {
         align-self: center;
@@ -160,6 +163,7 @@ footer {
     }
 
     @media screen and (min-width: 400px) {
+
         .newsletter-title {
             font-size: 2.5em;
         }
