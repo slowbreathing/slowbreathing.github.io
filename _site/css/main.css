@@ -609,7 +609,7 @@ pre code span { word-break: break-all; }
 .nav-list .nav-item a { margin-top: 1em; text-transform: lowercase; font-size: 85%; color: #8d7edc; }
 .nav-list .nav-item a:hover, .nav-list .nav-item a:focus { color: #bfb6eb; }
 
-footer .newsletter-container { max-width: 400px; max-height: 200px; border-radius: 1em; display: flex; flex-direction: column; padding: 0 0; background: #444; box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2); margin-bottom: 0em; }
+footer .newsletter-container { margin-left: 15em; max-width: 400px; max-height: 200px; border-radius: 1em; display: flex; flex-direction: column; padding: 0 0; background: #444; box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2); margin-bottom: 0em; }
 footer .newsletter-container * { align-self: center; padding: 0; }
 footer .newsletter-form { text-align: center; }
 footer .newsletter-title { font-size: 1.5em; margin: 0; color: #fff; text-transform: uppercase; }
