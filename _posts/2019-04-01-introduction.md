@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Introduction: Why another technical blog?"
-excerpt: "Pictures say a thousand words is a cliche, but I believe in it. I have made career out of it. Complex programming or logical concepts should be understood with the help of pictures ."
+excerpt: "Pictures say a thousand words is a cliche, but I believe in it. I have made a career out of it. Complex programming or logical concepts should be understood with the help of pictures."
 mathjax: true
 date:   2019-05-01 15:07:19
 categories: [article]
@@ -9,7 +9,7 @@ tags: Introduction
 comments: true
 ---
 
-<strong>Artificial Intelligence especially deep learning employs models which are extremely complex.</strong> Complexity stems from two major sources.
+<strong>Artificial Intelligence especially deep learning employs models that are extremely complex.</strong> Complexity stems from two major sources.
 > * <strong>Firstly</strong>, Models that have multiple dimensional representation have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also have a time dimension that have to be represented as well adding to the complexity.
 > * <strong>Secondly</strong>, the mathematical model has to be translated to code and executed on CPUs/GPUs. When I illustrate these models in later articles, one realizes the importance of looking at the whole stack or at least have an understanding of the whole stack. This enables, in the very least, easier debugging. At best, one understands the model’s execution and behavior and modifications that require to be done to suit our specific use-case(s).
 <p>In my experience, for most clients I have work for, the single most important reason why models underperform is because the hyperparameters is not understood well and hence most often mis-configured. If, from hardware to the software model and everything in between is understood well, then Deep Learning become fun and magic. <strong>This blog over the next couple of month will try to lower the barrier to entry.</strong></p>
