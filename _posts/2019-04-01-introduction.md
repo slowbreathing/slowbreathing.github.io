@@ -9,16 +9,16 @@ tags: Introduction
 comments: true
 ---
 
-<strong>Artificial Intelligence especially deep learning employs models that are extremely complex.</strong> Complexity stems from two major sources.
-> * <strong>Firstly</strong>, Models that have multiple dimensional representation have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also have a time dimension that have to be represented as well adding to the complexity.
+<strong>Artificial Intelligence especially deep learning employs extremely complex models.</strong> Complexity stems from two major sources.
+> * <strong>Firstly</strong>, Models that have multiple dimensional representations have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also has a time dimension that have to be represented as well adding to the complexity.
 > * <strong>Secondly</strong>, the mathematical model has to be translated to code and executed on CPUs/GPUs. When I illustrate these models in later articles, one realizes the importance of looking at the whole stack or at least have an understanding of the whole stack. This enables, in the very least, easier debugging. At best, one understands the model’s execution and behavior and modifications that require to be done to suit our specific use-case(s).
-<p>In my experience, for most clients I have work for, the single most important reason why models underperform is because the hyperparameters is not understood well and hence most often mis-configured. If, from hardware to the software model and everything in between is understood well, then Deep Learning become fun and magic. <strong>This blog over the next couple of month will try to lower the barrier to entry.</strong></p>
-<p>Being in the Optimisation field for quite some time, I have understood the importance of how  stuff works under-the-hood. I have a microarchitecture background, specifically X86 and vector based architectures. Microarchitecture has been my guiding light.  It has helped me solve many complex optimization problems despite some of them being programmed in high level languages like Java or python.</p>
+<p>In my experience, for most clients I have work for, the single most important reason why models underperform is that the hyperparameters are not understood well and hence most often misconfigured. If from hardware to the software model and everything in between is understood well, then Deep Learning becomes fun and magic. <strong>This blog over the next couple of months will try to lower the barrier to entry.</strong></p>
+<p>Being in the Optimisation field for quite some time, I have understood the importance of how stuff works under-the-hood. I have a microarchitecture background, specifically X86 and vector-based architectures. Microarchitecture has been my guiding light. It has helped me solve many complex optimization problems despite some of them being programmed in high-level languages like Java or python.</p>
 In this short post, <strong>which has nothing to do with Artificial Intelligence just yet</strong>, I demonstrate the <strong>importance of understanding stuff under-the-hood</strong> and <strong>thinking in pictures and then linking it to the code</strong>.  
 
 
 ### Importance of understanding stuff under-the-hood
-Lets say that one wants understand the underlying assembler for a high level language and the way it executes on a CPU( atleast theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Lets understand this with a very simple C program before we do this for a higher level language.
+Let us say that one wants to understand the underlying assembler for a high-level language and the way it executes on a CPU( at least theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general-purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Let us understand this with a very simple C program before we do this for a higher-level language.
 {% highlight c %}
   int main() {
       long d;
@@ -39,7 +39,7 @@ Lets say that one wants understand the underlying assembler for a high level lan
 Listing-1
 {% endhighlight %}
 
-Consider the above code where, "main" calls "multstore" and "multstore" calls "mult2".
+Consider the above code where "main" calls "multstore" and "multstore" calls "mult2".
 
 {%
     include image.html
@@ -62,7 +62,7 @@ Compilers have the above convention in mind for x86 register usage. This is usua
     width="110%"
 %}
 
-For most part the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher level languages.
+For the most part, the above figure should clarify the use of registers in x86. Since the basic idea is clear, the same can be extended for higher-level languages.
 
 ### Extending the general idea of registers to higher level languages(Java)
 {% highlight Java %}
@@ -101,7 +101,7 @@ private static class Shape{
 Listing-2
 {% endhighlight %}
 
-Consider the code above, We have a list of points making up a shape and when "movex" or "movey" function gets called with an  offset it simply moves all the points' X or Y coordinates by that offset. Now because it is a list of points that make up the shape, moving through that list going to be expensive because the CPU prefethers cannot "guess" the pattern of load and cannot preload to cache. This results in resource stalls , which the another way of saying that the CPU is sitting idle.
+Consider the code above, We have a list of points making up a shape and when “movex” or “movey” function gets called with an offset it simply moves all the points’ X or Y coordinates by that offset. Now because it is a list of points that make up the shape, moving through that list going to be expensive because the CPU prefetchers cannot “guess” the pattern of load and cannot preload to cache. This results in resource stalls, which is another way of saying that the CPU is sitting idle.
 
 {% highlight Java linenos %}
   public static void main(String [] args){
@@ -130,11 +130,11 @@ Consider the code above, We have a list of points making up a shape and when "mo
 Listing-3
 {% endhighlight %}
 
-Line 16-21 is where the call is being made to functions "movex" and "movey". The question is can a profiler pinpoint how the java code executes and the resource stalls that this code is going to encounter. Once this is understood, similar analogy can be extended to more complex code.
+Line 16-21 is where the call is being made to functions "movex" and "movey". The question is can a profiler pinpoint how the java code executes and the resource stalls that this code is going to encounter. Once this is understood, a similar analogy can be extended to more complex code.
 Just before we get started a few things to keep in mind.
 > * The profiler being used is <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzer</a> also called <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Solaris Analyzer</a>. Probably one of the best profilers to deep dive into the code at an instruction level. <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> would require a post in itself.
 > * The <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">performance analyzer</a> for this run has be configured to capture resource stalls for the above code.
-> * Despite Java being an interpreted language, in practice it is opmtimized on-the-fly by a <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a>. These are usually profile guided optimizations and topic for another day. The code shown by <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> is <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a> generated. Typically we get this profile when the code has run for some time for it to be JIT compiled.
+> * Despite Java being an interpreted language, in practice, it is optimized on-the-fly by a <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a>. These are usually profile guided optimizations and topic for another day. The code shown by <a href="https://www.oracle.com/technetwork/server-storage/solarisstudio/features/performance-analyzer-2292312.html">Performance Analyzers</a> is <a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">JIT compiler</a> generated. Typically we get this profile when the code has run for some time for it to be JIT-compiled.
 
 ### Code walk through using Solaris Analyzer
 > * Measuring CPU cycles for the code
@@ -275,4 +275,4 @@ Just before we get started a few things to keep in mind.
 
 ### Summary
 
-In summary then, the figure-17 should clarify the resource stalls exhibited by the code. It is time consuming to take first principles approach to undertand deep technical concepts but ultimately it brings great joy. I would like to bring similar undetsanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. <strong><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a></strong> is a complete and pure python implementation of these models, specially but not limited to <strong><a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py">Neural Machine Translator</a></strong> . <strong>In the next few articles I will go into the details of their inner workings. And in this blog I will focus more on Pictures and Code </strong>
+In summary, then, the figure-17 should clarify the resource stalls exhibited by the code. It is time-consuming to take the first-principles approach to understand deep technical concepts but ultimately it brings great joy. I would like to bring similar understanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. <strong><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a></strong> is a complete and pure python implementation of these models, especially but not limited to <strong><a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py">Neural Machine Translator</a></strong>. <strong>In the next few articles, I will go into the details of their inner workings. And in this blog, I will focus more on Pictures and Code.</strong>
