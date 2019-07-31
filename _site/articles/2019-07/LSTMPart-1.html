@@ -198,13 +198,13 @@
 
   <article class="post-content">
     <h3 id="introduction">Introduction</h3>
-<p>LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. <strong>This is a <a href="/tags/#LSTM">multi-part series</a> that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT,BERT,NTM,DNC, etc. I do this using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> approach for which I have pure python implementation (<a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a>) of most complex Deep Learning models.</strong></p>
+<p>LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. <strong>This is a <a href="/tags/#LSTM">multi-part series</a> that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> approach for which I have pure python implementation (<a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a>) of most complex Deep Learning models.</strong></p>
 
 <h3 id="what-this-article-is-not-about">What this article is not about?</h3>
 <blockquote>
   <ul>
-    <li>This article will not talk about the conceptual model of LSTM, on which there are some great existing material <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">here</a> and <a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html">here</a> in thye order of difficulty.</li>
-    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome, if somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>, by Andrej .</li>
+    <li>This article will not talk about the conceptual model of LSTM, on which there is some great existing material here and here in the order of difficulty.</li>
+    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome, if a somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>, by Andrej.</li>
     <li>This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts <a href="https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html">here</a> and <a href="https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577">here</a> in the order of difficulty</li>
   </ul>
 </blockquote>
@@ -212,10 +212,10 @@
 <h3 id="what-this-article-is-about">What this article is about?</h3>
 <blockquote>
   <ul>
-    <li>The reason why understanding LSTM’s inner working is vital is because it underpins most important models of modern Artificial Intelligence.</li>
+    <li>The reason why understanding LSTM’s inner working is vital is that it underpins the most important models of modern Artificial Intelligence.</li>
     <li>Underpins <strong>memory augmented</strong> models and architecture.</li>
     <li>Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece in itself.</li>
-    <li>In this multi-part series, I get under the cover of an LSTM using <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> especially its back propagation when it is a part of a more complex model.</li>
+    <li>In this multi-part series, I get under the cover of an LSTM using <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> especially its back-propagation when it is a part of a more complex model.</li>
   </ul>
 </blockquote>
 
@@ -236,7 +236,7 @@
 </figure>
 
 <h3 id="training-process">Training Process</h3>
-<p>In the next few illustrations we are looking at primary the shape of input, how is the input fed in, when do we check the output before back-propagation happens, etc. All this <strong>without looking inside the LSTM Cell just yet</strong>. Batch=1(for parallelism), sequence=3(3 words in our example), size=10(vocabulary size 10 so our representation is is a one-hot of size 10).</p>
+<p>In the next few illustrations we are looking at primary the shape of input, how is the input fed in, when do we check the output before back-propagation happens, etc. All this <strong>without looking inside the LSTM Cell just yet</strong>. Batch=1(for parallelism), sequence=3(3 words in our example), size=10(vocabulary size 10 so our representation is a one-hot of size 10).</p>
 
 <blockquote>
   <ul>
@@ -253,7 +253,7 @@
 
 <blockquote>
   <ul>
-    <li>Functionally dynamic_rnn feeds in the batches of sequences but its code is written using “tf.while_loop” and not one of python’s native loop construct. With any one of python’s native loop construct only the code within an iteration be optimized on a GPU but with “tf.while_loop” the advantage is that the complete loop can be optimed on a GPU.</li>
+    <li>Functionally dynamic_rnn feeds in the batches of sequences but its code is written using “tf.while_loop” and not one of python’s native loop construct. With any one of python’s native loop construct only the code within an iteration be optimized on a GPU but with “tf.while_loop” the advantage is that the complete loop can be optimized on a GPU.</li>
   </ul>
 </blockquote>
 
@@ -266,7 +266,7 @@
 
 <blockquote>
   <ul>
-    <li>Returns a tuple of <strong>output(H-state across all time steps)</strong> and states(C-state and H-state for the lst time step).</li>
+    <li>Returns a tuple of <strong>output(H-state across all time steps)</strong> and states(C-state and H-state for the last time step).</li>
   </ul>
 </blockquote>
 
@@ -292,7 +292,7 @@
 
 <blockquote>
   <ul>
-    <li>Multiplier Wy and By which among other things shape last h into shape of X(10) so a comparision can be made.</li>
+    <li>Multiplier Wy and By which among other things shape the last “h” into the shape of X(10) so a comparison can be made.</li>
   </ul>
 </blockquote>
 
@@ -305,7 +305,7 @@
 
 <blockquote>
   <ul>
-    <li>Finally <a href="/articles/2019-05/softmax-and-its-gradient">softmax</a> and a <a href="/articles/2019-05/softmax-and-cross-entropy">cross_entropy_loss</a>.</li>
+    <li>Finally <a href="/articles/2019-05/softmax-and-its-gradient">softmax</a> and <a href="/articles/2019-05/softmax-and-cross-entropy">cross_entropy_loss</a>.</li>
   </ul>
 </blockquote>
 
@@ -392,7 +392,7 @@
 
 <h4 id="deep-breathe"><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a></h4>
 
-<p>I could have done without a similar behaviour in <a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. <strong>Without building a full fleged graph, I associated the variable name with the corresonding weight, i.e. when the variable name is same it fetches the same set of weights </strong>. This is difficult and not reccomended but, if you care to see, then its demonstrated <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255">here</a>,<a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81">here</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112">here</a>. <strong>To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.</strong></p>
+<p>I could have done without a similar behavior in Deep-Breathe but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. Without building a full-fledged graph, I associated the variable name with the corresponding weight, i.e. when the variable name is the same it fetches the same set of weights. This is difficult and not recommended but, if you care to see, then its demonstrated <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76">here</a>, <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255">here</a>, <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81">here</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112">here</a>. <strong>To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
@@ -453,7 +453,7 @@
 </blockquote>
 
 <h3 id="summary">Summary</h3>
-<p>In summary then, that was the walk though of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.</p>
+<p>In summary, then, that was the walk through of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.</p>
 
 
   </article>

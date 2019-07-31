@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionalily. Multiple layers though comput...">
+  <meta name="description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are co...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing">
-  <meta name="twitter:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionalily. Multiple layers though comput...">
+  <meta name="twitter:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are co...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2019-07/LSTMPart-4">
   <meta property="og:title" content="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing">
-  <meta property="og:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionalily. Multiple layers though comput...">
+  <meta property="og:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are co...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -198,13 +198,13 @@
 
   <article class="post-content">
     <h3 id="introduction">Introduction</h3>
-<p>In this <a href="/tags/#LSTM">multi-part series</a> (<a href="/articles/2019-07/LSTMPart-1">part-1</a>,<a href="/articles/2019-07/LSTMPart-2">part-2</a>,<a href="/articles/2019-07/LSTMPart-3">part-3</a>) we look into composing LSTM into multiple higher layers and its directionalily. <strong>Multiple layers</strong> though compute intensive are great accuracy and so is <strong>bidirectional connections.</strong> More importantly a solid understanding of the above mentioned paves the way for concepts like <strong>Highway connections</strong>, <strong>Residual Connections</strong>, <strong>Pointer networks</strong>, <strong>Encoder-Decoder</strong> Architectures and so forth in future article. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</strong></p>
+<p>In this <a href="/tags/#LSTM">multi-part series</a> (<a href="/articles/2019-07/LSTMPart-1">part-1</a>,<a href="/articles/2019-07/LSTMPart-2">part-2</a>,<a href="/articles/2019-07/LSTMPart-3">part-3</a>) we look into composing LSTM into multiple higher layers and its directionality. Though <strong>Multiple layers</strong> are compute-intensive, they have better accuracy and so does <strong>bidirectional connections.</strong> More importantly, a solid understanding of the above mentioned paves the way for concepts like <strong>Highway connections</strong>, <strong>Residual Connections</strong>, <strong>Pointer networks</strong>, <strong>Encoder-Decoder</strong> Architectures and so forth in future article. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models</strong>.</p>
 
 <h3 id="what-this-article-is-not-about">What this article is not about?</h3>
 <blockquote>
   <ul>
-    <li>This article will not talk about the conceptual model of LSTM, on which there are some great existing material <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">here</a> and <a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html">here</a> in thye order of difficulty.</li>
-    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>.</li>
+    <li>This article will not talk about the conceptual model of LSTM, on which there is some great existing material here and here in the order of difficulty.</li>
+    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome, if a somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>, by Andrej.</li>
     <li>This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts <a href="https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html">here</a> and <a href="https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577">here</a> in the order of difficulty</li>
   </ul>
 </blockquote>
@@ -212,13 +212,13 @@
 <h3 id="what-this-article-is-about">What this article is about?</h3>
 <blockquote>
   <ul>
-    <li>Using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> we picturize <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L61-L193">MultiRNNCell</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a> and their backward propagation.</li>
+    <li>Using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> we picturize/visualize <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L61-L193">MultiRNNCell</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a> and their backward propagation.</li>
     <li>Then we use a heady mixture of intuition, Logic, and programming to prove mathematical results.</li>
   </ul>
 </blockquote>
 
 <h3 id="context">Context</h3>
-<p>This is the same example and the context is the same as described in <a href="/articles/2019-07/LSTMPart-1">part-1</a>. <strong>The focus however, this time is on <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L61-L193">MultiRNNCell</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a></strong></p>
+<p>This is the same example and the context is the same as described in <a href="/articles/2019-07/LSTMPart-1">part-1</a>. <strong>The focus. however, this time is on <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L61-L193">MultiRNNCell</a> and <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a></strong>.</p>
 
 <p>There are 2 parts to this article.</p>
 <ol>
@@ -238,7 +238,7 @@
 
 <h1 id="-1"><a name="Recurent depth"></a></h1>
 <h4 id="recurent-depth">Recurent depth</h4>
-<p>A quick recap, LSTM encapsulates the internal cell logic. There are many variations to Cell logic, VanillaRNN, LSTMs, GRUs etc. What we have seen so far is they can be fed sequiential time series kind of data. We feed in the sequence, compare with the labels, calculate errors back propagate and adjust the weights. The length of the fed in sequence is informally called recurrent depth.</p>
+<p>A quick recap, LSTM encapsulates the internal cell logic. There are many variations to Cell logic, VanillaRNN, LSTMs, GRUs, etc. What we have seen so far is they can be fed with sequential time series data. We feed in the sequence, compare with the labels, calculate errors back-propagate and adjust the weights. The length of the fed in the sequence is informally called recurrent depth.</p>
 
 <figure>
     
@@ -247,11 +247,11 @@
     <figcaption><center><span class="faded_text">figure-1: <strong>Recurrent depth</strong>=3</span></center></figcaption>
 </figure>
 
-<p>Figure-1 shows the recurrent depth. Formally, <strong>Recurrent depth is the Longest path between same hidden state in successive timesteps</strong>. The recurrent depth is amply clear.</p>
+<p>Figure-1 shows the recurrent depth. Formally stated, <strong>Recurrent depth is the Longest path between the same hidden state in successive time-steps</strong>. The recurrent depth is amply clear.</p>
 
 <h1 id="-2"><a name="Feed Forward depth"></a></h1>
 <h4 id="feed-forward-depth">Feed Forward depth</h4>
-<p>The topic of this article is Feed-forward depth, more akin to the depth we have in vanilla neural networks. It is the depth of a network that is generally attributed to the success of deep learning as a technique. There are downsides too, too much compute budget for one if done indiscrimately. That being said, well look at the inner workings of Multiple layers and how we set it up in code.</p>
+<p>The topic of this article is Feed-forward depth, more akin to the depth we have in vanilla neural networks. It is the depth of a network that is generally attributed to the success of deep learning as a technique. There are downsides too, too much compute budget for one if done indiscriminately. That being said, well look at the inner workings of Multiple layers and how we set it up in code.</p>
 
 <figure>
     
@@ -260,12 +260,12 @@
     <figcaption><center><span class="faded_text">figure-2: <strong>Feed forward depth</strong>=3</span></center></figcaption>
 </figure>
 
-<p>Figure-2 shows the feed forward depth. Formally longest path between an input and output at the same timestep.</p>
+<p>Figure-2 shows the Feed-Forward depth. Formally stated the longest path between an input and output at the same timestep.</p>
 
 <h1 id="-3"><a name="Multi layer RNNs Forward pass"></a></h1>
 <h4 id="multi-layer-rnns-forward-pass">Multi layer RNNs Forward pass</h4>
 
-<p>For most part this straight forward as you have already seen in the <a href="/articles/2019-07/LSTMPart-3">previous article</a> in this series. The only difference being that there are multiple cells(2 in this example) now and how the state flows forward and gradient flows backwards.</p>
+<p>For the most part this straight forward as you have already seen in the <a href="/articles/2019-07/LSTMPart-3">previous article</a> in this series. The only difference is that there are multiple cells(2 in this example) now and how the state flows forward and gradient flows backwards.</p>
 
 <blockquote>
   <ul>
@@ -282,9 +282,9 @@
 
 <blockquote>
   <ul>
-    <li>Multi layer RNNs Forward pass</li>
-    <li>Notice the state being passed(yellow) from first layer to the second.</li>
-    <li>The softmax and cross_entropy_loss is done on the second layer output expectedly.</li>
+    <li>Multi-layer RNNs Forward pass</li>
+    <li>Notice the state being passed(yellow) from the first layer to the second.</li>
+    <li>The softmax and cross_entropy_loss are done on the second layer output expectedly.</li>
   </ul>
 </blockquote>
 
@@ -341,7 +341,7 @@
 
 <h1 id="-4"><a name="Multi layer RNNs backward propagation"></a></h1>
 <h4 id="multi-layer-rnns-backward-propagation">Multi layer RNNs backward propagation</h4>
-<p>Again, for most part, this is almost identical to standard LSTM Backward Propagation which we went through in detail in <a href="/articles/2019-07/LSTMPart-3">part-3</a>. So if you have got a good hang of it, only a few things change. But before we go on, refresh <a href="LSTMPart-3#DHX">DHX</a> and the complete <a href="LSTMPart-3#Backward propagation through LSTMCell(Step-2)">section</a> before you resume here. Here is what we have to calculate.</p>
+<p>Again, for the most part, this is almost identical to standard LSTM Backward Propagation which we went through in detail in <a href="/articles/2019-07/LSTMPart-3">part-3</a>. So if you have got a good hang of it, only a few things change. But before we go on, refresh <a href="LSTMPart-3#DHX">DHX</a> and the complete <a href="LSTMPart-3#Backward propagation through LSTMCell(Step-2)">section</a> before you resume here. Here is what we have to calculate.</p>
 
 <blockquote>
   <ul>
@@ -361,7 +361,7 @@
 <blockquote>
   <ul>
     <li><strong>Dhx</strong>, <strong>Dh_next</strong>, <strong>dxt</strong>.</li>
-    <li>Complete listing can be found at [code-15]</li>
+    <li>Complete listing can be found at <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L333-L344">code-1</a></li>
   </ul>
 </blockquote>
 
@@ -375,22 +375,22 @@
 <h6 id="dhx-for-multirnncell-composing-lstm-cell">DHX for MultiRNNCell composing LSTM Cell</h6>
 <blockquote>
   <ul>
-    <li>Dhx, Dh_next, dxt as usual and then <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to next layer.</li>
+    <li>Dhx, Dh_next, dxt as usual and then <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to the next layer.</li>
     <li>Complete listing can be found at <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L333-L344">code-1</a>. Pay careful attention to the weights shapes.</li>
   </ul>
 </blockquote>
 
 <figure>
     
-    <img src="/img/rnn/multilayercell9.jpg" alt="Image: figure-10: &lt;strong&gt;dh_next_recurr&lt;/strong&gt; which is passed back to MultiRNNCell to be applied to next layer." hight="110%" width="110%" />
+    <img src="/img/rnn/multilayercell9.jpg" alt="Image: figure-10: &lt;strong&gt;dh_next_recurr&lt;/strong&gt; which is passed back to MultiRNNCell to be applied to the next layer." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-10: <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to next layer.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-10: <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to the next layer.</span></center></figcaption>
 </figure>
 
 <h6 id="standard-dhx-schematically-regular-lstm-cell">Standard DHX schematically Regular LSTM Cell</h6>
 <blockquote>
   <ul>
-    <li>Many models like Neural Machine Translators(NMT), Bidirectional Encoder Representation from Transformers(BERT) use word embeddings as their inputs(Xs) which often times need learrning and that is where we need <strong>dxt</strong></li>
+    <li>Many models like Neural Machine Translators(NMT), Bidirectional Encoder Representation from Transformers(BERT) use word embeddings as their inputs(Xs) which oftentimes need learning and that is where we need <strong>dxt</strong></li>
   </ul>
 </blockquote>
 
@@ -404,8 +404,8 @@
 <h6 id="dhx-schematically-for-multirnncell-composing-lstm-cell">DHX schematically for MultiRNNCell composing LSTM Cell</h6>
 <blockquote>
   <ul>
-    <li>Dhx, Dh_next, dxt as usual and then <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to next layer.</li>
-    <li>Complete listing can be found at <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L333-L344">code-1</a> in particular the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L146-L153">MultiRNNCell “compute_gradient()”</a>. Pay careful attention to the weights shapes.</li>
+    <li>Dhx, Dh_next, dxt as usual and then <strong>dh_next_recurr</strong> which is passed back to MultiRNNCell to be applied to the next layer.</li>
+    <li>The Complete listing can be found at <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn_cell.py#L333-L344">code-1</a>, in particular, the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L146-L153">MultiRNNCell “compute_gradient()”</a>. Pay careful attention to the weights’ shapes.</li>
   </ul>
 </blockquote>
 
@@ -418,7 +418,7 @@
 
 <h1 id="-5"><a name="Bidirectional RNNs section"></a></h1>
 <h3 id="bidirectional-rnns">Bidirectional RNNs</h3>
-<p>The bidirectional RNNs are great for accuracy but the compute budget goes up. Most advanced architectures use bidirectional for better accuracy. It has 2 cells or 2 multi-cells where the sequence is fed in forwards as well as backwards. For many sequences, language models for instances, when the sequence is fed in-reverse then it provide a bit more context of what is being said. Consider the below statements.</p>
+<p>The bidirectional RNNs are great for accuracy but the compute budget goes up. Most advanced architectures use bidirectional for better accuracy. It has 2 cells or 2 multi-cells where the sequence is fed in forwards as well as backwards. For many sequences, language models for instance, when the sequence is fed in-reverse then it provides a bit more context of what is being said. Consider the below statements.</p>
 
 <blockquote>
   <ul>
@@ -432,7 +432,7 @@
 <blockquote>
   <ul>
     <li><a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a>.</li>
-    <li>Simple 2 seperate cells fed in with the same sequence in opposite directions.</li>
+    <li>Simple 2 separate cells fed in with the same sequence in opposite directions.</li>
   </ul>
 </blockquote>
 
@@ -446,7 +446,7 @@
 <blockquote>
   <ul>
     <li><a href="https://github.com/slowbreathing/Deep-Breathe/blob/b5f4073ec616ebe198721bfedcd3ab8060c0847a/org/mk/training/dl/rnn.py#L288-L416">Bidirectional RNNs</a></li>
-    <li>The State look identical but reversed, and that is because they have been initialized indentically for comparision purposes. <strong>In practise we don’t do that</strong>.</li>
+    <li>The State looks identical but reversed, and that is because they have been initialized identically for comparison purposes. <strong>In practice we don’t do that</strong>.</li>
   </ul>
 </blockquote>
 
@@ -541,7 +541,7 @@
 </figure>
 
 <h3 id="summary">Summary</h3>
-<p>Finally, that would be the complete documnentation of LSTMs inner workings. Maybe a comparision with RNNs for vanishing gradient improvement will complete it. But that apart, once we have a drop on LSTMs like we did, using them in more complex architectures will become a lot easier. In the immediate next article well look at the improvements in gradient propagation, if any, brought about by LSTMs over RNNs.</p>
+<p>Finally, that would be the complete documentation of LSTMs inner workings. Maybe a comparison with RNNs for vanishing gradient improvement will complete it. But that apart, once we have a drop on LSTMs like we did, using them in more complex architectures will become a lot easier. In the immediate next article, we’ll look at the improvements in propagation because of vanishing and exploding gradients, if any, brought about by LSTMs over RNNs.</p>
 
 
   </article>

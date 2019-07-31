@@ -198,13 +198,13 @@
 
   <article class="post-content">
     <h3 id="introduction">Introduction</h3>
-<p>This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is defined as error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as <script type="math/tex">\Large softmax_j (logits)</script> and logits are weighted sum. One of the reason to choose cross entropy alongside softmax is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.</p>
+<p>This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as <script type="math/tex">\Large E = -y .log ({\hat{Y}})</script> where <script type="math/tex">\Large E</script>, is defined as the error, <script type="math/tex">\Large y</script> is the label and <script type="math/tex">\Large \hat{Y}</script> is defined as the <script type="math/tex">\Large softmax_j (logits)</script> and logits are the weighted sum. One of the reasons to choose cross-entropy alongside softmax is that because softmax has an exponential element inside it. A cost function that has an element of the natural log will provide for a convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.</p>
 
 <script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
 
 <script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
 
-<p>where <script type="math/tex">\Large y</script> is the label and Yhat <script type="math/tex">\Large \hat{Y}</script> the predicted value.</p>
+<p>where <script type="math/tex">\Large y</script> is the label and Yhat is <script type="math/tex">\Large \hat{Y}</script> the predicted value.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
   <span class="s">"""
@@ -232,7 +232,7 @@
 <span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></code></pre></figure>
 
 <p>As you can see the loss function accepts softmaxed input and one-hot encoded labels which is being passed in <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L26-L38">Listing-2</a>.
-The output is illustated in figure-1 and 2 below.</p>
+The output is illustrated in figure-1 and 2 below.</p>
 
 <blockquote>
   <ul>
@@ -261,7 +261,7 @@ The output is illustated in figure-1 and 2 below.</p>
 </figure>
 
 <h3 id="crossentropyloss">CrossEntropyLoss</h3>
-<p>CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136">CrossEntropyLoss</a> function that calculates the softmax internally.</p>
+<p>CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. In fact, it calls the same loss function internally. In the above example, we are making 2 comparisons because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the above 2 comparisons are for 2 timesteps, the above results can be achieved by calling the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136">CrossEntropyLoss</a> function that calculates the softmax internally.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">cross_entropy_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
     <span class="s">"""
@@ -301,13 +301,13 @@ The output is illustated in figure-1 and 2 below.</p>
 <p>As illustrated in <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L117-L136">Listing-3</a> and <a href="https://github.com/slowbreathing/Deep-Breathe">Listing-4</a><a href="https://github.com/slowbreathing/Deep-Breathe">Deep-Breathe</a> version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.</p>
 
 <h3 id="crossentropyloss-derivative">CrossEntropyLoss Derivative</h3>
-<p>One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.</p>
+<p>One of the tricks I have learnt to get back-propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.</p>
 
 <script type="math/tex; mode=display">\Large \hat{Y}=softmax_j (logits)</script>
 
 <script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
 
-<p>The above equation is writen like so below while calculating the gradients.</p>
+<p>The above equation is written like so below while calculating the gradients.</p>
 
 <script type="math/tex; mode=display">\Large E = -y .log ({\hat{Y}})</script>
 
@@ -387,7 +387,7 @@ softmax_i(1-softmax_j) & i= j \\
 <p><a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L52-L62">Listing-5</a></p>
 
 <h3 id="summary">Summary</h3>
-<p>As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss’s combined gradient in Listing-5 does the same.</p>
+<p>As you can see the idea behind softmax and cross_entropy_loss and their combined use and implementation. Also, their combined gradient derivation is one of the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully, cross_entropy_loss’s combined gradient in Listing-5 does the same.</p>
 
 
   </article>

@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="In this multi-part series we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the m...">
+  <meta name="description" content="In this multi-part series, we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the ...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="RNN Series:LSTM internals:Part-2:The Forward pass | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RNN Series:LSTM internals:Part-2:The Forward pass | Slowbreathing">
-  <meta name="twitter:description" content="In this multi-part series we look inside LSTM forward pass. Read the part-1&#39;s before you come back here. Once you are back, in this article, we explore the m...">
+  <meta name="twitter:description" content="In this multi-part series, we look inside LSTM forward pass. Read the part-1&#39;s before you come back here. Once you are back, in this article, we explore the ...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2019-07/LSTMPart-2">
   <meta property="og:title" content="RNN Series:LSTM internals:Part-2:The Forward pass | Slowbreathing">
-  <meta property="og:description" content="In this multi-part series we look inside LSTM forward pass. Read the part-1&#39;s before you come back here. Once you are back, in this article, we explore the m...">
+  <meta property="og:description" content="In this multi-part series, we look inside LSTM forward pass. Read the part-1&#39;s before you come back here. Once you are back, in this article, we explore the ...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -198,13 +198,13 @@
 
   <article class="post-content">
     <h3 id="introduction">Introduction</h3>
-<p><strong>In this <a href="/tags/#LSTM">multi-part series</a> we look inside LSTM forward pass.</strong> If you havent already read it I suggest run through the previous parts (<a href="/articles/2019-07/LSTMPart-1">part-1</a>) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</strong></p>
+<p><strong>In this <a href="/tags/#LSTM">multi-part series</a>, we look inside LSTM forward pass.</strong> If you haven’t already read it I suggest run through the previous parts (<a href="/articles/2019-07/LSTMPart-1">part-1</a>) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</strong></p>
 
 <h3 id="what-this-article-is-not-about">What this article is not about?</h3>
 <blockquote>
   <ul>
-    <li>This article will not talk about the conceptual model of LSTM, on which there are some great existing material <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">here</a> and <a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html">here</a> in thye order of difficulty.</li>
-    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>.</li>
+    <li>This article will not talk about the conceptual model of LSTM, on which there is some great existing material <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">here</a> and <a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html">here</a> in the order of difficulty.</li>
+    <li>This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if a somewhat <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">difficult post</a>.</li>
     <li>This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts <a href="https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html">here</a> and <a href="https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577">here</a> in the order of difficulty</li>
   </ul>
 </blockquote>
@@ -212,20 +212,20 @@
 <h3 id="what-this-article-is-about">What this article is about?</h3>
 <blockquote>
   <ul>
-    <li>Using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> we picturize the forward pass of an LSTM cell.</li>
-    <li>Then we associate code with picture to make our understanding more concrete</li>
+    <li>Using the <a href="https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0">first principles</a> we picturize/visualize the forward pass of an LSTM cell.</li>
+    <li>Then we associate code with the picture to make our understanding more concrete</li>
   </ul>
 </blockquote>
 
 <h3 id="context">Context</h3>
-<p>This is the same example and the context is the same as described in <a href="/articles/2019-07/LSTMPart-1">part-1</a>. <strong>The focus however, this time is on LSTM cell.</strong></p>
+<p>This is the same example and the context is the same as described in <a href="/articles/2019-07/LSTMPart-1">part-1</a>. <strong>The focus however, this time is on LSTMCell.</strong></p>
 
 <h3 id="lstm-cell">LSTM Cell</h3>
-<p>While there are many variations to the LSTM cell. In the current article we are looking at <a href="https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/LayerNormBasicLSTMCell">LayerNormBasicLSTMCell</a>.</p>
+<p>While there are many variations to the LSTM cell. In the current article, we are looking at <a href="https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/LayerNormBasicLSTMCell">LayerNormBasicLSTMCell</a>.</p>
 <blockquote>
   <ul>
     <li>Weights and biases of the LSTM cell.</li>
-    <li>Shapes color coded.</li>
+    <li>Shapes color-coded.</li>
   </ul>
 </blockquote>
 
@@ -245,15 +245,15 @@
 
 <figure>
     
-    <img src="/img/rnn/lstm2.jpg" alt="Image: figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). Shape of these &lt;strong&gt;weights&lt;/strong&gt; are &lt;strong&gt;5X15&lt;/strong&gt; individually and stacked vertically as shown they measure &lt;strong&gt;20X15&lt;/strong&gt;. Shape of the &lt;strong&gt;biases&lt;/strong&gt; are &lt;strong&gt;5X1&lt;/strong&gt; individually and stacked up &lt;strong&gt;20X1&lt;/strong&gt;." hight="110%" width="110%" />
+    <img src="/img/rnn/lstm2.jpg" alt="Image: figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these &lt;strong&gt;weights&lt;/strong&gt; are &lt;strong&gt;5X15&lt;/strong&gt; individually and stacked vertically as shown they measure &lt;strong&gt;20X15&lt;/strong&gt;. The Shapes of the &lt;strong&gt;biases&lt;/strong&gt; are &lt;strong&gt;5X1&lt;/strong&gt; individually and stacked up &lt;strong&gt;20X1&lt;/strong&gt;." hight="110%" width="110%" />
     
-    <figcaption><center><span class="faded_text">figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). Shape of these <strong>weights</strong> are <strong>5X15</strong> individually and stacked vertically as shown they measure <strong>20X15</strong>. Shape of the <strong>biases</strong> are <strong>5X1</strong> individually and stacked up <strong>20X1</strong>.</span></center></figcaption>
+    <figcaption><center><span class="faded_text">figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these <strong>weights</strong> are <strong>5X15</strong> individually and stacked vertically as shown they measure <strong>20X15</strong>. The Shapes of the <strong>biases</strong> are <strong>5X1</strong> individually and stacked up <strong>20X1</strong>.</span></center></figcaption>
 </figure>
 
 <blockquote>
   <ul>
     <li>Weights and biases in the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L76">code</a>.</li>
-    <li>Often the code accepts constants as weights for comparision with <a href="https://www.tensorflow.org/">Tensorflow</a></li>
+    <li>Often the code accepts constants as weights for comparison with <a href="https://www.tensorflow.org/">Tensorflow</a></li>
   </ul>
 </blockquote>
 
@@ -294,8 +294,8 @@
 
 <blockquote>
   <ul>
-    <li>The <strong>mathematical reason</strong> why <strong>vanishing gradient</strong> is <strong>mitigated</strong>.</li>
-    <li>There are many theories though. Look into this in detail with back propagation.</li>
+    <li>The <strong>mathematical reason</strong> why the <strong>vanishing gradient</strong> is <strong>mitigated</strong>.</li>
+    <li>There are many theories though. Look into this in detail with back-propagation.</li>
   </ul>
 </blockquote>
 
@@ -364,7 +364,7 @@
 
 <blockquote>
   <ul>
-    <li>Usually this is done in on the client side code because only the clients know the model and when the loss calculation can be done.</li>
+    <li>Usually, this is done in on the client-side code because only the clients know the model and when the loss calculation can be done.</li>
     <li>Tensorflow version of the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104">code</a>.</li>
   </ul>
 </blockquote>
@@ -432,7 +432,7 @@
 
 <blockquote>
   <ul>
-    <li>Sequence of 3 shown below, but that can depend on the use-case.</li>
+    <li>A Sequence of 3 shown below, but that can depend on the use-case.</li>
     <li>Tensorflow version of the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104">code</a> and DEEP-Breathe version of the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109">code</a>.</li>
   </ul>
 </blockquote>
@@ -445,7 +445,7 @@
 </figure>
 
 <h3 id="summary">Summary</h3>
-<p>In summary then, that was the walk though of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time step advanced. However, Lets not get ahead of ourselves, before we get to a language model, lets look at the backward pass(Back Propagation) for LSTM in the next post.</p>
+<p>In summary, then, that was the walk through of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time-step advanced. However, Let’s not get ahead of ourselves, before we get to a language model, let’s look at the backward pass(Back Propagation) for LSTM in the next post.</p>
 
 
   </article>

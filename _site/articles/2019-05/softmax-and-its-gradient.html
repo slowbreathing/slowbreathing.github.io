@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
+  <meta name="description" content="From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="Softmax and its Gradient | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Softmax and its Gradient | Slowbreathing">
-  <meta name="twitter:description" content="From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
+  <meta name="twitter:description" content="From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2019-05/softmax-and-its-gradient">
   <meta property="og:title" content="Softmax and its Gradient | Slowbreathing">
-  <meta property="og:description" content="From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it ...">
+  <meta property="og:description" content="From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it...">
   
     <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
   
@@ -197,8 +197,8 @@
   </header>
 
   <article class="post-content">
-    <p>From the perspective of deep neural network, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross entropy loss and the combined gradient.<br />
-There are many softmax resources available in the internet. Among the many that are availble, I found the link <a href="https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/">here</a> to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code when associated with theory makes the explanation very precise. <strong>But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT etc.</strong></p>
+    <p>From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross-entropy loss and the combined gradient.
+There are many softmax resources available on the internet. Among the many that are available, I found the link <a href="https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/">here</a> to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code, when associated with theory, makes the explanation very precise. <strong>But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT, etc.</strong></p>
 
 <p>Softmax is essentially a vector function. It takes n inputs and produces and n outputs. <strong>The out can be interpreted as a probabilistic output(summing up to 1). A multiway shootout if you will.<strong></strong></strong></p>
 
@@ -218,7 +218,7 @@ S_N
 
 <script type="math/tex; mode=display">\Large softmax_j = \frac{e^{a_j}}{\sum_{k=1}^{N} e^{a_k}}</script>
 
-<p>As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also,  as the value  appears in the denominator summed up with other positive numbers.</p>
+<p>As one can see the output function can only be positive because of the exponential and the values range between 0 and 1. Also, the value appears in the denominator summed up with other positive numbers.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">):</span>
     <span class="c">#row represents num classes but they may be real numbers</span>
@@ -256,7 +256,7 @@ S_N
 
 <p>Above is a <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L10-L19">softmaxtest</a> implementation.</p>
 
-<p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the the above two rows individually summing up to one.</p>
+<p>The softmax function is very similar to the Logistic regression cost function. The only difference being that the sigmoid makes the output binary interpretable whereas, softmax’s output can be interpreted as a multiway shootout. With the above two rows individually summing up to one.</p>
 
 <h3 id="softmax-derivative">Softmax Derivative</h3>
 <p>Before diving into computing the derivative of softmax, let’s start with some preliminaries from vector calculus.</p>
@@ -265,7 +265,7 @@ S_N
 
 <ol>
   <li>Which component (output element) of softmax we’re seeking to find the derivative of.</li>
-  <li>Since softmax has multiple inputs, with respect to which input element the partial derivative is computed.
+  <li>Since softmax has multiple inputs, with respect to which input element the partial derivative is being computed.
 This is exactly why the notation of vector calculus was developed. What we’re looking for is the partial derivatives:</li>
 </ol>
 
@@ -356,7 +356,7 @@ softmax_i(1-softmax_j) & i= j \\
 
     <span class="k">return</span> <span class="n">jacobian_m</span></code></pre></figure>
 
-<p>The above is the <a href="https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/common.py#L76-L115">softmax grad</a> code. As you can see it initializes a diagonal matrix that is then populated with right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustarted in the picture below.</p>
+<p>The above is the softmax grad code. As you can see it initializes a diagonal matrix that is then populated with the right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustrated in the picture below.</p>
 
 <figure>
     
@@ -366,7 +366,7 @@ softmax_i(1-softmax_j) & i= j \\
 </figure>
 
 <h3 id="summary">Summary</h3>
-<p>As you can see the softmax gradient <strong>producers an nxn matrix for input size of n</strong>. Hopefully you got a good idea of softmax and its implementation. Hopefully you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few instances like “<a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py">Attention</a>”. More on <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py">Attention</a> in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.</p>
+<p>As you can see the softmax gradient <strong>producers an nxn matrix for input size of n</strong>. Hopefully, you got a good idea of softmax and its implementation. Hopefully, you got a good idea of softmax’s gradient and its implementation. Softmax is usually used along with cross_entropy_loss, but not always. There are few a instances like “<a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py">Attention</a>”. More on <a href="https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/attention.py">Attention</a> in a much later article. But for now, what is the relationship between softmax and cross_entropy_loss function. This will be illustrated in the next article.</p>
 
 
   </article>

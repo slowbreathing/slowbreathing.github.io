@@ -10,13 +10,13 @@ comments: true
 ---
 
 ### Introduction
-This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as $$\Large E = -y .log ({\hat{Y}})$$ where $$\Large E$$, is defined as the error, $$\Large y$$ is the label and $$\Large \hat{Y}$$ is defined as $$\Large softmax_j (logits)$$ and logits are weighted sum. One of the reason to choose cross entropy alongside softmax is that because softmax has an exponential element inside it the, an element log provides for convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.  
+This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as $$\Large E = -y .log ({\hat{Y}})$$ where $$\Large E$$, is defined as the error, $$\Large y$$ is the label and $$\Large \hat{Y}$$ is defined as the $$\Large softmax_j (logits)$$ and logits are the weighted sum. One of the reasons to choose cross-entropy alongside softmax is that because softmax has an exponential element inside it. A cost function that has an element of the natural log will provide for a convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.  
 
 $$\Large \hat{Y}=softmax_j (logits)$$
 
 $$\Large E = -y .log ({\hat{Y}})$$  
 
-where $$ \Large y $$ is the label and Yhat $$\Large \hat{Y}$$ the predicted value.
+where $$ \Large y $$ is the label and Yhat is $$\Large \hat{Y}$$ the predicted value.
 
 {% highlight python %}
 def loss(pred,labels):
@@ -47,7 +47,7 @@ Listing-2
 {% endhighlight %}
 
 As you can see the loss function accepts softmaxed input and one-hot encoded labels which is being passed in [Listing-2].
-The output is illustated in figure-1 and 2 below.
+The output is illustrated in figure-1 and 2 below.
 
 > * Loss function: Example-1
 {%
@@ -67,7 +67,7 @@ The output is illustated in figure-1 and 2 below.
     width="110%"
 %}
 ### CrossEntropyLoss
-CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. Infact it calls the same loss function internally. In the above example we are making 2 comparisions because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the abobe 2 comparisions are for 2 time timesteps, the abobe results can be achieved by calling the the [CrossEntropyLoss][CrossEntropyLoss] function that calculates the softmax internally.
+CrossEntropyLoss Function is the same loss function above but simplified and adapted for calculating the loss for multiple time steps as is usually required in RNNs. In fact, it calls the same loss function internally. In the above example, we are making 2 comparisons because we are passing 2 sets of logits(x) and 2 labels(y). The labels further have to be adapted into a one-hot of 4 so that they can be compared. Assuming that the above 2 comparisons are for 2 timesteps, the above results can be achieved by calling the [CrossEntropyLoss][CrossEntropyLoss] function that calculates the softmax internally.
 
 {% highlight python %}
 def cross_entropy_loss(pred,labels):
@@ -110,13 +110,13 @@ Listing-4
 As illustrated in [Listing-3] and [Listing-4] [Deep-Breathe][Deep-Breathe] version of cross_entropy_loss function returns a tuple of softmaxed output that it calculates internally(only for convenience) and the Loss. The calculated loss, as expected, is the same as before as was while calling the loss function directly.
 
 ### CrossEntropyLoss Derivative
-One of the tricks I have learnt to get back propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.  
+One of the tricks I have learnt to get back-propagation right is to write the equations backwards. This becomes especially useful when the model is more complex in later articles. A trick that I use a lot.  
 
 $$\Large \hat{Y}=softmax_j (logits)$$
 
 $$\Large E = -y .log ({\hat{Y}})$$  
 
-The above equation is writen like so below while calculating the gradients.
+The above equation is written like so below while calculating the gradients.
 
 $$\Large E = -y .log ({\hat{Y}})$$
 
@@ -183,7 +183,7 @@ Listing-5
 [Listing-5]
 
 ### Summary
-As you can see idea behind softmax and cross_entropy_loss and their combined use and implementation. Also their combined gradient derivation is one the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully cross_entropy_loss's combined gradient in Listing-5 does the same.
+As you can see the idea behind softmax and cross_entropy_loss and their combined use and implementation. Also, their combined gradient derivation is one of the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully, cross_entropy_loss’s combined gradient in Listing-5 does the same.
 
 [eq-1]: softmax-and-its-gradient#eq-1
 [eq-2]: softmax-and-cross-entropy#eq-2
