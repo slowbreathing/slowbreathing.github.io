@@ -44,6 +44,9 @@
 <loc>http://localhost:4000/tags/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/thankyou</loc>
+</url>
+<url>
 <loc>http://localhost:4000/img/Microoptimization.pdf</loc>
 <lastmod>2019-08-06T13:48:51+00:00</lastmod>
 </url>
