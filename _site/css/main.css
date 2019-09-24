@@ -693,7 +693,7 @@ a.read-more { padding: 5px 8px; }
 .post-nav-btn .table-cell { vertical-align: middle; }
 
 .post-image-feature { margin-bottom: 40px; }
-.post-image-feature .feature-image { width: 100%; max-height: 500px; }
+.post-image-feature .feature-image { width: 100%; max-height: 300px; }
 
 .share-buttons { padding-top: 1em; border-top: 1px solid #ddd; }
 .share-buttons ul { margin: 0; padding: 0; list-style: none; }
