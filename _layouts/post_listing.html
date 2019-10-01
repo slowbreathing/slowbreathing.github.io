@@ -37,8 +37,13 @@ layout: default
     {% if post.image.feature %}
     <div class="post-image-feature">
       <img class="feature-image" src=
+<<<<<<< HEAD
+      {% if post.image.feature contains 'https' %}
+      "{{ page.image.feature }}"
+=======
       {% if page.image.feature contains 'https' %}
       "{{ post.image.feature }}"
+>>>>>>> 5eda23121f47f034aac69b14dd1538da41dfd1ef
       {% else %}
       "{{ site.url }}/img/{{ post.image.feature }}"
       {% endif %}

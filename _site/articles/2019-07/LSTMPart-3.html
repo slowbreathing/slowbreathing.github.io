@@ -19,31 +19,31 @@
   <meta name="twitter:title" content="RNN Series:LSTM internals:Part-3: The Backward Propagation | Slowbreathing">
   <meta name="twitter:description" content="In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am no...">
   
-    <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
+    <meta property="twitter:image" content="http://0.0.0.0:4000/img/leonids-logo.png">
   
 
   <!-- Open Graph Tags -->
   <meta property="og:type" content="blog">
-  <meta property="og:url" content="http://localhost:4000/articles/2019-07/LSTMPart-3">
+  <meta property="og:url" content="http://0.0.0.0:4000/articles/2019-07/LSTMPart-3">
   <meta property="og:title" content="RNN Series:LSTM internals:Part-3: The Backward Propagation | Slowbreathing">
   <meta property="og:description" content="In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am no...">
   
-    <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
+    <meta property="og:image" content="http://0.0.0.0:4000/img/leonids-logo.png">
   
   <title>RNN Series:LSTM internals:Part-3: The Backward Propagation | Slowbreathing</title>
 
   <!-- CSS files -->
-  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
-  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+  <link rel="stylesheet" href="http://0.0.0.0:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://0.0.0.0:4000/css/main.css">
 
-  <link rel="canonical" href="http://localhost:4000/articles/2019-07/LSTMPart-3">
-  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+  <link rel="canonical" href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-3">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://0.0.0.0:4000/feed.xml" />
 
   <!-- Icons -->
   <!-- 16x16 -->
-  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <link rel="shortcut icon" href="http://0.0.0.0:4000/favicon.ico">
   <!-- 32x32 -->
-  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <link rel="shortcut icon" href="http://0.0.0.0:4000/favicon.png">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
   <script>
@@ -53,7 +53,7 @@
 
     gtag('config', 'UA-142206738-1');
   </script>-->
-  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+  <link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/feed.xml" title="Slowbreathing" />
 </head>
 
 
@@ -65,33 +65,33 @@
 
 <div class="cover-card table-cell table-middle">
   
-  <a href="http://localhost:4000/">
-    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  <a href="http://0.0.0.0:4000/">
+    <img src="http://0.0.0.0:4000/img/leonids-logo.png" alt="" class="avatar">
   </a>
   
-  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <a href="http://0.0.0.0:4000/" class="author_name">Mohit Kumar</a>
   <span class="author_job">Researcher/Consultant/Trainer</span>
   <span class="author_bio mbm">Programming is more than just typing.</span>
   <nav class="nav">
     <ul class="nav-list">
       <li class="nav-item">
-        <a href="http://localhost:4000/">home</a>
+        <a href="http://0.0.0.0:4000/">home</a>
       </li>
        
       <li class="nav-item">
-        <a href="http://localhost:4000/archive/">Archive</a>
+        <a href="http://0.0.0.0:4000/archive/">Archive</a>
       </li>
           
       <li class="nav-item">
-        <a href="http://localhost:4000/categories/">Categories</a>
+        <a href="http://0.0.0.0:4000/categories/">Categories</a>
       </li>
             
       <li class="nav-item">
-        <a href="http://localhost:4000/resume/">about me</a>
+        <a href="http://0.0.0.0:4000/resume/">about me</a>
       </li>
         
       <li class="nav-item">
-        <a href="http://localhost:4000/tags/">Tags</a>
+        <a href="http://0.0.0.0:4000/tags/">Tags</a>
       </li>
                  
     </ul>
@@ -148,7 +148,7 @@
     </div>
     <div class="col s12 m9">
       <div class="post-listing">
-        <a class="btn" href= "http://localhost:4000/" >
+        <a class="btn" href= "http://0.0.0.0:4000/" >
   Home
 </a>
 
@@ -719,19 +719,19 @@ As some of you had requested, Login has been removed from subscription form.
   <h6>Share on: </h6>
   <ul>
     <li>
-      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2019-07/LSTMPart-3" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+      <a href="https://twitter.com/intent/tweet?text=http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
     </li>
     <li>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2019-07/LSTMPart-3" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
     </li>
     <li>
-      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2019-07/LSTMPart-3" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+      <a href="https://plus.google.com/share?url=http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
     </li>
     <li>
-      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2019-07/LSTMPart-3" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+      <a href="https://news.ycombinator.com/submitlink?u=http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
     </li>
     <li>
-      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2019-07/LSTMPart-3" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+      <a href="https://www.reddit.com/submit?url=http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
     </li>
   </ul>
 </div><!-- end share-buttons -->
@@ -776,8 +776,8 @@ As some of you had requested, Login has been removed from subscription form.
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+  <script type="text/javascript" src="http://0.0.0.0:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://0.0.0.0:4000/js/main.js"></script>
 
 <!-- Asynchronous Google Analytics snippet -->
 <script>
