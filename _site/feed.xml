@@ -1,4 +1,567 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2019-10-01T10:58:55+00:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs</title><link href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-4" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs" /><published>2019-07-22T15:07:19+00:00</published><updated>2019-07-22T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-07/LSTMPart-4</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-07/LSTMPart-4">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+=======
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-10-01T10:53:31+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation</title><link href="http://localhost:4000/articles/2019-09/NMTPart1" rel="alternate" type="text/html" title="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation" /><published>2019-09-19T15:07:19+00:00</published><updated>2019-09-19T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-09/NMTPart1</id><content type="html" xml:base="http://localhost:4000/articles/2019-09/NMTPart1">&lt;h1&gt;&lt;a name=&quot;Multi layer RNNs backward propagation&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In this &lt;strong&gt;&lt;a href=&quot;/tags/#NMT&quot;&gt;multi-part series&lt;/a&gt;&lt;/strong&gt; we look at Neural Machine Translation, the technology behind how machines understand humans. The &lt;strong&gt;&lt;a href=&quot;NMTPart1&quot;&gt;first of which(current article)&lt;/a&gt;&lt;/strong&gt; is a completely pictorial and a non technical take on the technology and its potential.
+The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code and logic)&lt;/strong&gt; look at &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Neural Machine Translators&lt;/strong&gt;&lt;/a&gt;, &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Attention&lt;/strong&gt;&lt;/a&gt; and, the cherry on the cake &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Googles Neural Machine Translators&lt;/strong&gt;&lt;/a&gt;. The rigorous &lt;strong&gt;under-the-skin (math,code and logic)&lt;/strong&gt; look will enable you to recreate the system for your own needs.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;strong&gt;&lt;a href=&quot;NMTPart1&quot;&gt;current article&lt;/a&gt;&lt;/strong&gt;, we take a &lt;strong&gt;highly simplified&lt;/strong&gt;, &lt;strong&gt;completely pictorial&lt;/strong&gt; look at &lt;strong&gt;Artificial Intelligence(AI)&lt;/strong&gt; based translation systems from one &lt;strong&gt;Natural Language&lt;/strong&gt; to another. Natural language, as in the way humans speak and how far have we come in &lt;strong&gt;designing machines that understand and act on it&lt;/strong&gt;. Once you have a solid understanding of systems like these, we take a look at where are we currently applying it to(&lt;a href=&quot;NMTPart1#Case Studies&quot;&gt;case studies&lt;/a&gt;), to broaden the horizons.&lt;/p&gt;
+
+&lt;p&gt;Artificial Intelligence(AI) is a vast subject. To explain in short and without getting technical is even more difficult. However, if we confine ourselves to examples in a particular domain, it might be a lot easier. Once we understand AI in the context of our chosen example, we could then broaden the horizon.  In our case, we consider software that translates text from one language to another. Let’s look at a quick history first.&lt;/p&gt;
+
+&lt;p&gt;There are multiple parts to the article:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Machine Translation: A quick history&quot;&gt;Machine Translation: A quick history&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Machine Translation(MT)&quot;&gt;Machine Translation(MT)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Rule-based Machine Translation(RBMT)&quot;&gt;Rule-based Machine Translation(RBMT)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Statistical Machine Translation(SMT)&quot;&gt;Statistical Machine Translation(SMT)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Neural Machine Translators(NMT)&quot;&gt;Neural Machine Translators(NMT)&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Neural Machine Translators(NMT) with Attention&quot;&gt;Neural Machine Translators(NMT) with Attention&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Process of training&quot;&gt;Process of training&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Jump to accuracy first&quot;&gt;Jump to accuracy first&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Generality&quot;&gt;Generality&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Practice makes the NMT perfect&quot;&gt;Practice makes the NMT perfect&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Hindi to Engish Examples&quot;&gt;Hindi to Engish Examples&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;Byte pair Encoding&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Could not resist having some fun&quot;&gt;Could not resist having some fun&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#French to english&quot;&gt;French to english&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Other Languages&quot;&gt;Other Languages&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Case Studies&quot;&gt;Case Studies&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Natural Language Processing case studies&quot;&gt;Natural Language Processing case studies&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;NMTPart1#Automating L1/L2/L3 support systems&quot;&gt;Automating L1/L2/L3 support systems&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;NMTPart1#Sequence based Case studies&quot;&gt;Sequence based Case studies&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;NMTPart1#Neural Microprocessor Branch Predictions&quot;&gt;Microprocessor Branch Predictions&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;NMTPart1#Time Series Data&quot;&gt;Time Series Data&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;-1&quot;&gt;&lt;a name=&quot;Machine Translation: A quick history&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;machine-translation-a-quick-history&quot;&gt;Machine Translation: A quick history&lt;/h3&gt;
+
+&lt;p&gt;&lt;a name=&quot;Machine Translation(MT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;machine-translationmt&quot;&gt;Machine Translation(MT)&lt;/h4&gt;
+&lt;p&gt;On a basic level, MT performs simple substitution of words in one language for words in another. But that alone cannot produce a good translation of a text because recognition of whole phrases and their closest counterparts in the target language is needed. Have you ever watched a movie with subtitles being so bad it distracts. A few years back I have had the crass luck of accidentally watching a movie with subtitles turn on for the Hindi language. I am wondering if I can call it hilarious or scary, maybe both. A serious plot-based movie’s literal translation of “holy shit” in Hindi forever ruined my movie-watching experience.&lt;/p&gt;
+&lt;p&gt;The context of what is being said is extremely vital to do a decent translation. Let's look at an example. Out of many possibilities, one correct literal translations of “Higher ape” to Hindi would be “ooncha bandar”, translated back to English it becomes “Tall monkey”. The last example completely loses the context of what is being said. The genetic ancestral context is completely lost.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Rule-based Machine Translation(RBMT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;rule-based-machine-translationrbmt&quot;&gt;Rule-based Machine Translation(RBMT)&lt;/h4&gt;
+&lt;p&gt;An RBMT system generates output sentences (in some target language) based on morphological, syntactic, and semantic analysis of both the source and the target languages involved in a concrete translation task. This is difficult, to say the least. And the rules for a language is not reusable for another.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Statistical Machine Translation(SMT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;statistical-machine-translationsmt&quot;&gt;Statistical Machine Translation(SMT)&lt;/h4&gt;
+&lt;p&gt;Statistical machine translation was re-introduced in the late 1980s and early 1990s by researchers at IBM’s Thomas J. Watson Research Center. Roughly translated and simplified, SMT measures the conditional probability that a sequence of words Y in the target language is a true translation of a sequence of words X in the source language. The problem with SMT is that the use of probabilities to understand the complex structure of language was a bit too simplistic. They have had moderate success and were used nearly a decade back.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Neural Machine Translators(NMT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;neural-machine-translatorsnmt&quot;&gt;Neural Machine Translators(NMT)&lt;/h4&gt;
+&lt;p&gt;The object of our discussion in the current article and the accuracy has to be seen to be believed. To be precise, what I am presenting today is &lt;strong&gt;Neural Machine Translators(NMT) with Attention&lt;strong&gt;. Like most(not all) AI-based models, &lt;strong&gt;NMTs&lt;strong&gt; also learn by looking at examples, in our case example translations. In this respect, they are similar to SMTs. However, their internal representation where they store their understanding is a &lt;strong&gt;neural network&lt;strong&gt; instead of a probabilistic one.&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;-2&quot;&gt;&lt;a name=&quot;Neural Machine Translators(NMT) with Attention&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;neural-machine-translatorsnmt-with-attention&quot;&gt;Neural Machine Translators(NMT) with Attention&lt;/h3&gt;
+&lt;p&gt;There are multiple parts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Process of training&quot;&gt;Process of training&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Jump to accuracy first&quot;&gt;Jump to accuracy first&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Generality&quot;&gt;Generality&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Practice makes the NMT perfect&quot;&gt;Practice makes the NMT perfect&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Hindi to Engish Examples&quot;&gt;Hindi to Engish Examples&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;Byte pair Encoding&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Could not resist having some fun&quot;&gt;Could not resist having some fun&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#French to english&quot;&gt;French to english&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;NMTPart1#Other Languages&quot;&gt;Other Languages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a name=&quot;Process of training&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;process-of-training&quot;&gt;Process of training&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Ignore the blue rectangle for now.&lt;/li&gt;
+    &lt;li&gt;Words are converted to their numerical representation called embeddings before being fed into the NMT.&lt;/li&gt;
+    &lt;li&gt;Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-1 its Hindi to English.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hinditoengnmt.jpg&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Hindi to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Ignore the blue rectangle for now.&lt;/li&gt;
+    &lt;li&gt;Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-2 its French to English.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/frenchtoengnmt.jpg&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;French to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Ignore the blue rectangle for now.&lt;/li&gt;
+    &lt;li&gt;Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-2 its Vietnamese to English.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/vietnamesetoengnmt.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;Vietnamese to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;Vietnamese to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The training has to be meticulous, in that, the data has to be as accurate as possible. Various measures of accuracy checks have to employed to see if the desired accuracy has been achieved. Some data has to be kept aside for testing that is not shown during training. That and more in the deep technical analysis the articles that follow.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a name=&quot;Jump to accuracy first&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;jump-to-accuracy-first&quot;&gt;Jump to accuracy first&lt;/h4&gt;
+
+&lt;p&gt;To hell with the theory, show me the accuracy first. &lt;strong&gt;If you have not seen a system like this before, the results are nothing but magical&lt;strong&gt;.&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Take a pause, and imagine yourself translating between any 2 languages you know. It Happens subconsciously, but pause and analyze the process. You read the source sentence first, and then as you translate you keep your focus on the phrases/words and the surrounding words from the source sentence . Attention-based NMTs are built with the same idea.&lt;/li&gt;
+    &lt;li&gt;But what is that matrix?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex11.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;During the training, The NMT jots down its understanding of the 2 languages in it’s internal &lt;a href=&quot;/tags/#LSTM&quot;&gt;LSTM&lt;/a&gt; based neural network.&lt;/li&gt;
+    &lt;li&gt;I’m merely visualizing it specific to this example translation.&lt;/li&gt;
+    &lt;li&gt;It illustrates the &lt;strong&gt;attention(pun intended)&lt;/strong&gt; paid on the source words/phrases to translate to target words/phrases.&lt;/li&gt;
+    &lt;li&gt;The process is very similar to human Translators.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex13.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The highlighted portions of a matrix illustrate the specific word/phrases within the sentences.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex15.jpg&quot; alt=&quot;Image: figure-6: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The highlighted portions show prepositions in both languages.&lt;/li&gt;
+    &lt;li&gt;Well, it should come as no surprise that the NMTs can work out “Parts of speech” of a language and not just the prepositions.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex14.jpg&quot; alt=&quot;Image: figure-7: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Generality&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;generality&quot;&gt;Generality:&lt;/h4&gt;
+&lt;p&gt;If the accuracy is convincing then, let’s talk about generality.
+As you can witness yourself, the model architecture remains the same but when trained with different datasets “it acquires knowledge” about that data set and starts making predictions, in our case translations. &lt;strong&gt;This probably the most important reason why AI is going to redefine how programming is done in the future.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Practice makes the NMT perfect&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;practice-makes-the-nmt-perfect&quot;&gt;Practice makes the NMT perfect:&lt;/h4&gt;
+&lt;p&gt;The next couple of pictures illustrate the gradual attainment of knowledge by the NMT as we increase the training rounds.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;500 rounds/epochs of training.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog500.jpg&quot; alt=&quot;Image: figure-8: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:500 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: &lt;strong&gt;Hindi to english&lt;/strong&gt;:500 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;1000 rounds/epochs of training.&lt;/li&gt;
+    &lt;li&gt;The most important aspect being the &lt;strong&gt;difference between what is predicted by the NMT and what is the ground truth&lt;strong&gt;.&lt;/strong&gt;&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;This difference which we historically call error or loss is “communicated” back to the NMT.&lt;/li&gt;
+    &lt;li&gt;The NMT promptly adjusts its internal state and explore other possibilities.&lt;/li&gt;
+    &lt;li&gt;This is what “we”(scientific community) refer to as learning, and we think(well, the same scientific community) this learning “somewhat” mimics how human brain work.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog1000.jpg&quot; alt=&quot;Image: figure-9: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:1000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: &lt;strong&gt;Hindi to english&lt;/strong&gt;:1000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;2000 rounds/epochs of training.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog2000.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:2000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;Hindi to english&lt;/strong&gt;:2000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;5000 rounds/epochs of training.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog5000.jpg&quot; alt=&quot;Image: figure-11: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:5000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: &lt;strong&gt;Hindi to english&lt;/strong&gt;:5000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;7000 rounds/epochs of training.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog7000.jpg&quot; alt=&quot;Image: figure-12: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:7000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: &lt;strong&gt;Hindi to english&lt;/strong&gt;:7000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;10000 rounds/epochs of training.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog10000.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:10000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;Hindi to english&lt;/strong&gt;:10000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Incremental comparison&lt;/li&gt;
+    &lt;li&gt;The picture on the right has a far better distribution of attention weights then the one on the left.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenexprog109900300000.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;: Attention comparison&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;Hindi to english&lt;/strong&gt;: Attention comparison&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Hindi to Engish Examples&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;hindi-to-engish-examples&quot;&gt;Hindi to Engish Examples&lt;/h4&gt;
+
+&lt;p&gt;Why Hindi? I could have chosen any language where data was easy to come by. I did not because, with Hindi I can double up as a human evaluator. This is a language we speak at home, to be more precise, it is a mix of English, Hindi, and Kannada. My Hindi skills are, at best average but good enough for evaluating the translations.&lt;/p&gt;
+
+&lt;p&gt;The data for Indian languages are surprisingly difficult to come by. &lt;strong&gt;The data that is used for this blog, does not belong to &lt;a href=&quot;https://www.stillwaters.ai&quot;&gt;Stillwaters&lt;/a&gt; or &lt;a href=&quot;https://www.stillwaters.ai&quot;&gt;Stillwaters&lt;/a&gt;’  client by any means&lt;/strong&gt;. This has been personally sourced for this blog from &lt;a href=&quot;http://ufal.mff.cuni.cz/&quot;&gt;Charles University, Czech Republic&lt;/a&gt; and &lt;a href=&quot;http://www.statmt.org/&quot;&gt;Statistical Machine Translation&lt;/a&gt;. &lt;strong&gt;When &lt;a href=&quot;https://www.stillwaters.ai&quot;&gt;Stillwaters&lt;/a&gt; or me personally work with a social media giant, fintech giant or one of the formost chipmaker, the data is sourced by their team and, one can make guarantees about it’s accuracy. Infact, they have dedicated team(s) which exists solely for this purpose.&lt;/strong&gt; However, that data cannot be shared for various reasons.
+The same cannot be said about personally sourced dataset like the ones I’m using for this blog. The Example below shows an example of a really bad translation. It isn’t even a good literal translation. In fact it is an incorrect statement in English.&lt;/p&gt;
+
+&lt;p&gt;“मलेरिया के मुकाबले।”&lt;br /&gt;
+“than are put into malaria.”&lt;/p&gt;
+
+&lt;p&gt;One bad translation might be an oversight but there are many bad sample translations. One too many to ignore.
+&lt;strong&gt;Long story short, the accuracy of the translations can be much much much better with better data.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Byte pair Encoding&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;byte-pair-encoding&quot;&gt;Byte pair Encoding&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Byte_pair_encoding&quot;&gt;BPE&lt;/a&gt; Stands for &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;Byte Pair Encoding&lt;/a&gt;. It was originally developed for compressing data. While it is still used for compression in Natural Language processing, it has a few more important advantages.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Intuitively speaking, this is how words are made up in many languages. Longer words are made up of shorter syllabic sounds.&lt;/li&gt;
+    &lt;li&gt;Let’s say that we train a model on words like “walk”, “walking”, “walked” and it begins to understand the relationship between the words. However, a similar relationship between “talk”, “talked”, “talking” isn’t clear &lt;strong&gt;by analogy&lt;/strong&gt; if it has not trained on all the words before. This can be remedied by breaking words into smaller syllabic tokens. Words like “walking” can be broken down into “walk” and “ing”. Similarly “walked” can be broken down into “walk” and “ed”. &lt;strong&gt;This also clarifies the meaning of “ed” and “ing” to the model and by analogy, the model is able to infer the meaning of talking even though it has never encountered the word before.&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Another positive side effect is, rare words not seen at training time can still be recognized because they are made up of smaller syllabic tokens.&lt;/li&gt;
+    &lt;li&gt;Lastly, it improves accuracy.&lt;/li&gt;
+    &lt;li&gt;Now, even if you have not understood the above points, just remember the words are broken down into smaller syllabic tokens before being fed into the NMT.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Rest of the examples are in BPE encoding&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-1&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex16.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-1&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-2&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex17.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-2: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-2: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/hitoenex18.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-3: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-3: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-4&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;The remaining examples are long and complex sentences. We could solved them only post the arrival of Attention.&lt;/strong&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Src:”ल@@ ले@@ याल सत@@ वारी के ना@@ यब सर@@ पंच चैन सिंह ने बताया कि यहां आने वाले श ् रद ् धा@@ लुओं के लिए ल@@ ंगर की भी व ् यवस ् था है ।”&lt;br /&gt;
+Ref:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said that a L@@ ang@@ ar has also been organised for the pilgrims visiting this place .”&lt;br /&gt;
+NMT:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said that a L@@ ang@@ ar has also been organised for the pilgrims visiting this place .”&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind112.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-4: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-4: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-5&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Src:”शुक ् रवार को जय@@ राम ने कहा कि अदालतों का अपनी सीमाएं पार करते हुए अफसरों और सरकार के काम को अपने हाथ में ले लेना ठीक नहीं है ।”&lt;br /&gt;
+Ref:”On Friday J@@ airam said that it is not right for the Courts to exceed their powers and take the job of the officers and the Government into their own hands .”&lt;br /&gt;
+NMT:”On Friday J@@ airam said that it is not right for the Courts to exceed their powers and take the job of the officers and the Government into their own hands .”&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind374.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-5: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-5: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Could not resist having some fun&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;could-not-resist-having-some-fun&quot;&gt;Could not resist having some fun&lt;/h4&gt;
+
+&lt;p&gt;The premise of article is about bad and out of context subtitles. Just couldn’t stop my self from indulging in a little fun.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-6&lt;/li&gt;
+    &lt;li&gt;Just in case, I am not quoting a former president of United States.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Src:”बड ़ े-@@ बड ़ े देशों में छोटी-@@ छोटी बातें होती रहती हैं ' ।”&lt;br /&gt;
+Ref:”In big countries , little things like these keep happening .”&lt;br /&gt;
+NMT:”In big countries , little things like these keep happening .”&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind520.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-6: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-6: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-7&lt;/li&gt;
+    &lt;li&gt;Neither am I quoting Paulo Coelho.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Src:”इतनी शि@@ द@@ अत से मैं तुम ् हे पाने की कोशिश की है , की हर ज़@@ ारे ने मुझे तुमसे मिलाने की सा@@ ज़@@ ि@@ श की है ।”&lt;br /&gt;
+Ref:”I have tried to get you with all my heart , that the whole universe has con@@ sp@@ ired to introduce me to you .”&lt;br /&gt;
+NMT:”I have tried to get you with all my heart , the whole universe has con@@ sp@@ ired to introduce me to you .”&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind521.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-7: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-7: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-8&lt;/li&gt;
+    &lt;li&gt;And he’s the “desi” He-Man.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Src:”ब@@ सं@@ ती इन कुत ् तों के सामने मत ना@@ चना”&lt;br /&gt;
+Ref:”Bas@@ anti don 't dance in front of these dogs .”&lt;br /&gt;
+NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind522.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-8: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-8: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;French to english&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;french-to-english&quot;&gt;French to english&lt;/h3&gt;
+
+&lt;p&gt;My knowledge of the French language is rudimentary. I learnt French for understanding NMT results. That is the limit of French knowledge. However, one of the things that stood out for me in French were adjectives. In English, adjectives are pretty easy to use. You put them before the noun they describe and you’re done. In French however, the placement of adjectives varies. And if that wasn’t enough to confuse you and me, adjectives also change depending on whether the noun they describe is masculine, feminine, singular or plurial.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;French to english&lt;/strong&gt;:ex-1&lt;/li&gt;
+    &lt;li&gt;Adjectives to the test.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/frtoenex1.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;:ex-1: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-1: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;French to english&lt;/strong&gt;:ex-2&lt;/li&gt;
+    &lt;li&gt;I would like to argue that the one on the right is more finely tuned, because its translations are much more succinct.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/nmt/frtoenex2.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;:ex-2: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-2: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Other Languages&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;other-languages&quot;&gt;Other Languages&lt;/h4&gt;
+&lt;p&gt;What about supporting other Indian languages? Technically it is a no brainer. It will take half a day for my team to set it up. The only problem is data. We do not have high-quality data. Irony is I did not find high-quality data for Hindi-to-English training in India. For that, I have to thank &lt;a href=&quot;http://ufal.mff.cuni.cz/&quot;&gt;Charles University, Czech Republic&lt;/a&gt; and &lt;a href=&quot;http://www.statmt.org/&quot;&gt;Statistical Machine Translation&lt;/a&gt; for loaning it to me. If you find parallel corpus for the data of the language(s) you want to support ping us at support@stillwaters.ai. For &lt;strong&gt;Kannada&lt;/strong&gt; I have facing extreme pressure from home as well as office for obvious reasons. ;-) Tamil, Telegu, Punjabi, Malyalam, Gujrati, Bengali, Japanese e.t.c. Imagine speaking to your machine in your native language. Even local dialects can be supported like Swiss-German, Bhojpuri etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Case Studies&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;case-studies&quot;&gt;Case Studies&lt;/h3&gt;
+&lt;p&gt;Imagine this, if an AI model like NMT can excel at translation merely by looking at examples, what else can it be good at by the same analogy. But lets stay with translation for a while and imagine this. If the translations can be as good as you what you have seen, and can be bettered with better data, the NMT does this by storing in its &lt;strong&gt;“internal neural representation”&lt;/strong&gt; the knowledge it has gained on the languages it has been trained on. Now imagine what one could achieve with the interface to a machine being a Natural Language. A general Listing would be too exhaustive, &lt;strong&gt;so down below are some of the applications that we have directly built using this technology and its derivatives in the last 3-4 years&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Natural Language Processing case studies&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;natural-language-processing-case-studies&quot;&gt;Natural Language Processing case studies&lt;/h4&gt;
+
+&lt;p&gt;&lt;a name=&quot;Automating L1/L2/L3 support systems&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Automating L1/L2/L3 support systems&lt;/strong&gt;: Most organizations have historical data stored in sources(mails, JIRA, in house Knowledge bases, application logs and, source code). Most support systems &lt;strong&gt;manually&lt;/strong&gt; feed of this data collectively referred to as sources. &lt;strong&gt;Automated Support System&lt;/strong&gt; has the smarts to &lt;strong&gt;read or hear&lt;/strong&gt; a support query and because it contexually understands the query(using the below mentioned technologies), transform it to form that can be fired against one or more of the above sources. The sources respond with the information which is then assimilated. The assimilated results are then transformed into Natural Language and sent back to the client.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      * Speech to text: Converting speech to text.
+      * Text to speech: Converting text to speech.
+      * Handwriting recognition:
+      * Speech Translation: Speech from one language to another.   
+      * SQL Query Generation: Given a query in Natural Language, the MODEL translates it to an SQL
+                     query that is ready to be fired against a database or a knowledge base.
+      * Machine Comprehension: Given a passage of text, the MODEL can answer queries based on that.
+            (Recall middle school syllabus, Who said this to whom, only this time its the algorithm on the spot.)
+      * Parts of Speech taggings: Given a passage of text, the MODEL can mark the various parts of speech in
+            a sentence.
+      * Name Entity Recognition: Given a passage of text, the MODEL can mark the entities(Nouns) and their types.
+      * Sarcasm Detection:
+      * Word sense disambiguation:
+      * Hate speech Detection:
+      * Tone softening: Soften the tone of a sentence from being harsh and critical to a more polite tone without
+            making the intent of the message ambigous.
+      * Text Summarization: Given a passage, the model summarizes it.
+      * Topic Modelling: Given a passage, the MODEL suggests the topic for it.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a name=&quot;Sequence based Case studies&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;sequence-based-case-studies&quot;&gt;Sequence based Case studies&lt;/h4&gt;
+&lt;p&gt;Technologies like LSTM, Attention, Memory are fantastic at recognizing patterns in a sequence. Which is why they are great at speech, text etc. But language is not the only sequential data we deal with. Majority of dataset around us are some kind of sequence. Some examples are vehicle postions over time, stock prices, and all kinds of timeseies data. &lt;strong&gt;The details of these projects are extremely proprietary but the idea is simple. Presenting a few of them with a very short description&lt;/strong&gt;. &lt;strong&gt;Neural Microprocessor Branch Predictions&lt;/strong&gt; is something that we are extremely proud of. Once I finish the Natural Language Processing series, Ill look into the below mentioned case studies in a more detailed future post.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Neural Microprocessor Branch Predictions&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Neural Microprocessor Branch Predictions&lt;/strong&gt;: Depending on the exact CPU and code, Control-changing instructions, like branches in code add uncertainty in the execution of dependent instructions and lead to large performance loss in severely pipelined processors. Accurate prediction of branches is vital for modern CPUs. The latency incurred due to mispredictions is roughly proportionate to the size of the pipeline. Post Haswell microarchitecture this should range between 12-30 cycles. It also wastes energy executing the wrong instruction path. Branch prediction improvements can boost performance and energy consumption significantly. For example, experiments on real processors showed that reducing the branch mispredictions by 3/4 &lt;strong&gt;improved the processor performance by 29%&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a name=&quot;Time Series Data&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Time Series Data&lt;/strong&gt;: Return prediction on gold pricing is an example of time series data in finance. Traditionally forecasting time series data uses techniques like univariate Autoregressive (AR), univariateMoving Average (MA), Simple Exponential Smoothing (SES),and more notably Autoregressive Integrated Moving Average(ARIMA) with its many variations. However, with &lt;a href=&quot;/tags/#LSTM&quot;&gt;LSTMs&lt;/a&gt; when combined with Attention in some form, the &lt;strong&gt;improvement is upwards of 88%&lt;/strong&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;Is this the State-of-the-art(SOTA) technology for Artificial Intelligence in the field of Natural Language Processing? This field is a moving target and innovations are happening at a blinding speed. The scary part is this was SOTA less than a year ago. But today we have systems that take accuracy to a different level completely. Why then talk about NMTs? Well, NMTs are a major cog in the wheel for whatever is SOTA today. SOTA systems are called “Transformers” and they are an evolution over NMTs. So a great understanding of NMTs and its pieces is a precondition for understanding Transformers. In the immediate next post I’ll get under the skin of NMT and its back-propagation.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><category term="Natural-Language-Processing" /><category term="NLP" /><category term="Neural-Machine-Translation" /><category term="NMT" /><category term="Attention" /><summary type="html">In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the way humans speak and how far have we come in designing machines that understand and act on it. The first of the multi-part series is highly simplified, completely pictorial, dressing down of Neural Machine Translation systems. Once you have a solid understanding of systems like these, we take a look at where are we currently applying it to(case studies), to broaden the horizons. The rest of the parts will be a rigorous under-the-skin(math,code and logic) look of Neural Machine Translators, Attention and, the cherry on the cake Googles Neural Machine Translators</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22nmt/hitoenex11.jpg%22%7D" /></entry><entry><title type="html">RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-4" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs" /><published>2019-07-22T15:07:19+00:00</published><updated>2019-07-22T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-4</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-4">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+>>>>>>> 5eda23121f47f034aac69b14dd1538da41dfd1ef
 &lt;p&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-2&quot;&gt;part-2&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-3&quot;&gt;part-3&lt;/a&gt;), we look into composing LSTM into multiple higher layers and its directionality. Though &lt;strong&gt;Multiple layers&lt;/strong&gt; are compute-intensive, they have better accuracy and so does &lt;strong&gt;bidirectional connections.&lt;/strong&gt; More importantly, a solid understanding of the above mentioned paves the way for concepts like &lt;strong&gt;Highway connections&lt;/strong&gt;, &lt;strong&gt;Residual Connections&lt;/strong&gt;, &lt;strong&gt;Pointer networks&lt;/strong&gt;, &lt;strong&gt;Encoder-Decoder&lt;/strong&gt; Architectures and so forth in future article. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;

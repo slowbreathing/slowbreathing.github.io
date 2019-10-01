@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the wa...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation | Slowbreathing">
+  <meta name="twitter:description" content="In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the wa...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/nmt/hitoenex11.jpg">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2019-09/NMTPart1">
+  <meta property="og:title" content="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation | Slowbreathing">
+  <meta property="og:description" content="In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the wa...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/nmt/hitoenex11.jpg">
+  
+  <title>Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2019-09/NMTPart1">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/nmt/hitoenex11.jpg"
+  
+  alt="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation">Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        19 SEP 2019
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    24 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h1><a name="Multi layer RNNs backward propagation"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>In this <strong><a href="/tags/#NMT">multi-part series</a></strong> we look at Neural Machine Translation, the technology behind how machines understand humans. The <strong><a href="NMTPart1">first of which(current article)</a></strong> is a completely pictorial and a non technical take on the technology and its potential.
+The rest of the parts will be a rigorous <strong>under-the-skin (math,code and logic)</strong> look at <a href="/comingsoon.html"><strong>Neural Machine Translators</strong></a>, <a href="/comingsoon.html"><strong>Attention</strong></a> and, the cherry on the cake <a href="/comingsoon.html"><strong>Googles Neural Machine Translators</strong></a>. The rigorous <strong>under-the-skin (math,code and logic)</strong> look will enable you to recreate the system for your own needs.</p>
+
+<p>In the <strong><a href="NMTPart1">current article</a></strong>, we take a <strong>highly simplified</strong>, <strong>completely pictorial</strong> look at <strong>Artificial Intelligence(AI)</strong> based translation systems from one <strong>Natural Language</strong> to another. Natural language, as in the way humans speak and how far have we come in <strong>designing machines that understand and act on it</strong>. Once you have a solid understanding of systems like these, we take a look at where are we currently applying it to(<a href="NMTPart1#Case Studies">case studies</a>), to broaden the horizons.</p>
+
+<p>Artificial Intelligence(AI) is a vast subject. To explain in short and without getting technical is even more difficult. However, if we confine ourselves to examples in a particular domain, it might be a lot easier. Once we understand AI in the context of our chosen example, we could then broaden the horizon.  In our case, we consider software that translates text from one language to another. Let’s look at a quick history first.</p>
+
+<p>There are multiple parts to the article:</p>
+<ol>
+  <li><a href="NMTPart1#Machine Translation: A quick history">Machine Translation: A quick history</a>
+    <ul>
+      <li><a href="NMTPart1#Machine Translation(MT)">Machine Translation(MT)</a></li>
+      <li><a href="NMTPart1#Rule-based Machine Translation(RBMT)">Rule-based Machine Translation(RBMT)</a></li>
+      <li><a href="NMTPart1#Statistical Machine Translation(SMT)">Statistical Machine Translation(SMT)</a></li>
+      <li><a href="NMTPart1#Neural Machine Translators(NMT)">Neural Machine Translators(NMT)</a></li>
+    </ul>
+  </li>
+  <li><a href="NMTPart1#Neural Machine Translators(NMT) with Attention">Neural Machine Translators(NMT) with Attention</a>
+    <ul>
+      <li><a href="NMTPart1#Process of training">Process of training</a></li>
+      <li><a href="NMTPart1#Jump to accuracy first">Jump to accuracy first</a></li>
+      <li><a href="NMTPart1#Generality">Generality</a></li>
+      <li><a href="NMTPart1#Practice makes the NMT perfect">Practice makes the NMT perfect</a></li>
+      <li><a href="NMTPart1#Hindi to Engish Examples">Hindi to Engish Examples</a></li>
+      <li><a href="NMTPart1#Byte pair Encoding">Byte pair Encoding</a></li>
+      <li><a href="NMTPart1#Could not resist having some fun">Could not resist having some fun</a></li>
+      <li><a href="NMTPart1#French to english">French to english</a></li>
+      <li><a href="NMTPart1#Other Languages">Other Languages</a></li>
+    </ul>
+  </li>
+  <li><a href="NMTPart1#Case Studies">Case Studies</a>
+    <ul>
+      <li><a href="NMTPart1#Natural Language Processing case studies">Natural Language Processing case studies</a>
+        <ul>
+          <li><a href="NMTPart1#Automating L1/L2/L3 support systems">Automating L1/L2/L3 support systems</a></li>
+        </ul>
+      </li>
+      <li><a href="NMTPart1#Sequence based Case studies">Sequence based Case studies</a>
+        <ul>
+          <li><a href="NMTPart1#Neural Microprocessor Branch Predictions">Microprocessor Branch Predictions</a></li>
+          <li><a href="NMTPart1#Time Series Data">Time Series Data</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="-1"><a name="Machine Translation: A quick history"></a></h1>
+<h3 id="machine-translation-a-quick-history">Machine Translation: A quick history</h3>
+
+<p><a name="Machine Translation(MT)"></a></p>
+<h4 id="machine-translationmt">Machine Translation(MT)</h4>
+<p>On a basic level, MT performs simple substitution of words in one language for words in another. But that alone cannot produce a good translation of a text because recognition of whole phrases and their closest counterparts in the target language is needed. Have you ever watched a movie with subtitles being so bad it distracts. A few years back I have had the crass luck of accidentally watching a movie with subtitles turn on for the Hindi language. I am wondering if I can call it hilarious or scary, maybe both. A serious plot-based movie’s literal translation of “holy shit” in Hindi forever ruined my movie-watching experience.</p>
+<p>The context of what is being said is extremely vital to do a decent translation. Let's look at an example. Out of many possibilities, one correct literal translations of “Higher ape” to Hindi would be “ooncha bandar”, translated back to English it becomes “Tall monkey”. The last example completely loses the context of what is being said. The genetic ancestral context is completely lost.</p>
+
+<p><a name="Rule-based Machine Translation(RBMT)"></a></p>
+<h4 id="rule-based-machine-translationrbmt">Rule-based Machine Translation(RBMT)</h4>
+<p>An RBMT system generates output sentences (in some target language) based on morphological, syntactic, and semantic analysis of both the source and the target languages involved in a concrete translation task. This is difficult, to say the least. And the rules for a language is not reusable for another.</p>
+
+<p><a name="Statistical Machine Translation(SMT)"></a></p>
+<h4 id="statistical-machine-translationsmt">Statistical Machine Translation(SMT)</h4>
+<p>Statistical machine translation was re-introduced in the late 1980s and early 1990s by researchers at IBM’s Thomas J. Watson Research Center. Roughly translated and simplified, SMT measures the conditional probability that a sequence of words Y in the target language is a true translation of a sequence of words X in the source language. The problem with SMT is that the use of probabilities to understand the complex structure of language was a bit too simplistic. They have had moderate success and were used nearly a decade back.</p>
+
+<p><a name="Neural Machine Translators(NMT)"></a></p>
+<h4 id="neural-machine-translatorsnmt">Neural Machine Translators(NMT)</h4>
+<p>The object of our discussion in the current article and the accuracy has to be seen to be believed. To be precise, what I am presenting today is <strong>Neural Machine Translators(NMT) with Attention<strong>. Like most(not all) AI-based models, <strong>NMTs<strong> also learn by looking at examples, in our case example translations. In this respect, they are similar to SMTs. However, their internal representation where they store their understanding is a <strong>neural network<strong> instead of a probabilistic one.</strong></strong></strong></strong></strong></strong></p>
+
+<h1 id="-2"><a name="Neural Machine Translators(NMT) with Attention"></a></h1>
+<h3 id="neural-machine-translatorsnmt-with-attention">Neural Machine Translators(NMT) with Attention</h3>
+<p>There are multiple parts:</p>
+
+<ul>
+  <li><a href="NMTPart1#Process of training">Process of training</a></li>
+  <li><a href="NMTPart1#Jump to accuracy first">Jump to accuracy first</a></li>
+  <li><a href="NMTPart1#Generality">Generality</a></li>
+  <li><a href="NMTPart1#Practice makes the NMT perfect">Practice makes the NMT perfect</a></li>
+  <li><a href="NMTPart1#Hindi to Engish Examples">Hindi to Engish Examples</a></li>
+  <li><a href="NMTPart1#Byte pair Encoding">Byte pair Encoding</a></li>
+  <li><a href="NMTPart1#Could not resist having some fun">Could not resist having some fun</a></li>
+  <li><a href="NMTPart1#French to english">French to english</a></li>
+  <li><a href="NMTPart1#Other Languages">Other Languages</a></li>
+</ul>
+
+<p><a name="Process of training"></a></p>
+<h4 id="process-of-training">Process of training</h4>
+
+<blockquote>
+  <ul>
+    <li>Ignore the blue rectangle for now.</li>
+    <li>Words are converted to their numerical representation called embeddings before being fed into the NMT.</li>
+    <li>Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-1 its Hindi to English.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hinditoengnmt.jpg" alt="Image: figure-1: &lt;strong&gt;Hindi to english&lt;/strong&gt;. Ignore the blue rectangle for now" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>Hindi to english</strong>. Ignore the blue rectangle for now</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Ignore the blue rectangle for now.</li>
+    <li>Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-2 its French to English.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/frenchtoengnmt.jpg" alt="Image: figure-2: &lt;strong&gt;French to english&lt;/strong&gt;. Ignore the blue rectangle for now" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>French to english</strong>. Ignore the blue rectangle for now</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Ignore the blue rectangle for now.</li>
+    <li>Once you have trained with enough data, the NMTs start to understand the 2 languages in question. In figure-2 its Vietnamese to English.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/vietnamesetoengnmt.jpg" alt="Image: figure-3: &lt;strong&gt;Vietnamese to english&lt;/strong&gt;. Ignore the blue rectangle for now" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>Vietnamese to english</strong>. Ignore the blue rectangle for now</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The training has to be meticulous, in that, the data has to be as accurate as possible. Various measures of accuracy checks have to employed to see if the desired accuracy has been achieved. Some data has to be kept aside for testing that is not shown during training. That and more in the deep technical analysis the articles that follow.</li>
+  </ul>
+</blockquote>
+
+<p><a name="Jump to accuracy first"></a></p>
+<h4 id="jump-to-accuracy-first">Jump to accuracy first</h4>
+
+<p>To hell with the theory, show me the accuracy first. <strong>If you have not seen a system like this before, the results are nothing but magical<strong>.</strong></strong></p>
+
+<blockquote>
+  <ul>
+    <li>Take a pause, and imagine yourself translating between any 2 languages you know. It Happens subconsciously, but pause and analyze the process. You read the source sentence first, and then as you translate you keep your focus on the phrases/words and the surrounding words from the source sentence . Attention-based NMTs are built with the same idea.</li>
+    <li>But what is that matrix?</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex11.jpg" alt="Image: figure-4: &lt;strong&gt;Hindi to english&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>Hindi to english</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>During the training, The NMT jots down its understanding of the 2 languages in it’s internal <a href="/tags/#LSTM">LSTM</a> based neural network.</li>
+    <li>I’m merely visualizing it specific to this example translation.</li>
+    <li>It illustrates the <strong>attention(pun intended)</strong> paid on the source words/phrases to translate to target words/phrases.</li>
+    <li>The process is very similar to human Translators.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex13.jpg" alt="Image: figure-5: &lt;strong&gt;Hindi to english&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>Hindi to english</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The highlighted portions of a matrix illustrate the specific word/phrases within the sentences.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex15.jpg" alt="Image: figure-6: &lt;strong&gt;Hindi to english&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6: <strong>Hindi to english</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The highlighted portions show prepositions in both languages.</li>
+    <li>Well, it should come as no surprise that the NMTs can work out “Parts of speech” of a language and not just the prepositions.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex14.jpg" alt="Image: figure-7: &lt;strong&gt;Hindi to english&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7: <strong>Hindi to english</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Generality"></a></p>
+<h4 id="generality">Generality:</h4>
+<p>If the accuracy is convincing then, let’s talk about generality.
+As you can witness yourself, the model architecture remains the same but when trained with different datasets “it acquires knowledge” about that data set and starts making predictions, in our case translations. <strong>This probably the most important reason why AI is going to redefine how programming is done in the future.</strong></p>
+
+<p><a name="Practice makes the NMT perfect"></a></p>
+<h4 id="practice-makes-the-nmt-perfect">Practice makes the NMT perfect:</h4>
+<p>The next couple of pictures illustrate the gradual attainment of knowledge by the NMT as we increase the training rounds.</p>
+<blockquote>
+  <ul>
+    <li>500 rounds/epochs of training.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog500.jpg" alt="Image: figure-8: &lt;strong&gt;Hindi to english&lt;/strong&gt;:500 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-8: <strong>Hindi to english</strong>:500 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>1000 rounds/epochs of training.</li>
+    <li>The most important aspect being the <strong>difference between what is predicted by the NMT and what is the ground truth<strong>.</strong></strong></li>
+    <li>This difference which we historically call error or loss is “communicated” back to the NMT.</li>
+    <li>The NMT promptly adjusts its internal state and explore other possibilities.</li>
+    <li>This is what “we”(scientific community) refer to as learning, and we think(well, the same scientific community) this learning “somewhat” mimics how human brain work.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog1000.jpg" alt="Image: figure-9: &lt;strong&gt;Hindi to english&lt;/strong&gt;:1000 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-9: <strong>Hindi to english</strong>:1000 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>2000 rounds/epochs of training.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog2000.jpg" alt="Image: figure-10: &lt;strong&gt;Hindi to english&lt;/strong&gt;:2000 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-10: <strong>Hindi to english</strong>:2000 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>5000 rounds/epochs of training.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog5000.jpg" alt="Image: figure-11: &lt;strong&gt;Hindi to english&lt;/strong&gt;:5000 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-11: <strong>Hindi to english</strong>:5000 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>7000 rounds/epochs of training.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog7000.jpg" alt="Image: figure-12: &lt;strong&gt;Hindi to english&lt;/strong&gt;:7000 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-12: <strong>Hindi to english</strong>:7000 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>10000 rounds/epochs of training.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog10000.jpg" alt="Image: figure-13: &lt;strong&gt;Hindi to english&lt;/strong&gt;:10000 rounds/epochs of training" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-13: <strong>Hindi to english</strong>:10000 rounds/epochs of training</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Incremental comparison</li>
+    <li>The picture on the right has a far better distribution of attention weights then the one on the left.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenexprog109900300000.jpg" alt="Image: figure-14: &lt;strong&gt;Hindi to english&lt;/strong&gt;: Attention comparison" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-14: <strong>Hindi to english</strong>: Attention comparison</span></center></figcaption>
+</figure>
+
+<p><a name="Hindi to Engish Examples"></a></p>
+<h4 id="hindi-to-engish-examples">Hindi to Engish Examples</h4>
+
+<p>Why Hindi? I could have chosen any language where data was easy to come by. I did not because, with Hindi I can double up as a human evaluator. This is a language we speak at home, to be more precise, it is a mix of English, Hindi, and Kannada. My Hindi skills are, at best average but good enough for evaluating the translations.</p>
+
+<p>The data for Indian languages are surprisingly difficult to come by. <strong>The data that is used for this blog, does not belong to <a href="https://www.stillwaters.ai">Stillwaters</a> or <a href="https://www.stillwaters.ai">Stillwaters</a>’  client by any means</strong>. This has been personally sourced for this blog from <a href="http://ufal.mff.cuni.cz/">Charles University, Czech Republic</a> and <a href="http://www.statmt.org/">Statistical Machine Translation</a>. <strong>When <a href="https://www.stillwaters.ai">Stillwaters</a> or me personally work with a social media giant, fintech giant or one of the formost chipmaker, the data is sourced by their team and, one can make guarantees about it’s accuracy. Infact, they have dedicated team(s) which exists solely for this purpose.</strong> However, that data cannot be shared for various reasons.
+The same cannot be said about personally sourced dataset like the ones I’m using for this blog. The Example below shows an example of a really bad translation. It isn’t even a good literal translation. In fact it is an incorrect statement in English.</p>
+
+<p>“मलेरिया के मुकाबले।”<br />
+“than are put into malaria.”</p>
+
+<p>One bad translation might be an oversight but there are many bad sample translations. One too many to ignore.
+<strong>Long story short, the accuracy of the translations can be much much much better with better data.</strong></p>
+
+<p><a name="Byte pair Encoding"></a></p>
+<h4 id="byte-pair-encoding">Byte pair Encoding</h4>
+<blockquote>
+  <ul>
+    <li><a href="https://en.wikipedia.org/wiki/Byte_pair_encoding">BPE</a> Stands for <a href="NMTPart1#Byte pair Encoding">Byte Pair Encoding</a>. It was originally developed for compressing data. While it is still used for compression in Natural Language processing, it has a few more important advantages.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>Intuitively speaking, this is how words are made up in many languages. Longer words are made up of shorter syllabic sounds.</li>
+    <li>Let’s say that we train a model on words like “walk”, “walking”, “walked” and it begins to understand the relationship between the words. However, a similar relationship between “talk”, “talked”, “talking” isn’t clear <strong>by analogy</strong> if it has not trained on all the words before. This can be remedied by breaking words into smaller syllabic tokens. Words like “walking” can be broken down into “walk” and “ing”. Similarly “walked” can be broken down into “walk” and “ed”. <strong>This also clarifies the meaning of “ed” and “ing” to the model and by analogy, the model is able to infer the meaning of talking even though it has never encountered the word before.</strong></li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>Another positive side effect is, rare words not seen at training time can still be recognized because they are made up of smaller syllabic tokens.</li>
+    <li>Lastly, it improves accuracy.</li>
+    <li>Now, even if you have not understood the above points, just remember the words are broken down into smaller syllabic tokens before being fed into the NMT.</li>
+    <li><strong>Rest of the examples are in BPE encoding</strong>.</li>
+    <li><strong>Hindi to english</strong>:ex-1</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex16.jpg" alt="Image: figure-15: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-1" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-15: <strong>Hindi to english</strong>:ex-1</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-2</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex17.jpg" alt="Image: figure-16: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-2: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-16: <strong>Hindi to english</strong>:ex-2: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-3</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/hitoenex18.jpg" alt="Image: figure-17: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-3: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>Hindi to english</strong>:ex-3: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-4</li>
+    <li><strong>The remaining examples are long and complex sentences. We could solved them only post the arrival of Attention.</strong></li>
+  </ul>
+</blockquote>
+
+<p>Src:”ल@@ ले@@ याल सत@@ वारी के ना@@ यब सर@@ पंच चैन सिंह ने बताया कि यहां आने वाले श ् रद ् धा@@ लुओं के लिए ल@@ ंगर की भी व ् यवस ् था है ।”<br />
+Ref:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said that a L@@ ang@@ ar has also been organised for the pilgrims visiting this place .”<br />
+NMT:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said that a L@@ ang@@ ar has also been organised for the pilgrims visiting this place .”</p>
+
+<figure>
+    
+    <img src="/img/nmt/output_bibsattention_infer_ind112.jpg" alt="Image: figure-18: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-4: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-18: <strong>Hindi to english</strong>:ex-4: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-5</li>
+  </ul>
+</blockquote>
+
+<p>Src:”शुक ् रवार को जय@@ राम ने कहा कि अदालतों का अपनी सीमाएं पार करते हुए अफसरों और सरकार के काम को अपने हाथ में ले लेना ठीक नहीं है ।”<br />
+Ref:”On Friday J@@ airam said that it is not right for the Courts to exceed their powers and take the job of the officers and the Government into their own hands .”<br />
+NMT:”On Friday J@@ airam said that it is not right for the Courts to exceed their powers and take the job of the officers and the Government into their own hands .”</p>
+
+<figure>
+    
+    <img src="/img/nmt/output_bibsattention_infer_ind374.jpg" alt="Image: figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-5: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>Hindi to english</strong>:ex-5: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<p><a name="Could not resist having some fun"></a></p>
+<h4 id="could-not-resist-having-some-fun">Could not resist having some fun</h4>
+
+<p>The premise of article is about bad and out of context subtitles. Just couldn’t stop my self from indulging in a little fun.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-6</li>
+    <li>Just in case, I am not quoting a former president of United States.</li>
+  </ul>
+</blockquote>
+
+<p>Src:”बड ़ े-@@ बड ़ े देशों में छोटी-@@ छोटी बातें होती रहती हैं ' ।”<br />
+Ref:”In big countries , little things like these keep happening .”<br />
+NMT:”In big countries , little things like these keep happening .”</p>
+
+<figure>
+    
+    <img src="/img/nmt/output_bibsattention_infer_ind520.jpg" alt="Image: figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-6: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>Hindi to english</strong>:ex-6: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-7</li>
+    <li>Neither am I quoting Paulo Coelho.</li>
+  </ul>
+</blockquote>
+
+<p>Src:”इतनी शि@@ द@@ अत से मैं तुम ् हे पाने की कोशिश की है , की हर ज़@@ ारे ने मुझे तुमसे मिलाने की सा@@ ज़@@ ि@@ श की है ।”<br />
+Ref:”I have tried to get you with all my heart , that the whole universe has con@@ sp@@ ired to introduce me to you .”<br />
+NMT:”I have tried to get you with all my heart , the whole universe has con@@ sp@@ ired to introduce me to you .”</p>
+
+<figure>
+    
+    <img src="/img/nmt/output_bibsattention_infer_ind521.jpg" alt="Image: figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-7: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>Hindi to english</strong>:ex-7: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Hindi to english</strong>:ex-8</li>
+    <li>And he’s the “desi” He-Man.</li>
+  </ul>
+</blockquote>
+
+<p>Src:”ब@@ सं@@ ती इन कुत ् तों के सामने मत ना@@ चना”<br />
+Ref:”Bas@@ anti don 't dance in front of these dogs .”<br />
+NMT:”Bas@@ anti don 't dance in front of these dogs .”</p>
+
+<figure>
+    
+    <img src="/img/nmt/output_bibsattention_infer_ind522.jpg" alt="Image: figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-8: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>Hindi to english</strong>:ex-8: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<p><a name="French to english"></a></p>
+<h3 id="french-to-english">French to english</h3>
+
+<p>My knowledge of the French language is rudimentary. I learnt French for understanding NMT results. That is the limit of French knowledge. However, one of the things that stood out for me in French were adjectives. In English, adjectives are pretty easy to use. You put them before the noun they describe and you’re done. In French however, the placement of adjectives varies. And if that wasn’t enough to confuse you and me, adjectives also change depending on whether the noun they describe is masculine, feminine, singular or plurial.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>French to english</strong>:ex-1</li>
+    <li>Adjectives to the test.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/frtoenex1.jpg" alt="Image: figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-1: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>French to english</strong>:ex-1: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>French to english</strong>:ex-2</li>
+    <li>I would like to argue that the one on the right is more finely tuned, because its translations are much more succinct.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/nmt/frtoenex2.jpg" alt="Image: figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-2: Refer to &lt;a href='NMTPart1#Byte pair Encoding'&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens." hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>French to english</strong>:ex-2: Refer to <a href="NMTPart1#Byte pair Encoding"><strong>Byte pair encoding</strong></a> to understand the '@@' and '्' tokens.</span></center></figcaption>
+</figure>
+
+<p><a name="Other Languages"></a></p>
+<h4 id="other-languages">Other Languages</h4>
+<p>What about supporting other Indian languages? Technically it is a no brainer. It will take half a day for my team to set it up. The only problem is data. We do not have high-quality data. Irony is I did not find high-quality data for Hindi-to-English training in India. For that, I have to thank <a href="http://ufal.mff.cuni.cz/">Charles University, Czech Republic</a> and <a href="http://www.statmt.org/">Statistical Machine Translation</a> for loaning it to me. If you find parallel corpus for the data of the language(s) you want to support ping us at support@stillwaters.ai. For <strong>Kannada</strong> I have facing extreme pressure from home as well as office for obvious reasons. ;-) Tamil, Telegu, Punjabi, Malyalam, Gujrati, Bengali, Japanese e.t.c. Imagine speaking to your machine in your native language. Even local dialects can be supported like Swiss-German, Bhojpuri etc.</p>
+
+<p><a name="Case Studies"></a></p>
+<h3 id="case-studies">Case Studies</h3>
+<p>Imagine this, if an AI model like NMT can excel at translation merely by looking at examples, what else can it be good at by the same analogy. But lets stay with translation for a while and imagine this. If the translations can be as good as you what you have seen, and can be bettered with better data, the NMT does this by storing in its <strong>“internal neural representation”</strong> the knowledge it has gained on the languages it has been trained on. Now imagine what one could achieve with the interface to a machine being a Natural Language. A general Listing would be too exhaustive, <strong>so down below are some of the applications that we have directly built using this technology and its derivatives in the last 3-4 years</strong>.</p>
+
+<p><a name="Natural Language Processing case studies"></a></p>
+<h4 id="natural-language-processing-case-studies">Natural Language Processing case studies</h4>
+
+<p><a name="Automating L1/L2/L3 support systems"></a></p>
+<blockquote>
+  <ul>
+    <li><strong>Automating L1/L2/L3 support systems</strong>: Most organizations have historical data stored in sources(mails, JIRA, in house Knowledge bases, application logs and, source code). Most support systems <strong>manually</strong> feed of this data collectively referred to as sources. <strong>Automated Support System</strong> has the smarts to <strong>read or hear</strong> a support query and because it contexually understands the query(using the below mentioned technologies), transform it to form that can be fired against one or more of the above sources. The sources respond with the information which is then assimilated. The assimilated results are then transformed into Natural Language and sent back to the client.</li>
+  </ul>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      * Speech to text: Converting speech to text.
+      * Text to speech: Converting text to speech.
+      * Handwriting recognition:
+      * Speech Translation: Speech from one language to another.   
+      * SQL Query Generation: Given a query in Natural Language, the MODEL translates it to an SQL
+                     query that is ready to be fired against a database or a knowledge base.
+      * Machine Comprehension: Given a passage of text, the MODEL can answer queries based on that.
+            (Recall middle school syllabus, Who said this to whom, only this time its the algorithm on the spot.)
+      * Parts of Speech taggings: Given a passage of text, the MODEL can mark the various parts of speech in
+            a sentence.
+      * Name Entity Recognition: Given a passage of text, the MODEL can mark the entities(Nouns) and their types.
+      * Sarcasm Detection:
+      * Word sense disambiguation:
+      * Hate speech Detection:
+      * Tone softening: Soften the tone of a sentence from being harsh and critical to a more polite tone without
+            making the intent of the message ambigous.
+      * Text Summarization: Given a passage, the model summarizes it.
+      * Topic Modelling: Given a passage, the MODEL suggests the topic for it.
+</code></pre></div></div>
+
+<p><a name="Sequence based Case studies"></a></p>
+<h4 id="sequence-based-case-studies">Sequence based Case studies</h4>
+<p>Technologies like LSTM, Attention, Memory are fantastic at recognizing patterns in a sequence. Which is why they are great at speech, text etc. But language is not the only sequential data we deal with. Majority of dataset around us are some kind of sequence. Some examples are vehicle postions over time, stock prices, and all kinds of timeseies data. <strong>The details of these projects are extremely proprietary but the idea is simple. Presenting a few of them with a very short description</strong>. <strong>Neural Microprocessor Branch Predictions</strong> is something that we are extremely proud of. Once I finish the Natural Language Processing series, Ill look into the below mentioned case studies in a more detailed future post.</p>
+
+<p><a name="Neural Microprocessor Branch Predictions"></a></p>
+<blockquote>
+  <ul>
+    <li><strong>Neural Microprocessor Branch Predictions</strong>: Depending on the exact CPU and code, Control-changing instructions, like branches in code add uncertainty in the execution of dependent instructions and lead to large performance loss in severely pipelined processors. Accurate prediction of branches is vital for modern CPUs. The latency incurred due to mispredictions is roughly proportionate to the size of the pipeline. Post Haswell microarchitecture this should range between 12-30 cycles. It also wastes energy executing the wrong instruction path. Branch prediction improvements can boost performance and energy consumption significantly. For example, experiments on real processors showed that reducing the branch mispredictions by 3/4 <strong>improved the processor performance by 29%</strong>.</li>
+  </ul>
+</blockquote>
+
+<p><a name="Time Series Data"></a></p>
+<blockquote>
+  <ul>
+    <li><strong>Time Series Data</strong>: Return prediction on gold pricing is an example of time series data in finance. Traditionally forecasting time series data uses techniques like univariate Autoregressive (AR), univariateMoving Average (MA), Simple Exponential Smoothing (SES),and more notably Autoregressive Integrated Moving Average(ARIMA) with its many variations. However, with <a href="/tags/#LSTM">LSTMs</a> when combined with Attention in some form, the <strong>improvement is upwards of 88%</strong>.</li>
+  </ul>
+</blockquote>
+
+<h3 id="summary">Summary</h3>
+<p>Is this the State-of-the-art(SOTA) technology for Artificial Intelligence in the field of Natural Language Processing? This field is a moving target and innovations are happening at a blinding speed. The scary part is this was SOTA less than a year ago. But today we have systems that take accuracy to a different level completely. Why then talk about NMTs? Well, NMTs are a major cog in the wheel for whatever is SOTA today. SOTA systems are called “Transformers” and they are an evolution over NMTs. So a great understanding of NMTs and its pieces is a precondition for understanding Transformers. In the immediate next post I’ll get under the skin of NMT and its back-propagation.</p>
+
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2019-09/NMTPart1" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2019-09/NMTPart1" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2019-09/NMTPart1" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2019-09/NMTPart1" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2019-09/NMTPart1" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2019 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>
