@@ -171,6 +171,8 @@ table, th, td { border: none; }
 
 .faded_text { opacity: 0.6; }
 
+.font_0 { font: normal normal normal 65px/1.4em lulo-clean-w01-one-bold, sans-serif; color: #FFFFFF; margin-left: auto; margin-right: auto; }
+
 table { width: 100%; display: table; }
 table.bordered > thead > tr, table.bordered > tbody > tr { border-bottom: 1px solid #d0d0d0; }
 table.striped > tbody > tr:nth-child(odd) { background-color: #f2f2f2; }
