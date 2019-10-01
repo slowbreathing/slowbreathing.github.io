@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2019-10-01T10:58:55+00:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs</title><link href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-4" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs" /><published>2019-07-22T15:07:19+00:00</published><updated>2019-07-22T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-07/LSTMPart-4</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-07/LSTMPart-4">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-=======
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-10-01T10:53:31+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation</title><link href="http://localhost:4000/articles/2019-09/NMTPart1" rel="alternate" type="text/html" title="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation" /><published>2019-09-19T15:07:19+00:00</published><updated>2019-09-19T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-09/NMTPart1</id><content type="html" xml:base="http://localhost:4000/articles/2019-09/NMTPart1">&lt;h1&gt;&lt;a name=&quot;Multi layer RNNs backward propagation&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-10-01T15:15:42+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation</title><link href="http://localhost:4000/articles/2019-09/NMTPart1" rel="alternate" type="text/html" title="Natural Language Processing Series: Neural Machine Translation(NMT):Part-1: Highly Simplified, completely Pictorial understanding of Neural Machine Translation" /><published>2019-09-19T15:07:19+00:00</published><updated>2019-09-19T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-09/NMTPart1</id><content type="html" xml:base="http://localhost:4000/articles/2019-09/NMTPart1">&lt;h1&gt;&lt;a name=&quot;Multi layer RNNs backward propagation&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
 &lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;In this &lt;strong&gt;&lt;a href=&quot;/tags/#NMT&quot;&gt;multi-part series&lt;/a&gt;&lt;/strong&gt; we look at Neural Machine Translation, the technology behind how machines understand humans. The &lt;strong&gt;&lt;a href=&quot;NMTPart1&quot;&gt;first of which(current article)&lt;/a&gt;&lt;/strong&gt; is a completely pictorial and a non technical take on the technology and its potential.
 The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code and logic)&lt;/strong&gt; look at &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Neural Machine Translators&lt;/strong&gt;&lt;/a&gt;, &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Attention&lt;/strong&gt;&lt;/a&gt; and, the cherry on the cake &lt;a href=&quot;/comingsoon.html&quot;&gt;&lt;strong&gt;Googles Neural Machine Translators&lt;/strong&gt;&lt;/a&gt;. The rigorous &lt;strong&gt;under-the-skin (math,code and logic)&lt;/strong&gt; look will enable you to recreate the system for your own needs.&lt;/p&gt;
@@ -55,7 +52,7 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 
 &lt;p&gt;&lt;a name=&quot;Machine Translation(MT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&quot;machine-translationmt&quot;&gt;Machine Translation(MT)&lt;/h4&gt;
-&lt;p&gt;On a basic level, MT performs simple substitution of words in one language for words in another. But that alone cannot produce a good translation of a text because recognition of whole phrases and their closest counterparts in the target language is needed. Have you ever watched a movie with subtitles being so bad it distracts. A few years back I have had the crass luck of accidentally watching a movie with subtitles turn on for the Hindi language. I am wondering if I can call it hilarious or scary, maybe both. A serious plot-based movie’s literal translation of “holy shit” in Hindi forever ruined my movie-watching experience.&lt;/p&gt;
+&lt;p&gt;On a basic level, MT performs simple substitution of words in one language for words in another. But that alone cannot produce a good translation of a text because recognition of whole phrases and their closest counterparts in the target language is needed. Have you ever watched a movie with subtitles being so bad it actually distracts? A few years back I have had the crass luck of accidentally watching a movie with subtitles turn on for the Hindi language. I am wondering if I can call it hilarious or scary, maybe both. A serious plot-based movie’s literal translation of “holy shit” in Hindi forever ruined my movie-watching experience.&lt;/p&gt;
 &lt;p&gt;The context of what is being said is extremely vital to do a decent translation. Let's look at an example. Out of many possibilities, one correct literal translations of “Higher ape” to Hindi would be “ooncha bandar”, translated back to English it becomes “Tall monkey”. The last example completely loses the context of what is being said. The genetic ancestral context is completely lost.&lt;/p&gt;
 
 &lt;p&gt;&lt;a name=&quot;Rule-based Machine Translation(RBMT)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -98,9 +95,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hinditoengnmt.jpg&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Hindi to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -112,9 +109,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/frenchtoengnmt.jpg&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;French to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -126,9 +123,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/vietnamesetoengnmt.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;Vietnamese to english&amp;lt;/strong&amp;gt;. Ignore the blue rectangle for now&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;Vietnamese to english&lt;/strong&gt;. Ignore the blue rectangle for now&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -151,9 +148,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex11.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -167,9 +164,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex13.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -180,9 +177,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex15.jpg&quot; alt=&quot;Image: figure-6: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -194,9 +191,9 @@ The rest of the parts will be a rigorous &lt;strong&gt;under-the-skin (math,code
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex14.jpg&quot; alt=&quot;Image: figure-7: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: &lt;strong&gt;Hindi to english&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -215,9 +212,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog500.jpg&quot; alt=&quot;Image: figure-8: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:500 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: &lt;strong&gt;Hindi to english&lt;/strong&gt;:500 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -232,9 +229,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog1000.jpg&quot; alt=&quot;Image: figure-9: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:1000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: &lt;strong&gt;Hindi to english&lt;/strong&gt;:1000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -245,9 +242,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog2000.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:2000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;Hindi to english&lt;/strong&gt;:2000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -258,9 +255,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog5000.jpg&quot; alt=&quot;Image: figure-11: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:5000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: &lt;strong&gt;Hindi to english&lt;/strong&gt;:5000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -271,9 +268,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog7000.jpg&quot; alt=&quot;Image: figure-12: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:7000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: &lt;strong&gt;Hindi to english&lt;/strong&gt;:7000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -284,9 +281,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog10000.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:10000 rounds/epochs of training&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;Hindi to english&lt;/strong&gt;:10000 rounds/epochs of training&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -298,9 +295,9 @@ As you can witness yourself, the model architecture remains the same but when tr
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenexprog109900300000.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;: Attention comparison&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;Hindi to english&lt;/strong&gt;: Attention comparison&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -344,9 +341,9 @@ The same cannot be said about personally sourced dataset like the ones I’m usi
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex16.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-1&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -357,9 +354,9 @@ The same cannot be said about personally sourced dataset like the ones I’m usi
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex17.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-2: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-2: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -370,9 +367,9 @@ The same cannot be said about personally sourced dataset like the ones I’m usi
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/hitoenex18.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-3: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-3: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -388,9 +385,9 @@ Ref:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said
 NMT:”Nay@@ ab Sar@@ pan@@ ch of Lal@@ ey@@ al Sat@@ wari , Cha@@ in Singh said that a L@@ ang@@ ar has also been organised for the pilgrims visiting this place .”&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind112.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-4: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-4: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -405,9 +402,9 @@ Ref:”On Friday J@@ airam said that it is not right for the Courts to exceed th
 NMT:”On Friday J@@ airam said that it is not right for the Courts to exceed their powers and take the job of the officers and the Government into their own hands .”&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind374.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-5: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-5: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -428,9 +425,9 @@ Ref:”In big countries , little things like these keep happening .”&lt;br /&g
 NMT:”In big countries , little things like these keep happening .”&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind520.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-6: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-6: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -446,9 +443,9 @@ Ref:”I have tried to get you with all my heart , that the whole universe has c
 NMT:”I have tried to get you with all my heart , the whole universe has con@@ sp@@ ired to introduce me to you .”&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind521.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-7: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-7: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -464,9 +461,9 @@ Ref:”Bas@@ anti don 't dance in front of these dogs .”&lt;br /&gt;
 NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/output_bibsattention_infer_ind522.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;Hindi to english&amp;lt;/strong&amp;gt;:ex-8: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;Hindi to english&lt;/strong&gt;:ex-8: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -483,9 +480,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/frtoenex1.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;:ex-1: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-1: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -497,9 +494,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/nmt/frtoenex2.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;French to english&amp;lt;/strong&amp;gt;:ex-2: Refer to &amp;lt;a href='NMTPart1#Byte pair Encoding'&amp;gt;&amp;lt;strong&amp;gt;Byte pair encoding&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt; to understand the '@@' and '्' tokens.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;French to english&lt;/strong&gt;:ex-2: Refer to &lt;a href=&quot;NMTPart1#Byte pair Encoding&quot;&gt;&lt;strong&gt;Byte pair encoding&lt;/strong&gt;&lt;/a&gt; to understand the '@@' and '्' tokens.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -524,7 +521,7 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;      * Speech to text: Converting speech to text.
       * Text to speech: Converting text to speech.
       * Handwriting recognition:
-      * Speech Translation: Speech from one language to another.
+      * Speech Translation: Speech from one language to another.   
       * SQL Query Generation: Given a query in Natural Language, the MODEL translates it to an SQL
                      query that is ready to be fired against a database or a knowledge base.
       * Machine Comprehension: Given a passage of text, the MODEL can answer queries based on that.
@@ -555,13 +552,12 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;p&gt;&lt;a name=&quot;Time Series Data&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Time Series Data&lt;/strong&gt;: Return prediction on gold pricing is an example of time series data in finance. Traditionally forecasting time series data uses techniques like univariate Autoregressive (AR), univariateMoving Average (MA), Simple Exponential Smoothing (SES),and more notably Autoregressive Integrated Moving Average(ARIMA) with its many variations. However, with &lt;a href=&quot;/tags/#LSTM&quot;&gt;LSTMs&lt;/a&gt; when combined with Attention in some form, the &lt;strong&gt;improvement is upwards of 88%&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Time Series Data&lt;/strong&gt;: Return prediction on gold pricing is an example of time series data in finance. Traditionally forecasting time series data uses techniques like univariate Autoregressive (AR), univariateMoving Average (MA), Simple Exponential Smoothing (SES),and more notably Autoregressive Integrated Moving Average(ARIMA) with its many variations. However, with &lt;a href=&quot;/tags/#LSTM&quot;&gt;LSTMs&lt;/a&gt; when combined with Attention in some form, the &lt;strong&gt;improvement is upwards of 88%.&lt;/strong&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;Is this the State-of-the-art(SOTA) technology for Artificial Intelligence in the field of Natural Language Processing? This field is a moving target and innovations are happening at a blinding speed. The scary part is this was SOTA less than a year ago. But today we have systems that take accuracy to a different level completely. Why then talk about NMTs? Well, NMTs are a major cog in the wheel for whatever is SOTA today. SOTA systems are called “Transformers” and they are an evolution over NMTs. So a great understanding of NMTs and its pieces is a precondition for understanding Transformers. In the immediate next post I’ll get under the skin of NMT and its back-propagation.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><category term="Natural-Language-Processing" /><category term="NLP" /><category term="Neural-Machine-Translation" /><category term="NMT" /><category term="Attention" /><summary type="html">In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the way humans speak and how far have we come in designing machines that understand and act on it. The first of the multi-part series is highly simplified, completely pictorial, dressing down of Neural Machine Translation systems. Once you have a solid understanding of systems like these, we take a look at where are we currently applying it to(case studies), to broaden the horizons. The rest of the parts will be a rigorous under-the-skin(math,code and logic) look of Neural Machine Translators, Attention and, the cherry on the cake Googles Neural Machine Translators</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22nmt/hitoenex11.jpg%22%7D" /></entry><entry><title type="html">RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-4" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs" /><published>2019-07-22T15:07:19+00:00</published><updated>2019-07-22T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-4</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-4">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
->>>>>>> 5eda23121f47f034aac69b14dd1538da41dfd1ef
+&lt;p&gt;Is this the State-of-the-art(SOTA) technology for Artificial Intelligence in the field of Natural Language Processing? This field is a moving target and innovations are happening at a blinding speed. &lt;strong&gt;The scary part is this was SOTA less than a year ago. But today we have systems that take accuracy to a different level completely&lt;/strong&gt;. Why then talk about NMTs? Well, NMTs are a major cog in the wheel for whatever is SOTA today. SOTA systems are called “Transformers” and they are an evolution over NMTs. So a great understanding of NMTs and its pieces is a precondition for understanding Transformers. In the immediate next post I’ll get under the skin of NMT and its back-propagation.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><category term="Natural-Language-Processing" /><category term="NLP" /><category term="Neural-Machine-Translation" /><category term="NMT" /><category term="Attention" /><summary type="html">In the current article, we look at Artificial Intelligence(AI) based translation systems from one Natural Language to another. Natural language, as in the way humans speak and how far have we come in designing machines that understand and act on it. The first of the multi-part series is highly simplified, completely pictorial, dressing down of Neural Machine Translation systems. Once you have a solid understanding of systems like these, we take a look at where are we currently applying it to(case studies), to broaden the horizons. The rest of the parts will be a rigorous under-the-skin(math,code and logic) look of Neural Machine Translators, Attention and, the cherry on the cake Googles Neural Machine Translators</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22nmt/hitoenex11.jpg%22%7D" /></entry><entry><title type="html">RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-4" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs" /><published>2019-07-22T15:07:19+00:00</published><updated>2019-07-22T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-4</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-4">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-2&quot;&gt;part-2&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-3&quot;&gt;part-3&lt;/a&gt;), we look into composing LSTM into multiple higher layers and its directionality. Though &lt;strong&gt;Multiple layers&lt;/strong&gt; are compute-intensive, they have better accuracy and so does &lt;strong&gt;bidirectional connections.&lt;/strong&gt; More importantly, a solid understanding of the above mentioned paves the way for concepts like &lt;strong&gt;Highway connections&lt;/strong&gt;, &lt;strong&gt;Residual Connections&lt;/strong&gt;, &lt;strong&gt;Pointer networks&lt;/strong&gt;, &lt;strong&gt;Encoder-Decoder&lt;/strong&gt; Architectures and so forth in future article. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
@@ -605,9 +601,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;p&gt;A quick recap, LSTM encapsulates the internal cell logic. There are many variations to Cell logic, VanillaRNN, LSTMs, GRUs, etc. What we have seen so far is they can be fed with sequential time series data. We feed in the sequence, compare with the labels, calculate errors back-propagate and adjust the weights. The length of the fed in the sequence is informally called recurrent depth.&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell.jpg&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Recurrent depth&amp;lt;/strong&amp;gt;=3&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Recurrent depth&lt;/strong&gt;=3&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -618,9 +614,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;p&gt;The topic of this article is Feed-forward depth, more akin to the depth we have in vanilla neural networks. It is the depth of a network that is generally attributed to the success of deep learning as a technique. There are downsides too, too much compute budget for one if done indiscriminately. That being said, well look at the inner workings of Multiple layers and how we set it up in code.&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell2.jpg&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;Feed forward depth&amp;lt;/strong&amp;gt;=3&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;Feed forward depth&lt;/strong&gt;=3&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -638,9 +634,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell7.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;Multi layer RNNs Forward pass summary&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;Multi layer RNNs Forward pass summary&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -653,9 +649,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell3.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Multi layer RNNs Forward pass&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Multi layer RNNs Forward pass&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -666,9 +662,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell4.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -679,9 +675,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell5.jpg&quot; alt=&quot;Image: figure-6: &amp;lt;strong&amp;gt;outputs&amp;lt;/strong&amp;gt; returned.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: &lt;strong&gt;outputs&lt;/strong&gt; returned.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -692,9 +688,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell6.jpg&quot; alt=&quot;Image: figure-7: &amp;lt;strong&amp;gt;states&amp;lt;/strong&amp;gt; returned.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: &lt;strong&gt;states&lt;/strong&gt; returned.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -714,9 +710,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell8.jpg&quot; alt=&quot;Image: figure-8: MultiRNNCell Backward propagation summary.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: MultiRNNCell Backward propagation summary.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -730,9 +726,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback26.jpg&quot; alt=&quot;Image: figure-9: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -745,9 +741,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell9.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;dh_next_recurr&amp;lt;/strong&amp;gt; which is passed back to MultiRNNCell to be applied to the next layer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;dh_next_recurr&lt;/strong&gt; which is passed back to MultiRNNCell to be applied to the next layer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -759,9 +755,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback27.jpg&quot; alt=&quot;Image: figure-30: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-30: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -774,9 +770,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/multilayercell10.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;dh_next_recurr&amp;lt;/strong&amp;gt; which is passed back to MultiRNNCell to be applied to next layer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;dh_next_recurr&lt;/strong&gt; which is passed back to MultiRNNCell to be applied to next layer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -801,9 +797,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm0.jpg&quot; alt=&quot;Image: figure-11: Bidirectional RNNs.&amp;lt;strong&amp;gt;forward cell&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: Bidirectional RNNs.&lt;strong&gt;forward cell&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -815,9 +811,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm1.jpg&quot; alt=&quot;Image: figure-12: Bidirectional RNNs.&amp;lt;strong&amp;gt;backward cell&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: Bidirectional RNNs.&lt;strong&gt;backward cell&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -829,9 +825,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm2.jpg&quot; alt=&quot;Image: figure-13: Bidirectional RNNs:Output.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: Bidirectional RNNs:Output.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -843,9 +839,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm3.jpg&quot; alt=&quot;Image: figure-14: MultiRNNCell Backward propagation summary.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: MultiRNNCell Backward propagation summary.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -857,9 +853,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm4.jpg&quot; alt=&quot;Image: figure-15: MultiRNNCell Backward propagation summary.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: MultiRNNCell Backward propagation summary.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -872,9 +868,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm5.jpg&quot; alt=&quot;Image: figure-16: Combining Bidirectional RNNs and MultiRNNCell.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: Combining Bidirectional RNNs and MultiRNNCell.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -885,9 +881,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm6.jpg&quot; alt=&quot;Image: figure-17: Combining Bidirectional RNNs and MultiRNNCell.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: Combining Bidirectional RNNs and MultiRNNCell.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -898,14 +894,14 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/bilstm7.jpg&quot; alt=&quot;Image: figure-18: Combining Bidirectional RNNs and MultiRNNCell.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: Combining Bidirectional RNNs and MultiRNNCell.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;Finally, that would be the complete documentation of LSTMs inner workings. Maybe a comparison with RNNs for vanishing gradient improvement will complete it. But that apart, once we have a drop on LSTMs like we did, using them in more complex architectures will become a lot easier. In the immediate next article, we’ll look at the improvements in propagation because of vanishing and exploding gradients, if any, brought about by LSTMs over RNNs.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are compute-intensive, they have better accuracy and so does bidirectional connections. More importantly, a solid understanding of the above mentioned paves the way for concepts like Highway connections, Residual Connections, Pointer networks, Encoder-Decoder Architectures and so forth in a future article. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://0.0.0.0:4000/%7B%22feature%22=%3E%22rnn/bilstm7.jpg%22%7D" /></entry><entry><title type="html">RNN Series:LSTM internals:Part-3: The Backward Propagation</title><link href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-3" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-3: The Backward Propagation" /><published>2019-07-15T15:07:19+00:00</published><updated>2019-07-15T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-07/LSTMPart-3</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-07/LSTMPart-3">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Finally, that would be the complete documentation of LSTMs inner workings. Maybe a comparison with RNNs for vanishing gradient improvement will complete it. But that apart, once we have a drop on LSTMs like we did, using them in more complex architectures will become a lot easier. In the immediate next article, we’ll look at the improvements in propagation because of vanishing and exploding gradients, if any, brought about by LSTMs over RNNs.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are compute-intensive, they have better accuracy and so does bidirectional connections. More importantly, a solid understanding of the above mentioned paves the way for concepts like Highway connections, Residual Connections, Pointer networks, Encoder-Decoder Architectures and so forth in a future article. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22rnn/bilstm7.jpg%22%7D" /></entry><entry><title type="html">RNN Series:LSTM internals:Part-3: The Backward Propagation</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-3" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-3: The Backward Propagation" /><published>2019-07-15T15:07:19+00:00</published><updated>2019-07-15T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-3</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-3">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt;, we look inside LSTM forward pass.&lt;/strong&gt; If you haven’t already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;,&lt;a href=&quot;/articles/2019-07/LSTMPart-2&quot;&gt;part-2&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore LSTM’s Backward Propagation. This would usually involve &lt;strong&gt;lots of math&lt;/strong&gt;. I am &lt;strong&gt;not a trained mathematician&lt;/strong&gt;, however, I have decent &lt;strong&gt;intuition&lt;/strong&gt;. But just intuition can only get you so far. So I used my &lt;strong&gt;programming skills&lt;/strong&gt; to validate pure theoretical results often cited by a &lt;strong&gt;pure mathematician.&lt;/strong&gt; &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;”&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
@@ -946,9 +942,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmcelltemplate5.jpg&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Forward propagation:Summary with weights.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Forward propagation:Summary with weights.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -959,9 +955,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmforward.jpg&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;Forward propagation:Summary as simple flow diagram.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;Forward propagation:Summary as simple flow diagram.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -972,9 +968,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback1.jpg&quot; alt=&quot;Image: figure-3: Forward propagation: The complete picture.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Forward propagation: The complete picture.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -988,9 +984,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback2.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Step-1:&amp;lt;/strong&amp;gt;&amp;lt;strong&amp;gt;Wy&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;By&amp;lt;/strong&amp;gt; first.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Step-1:&lt;/strong&gt;&lt;strong&gt;Wy&lt;/strong&gt; and &lt;strong&gt;By&lt;/strong&gt; first.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1001,9 +997,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback3.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt;&amp;lt;strong&amp;gt;3rd&amp;lt;/strong&amp;gt; time step &amp;lt;strong&amp;gt;W&amp;lt;sub&amp;gt;f&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;i&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;c&amp;lt;/sub&amp;gt;,W&amp;lt;sub&amp;gt;o&amp;lt;/sub&amp;gt;&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;B&amp;lt;sub&amp;gt;f&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;i&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;c&amp;lt;/sub&amp;gt;,B&amp;lt;sub&amp;gt;o&amp;lt;/sub&amp;gt;&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;Step-2:&lt;/strong&gt;&lt;strong&gt;3rd&lt;/strong&gt; time step &lt;strong&gt;W&lt;sub&gt;f&lt;/sub&gt;,W&lt;sub&gt;i&lt;/sub&gt;,W&lt;sub&gt;c&lt;/sub&gt;,W&lt;sub&gt;o&lt;/sub&gt;&lt;/strong&gt; and &lt;strong&gt;B&lt;sub&gt;f&lt;/sub&gt;,B&lt;sub&gt;i&lt;/sub&gt;,B&lt;sub&gt;c&lt;/sub&gt;,B&lt;sub&gt;o&lt;/sub&gt;&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1016,9 +1012,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmbackcell.jpg&quot; alt=&quot;Image: figure-6: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt;LSTMCell BPTT in a simple reverse flow diagram.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: &lt;strong&gt;Step-2:&lt;/strong&gt;LSTMCell BPTT in a simple reverse flow diagram.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1029,9 +1025,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback4.jpg&quot; alt=&quot;Image: figure-7: &amp;lt;strong&amp;gt;Step-2:&amp;lt;/strong&amp;gt; Repeat for remaining time steps in the sequence&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: &lt;strong&gt;Step-2:&lt;/strong&gt; Repeat for remaining time steps in the sequence&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1053,9 +1049,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback5.jpg&quot; alt=&quot;Image: figure-8: &amp;lt;strong&amp;gt;The proof, intuition and program implementation&amp;lt;/strong&amp;gt; of the derivation can be found at &amp;lt;strong&amp;gt;&amp;lt;a href='/articles/2019-05/softmax-and-its-gradient'&amp;gt;softmax&amp;lt;/a&amp;gt;&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;&amp;lt;a href='/articles/2019-05/softmax-and-cross-entropy'&amp;gt;cross_entropy_loss&amp;lt;/a&amp;gt;&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: &lt;strong&gt;The proof, intuition and program implementation&lt;/strong&gt; of the derivation can be found at &lt;strong&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1068,9 +1064,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback6.jpg&quot; alt=&quot;Image: figure-9: &amp;lt;strong&amp;gt;DBy&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: &lt;strong&gt;DBy&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1082,9 +1078,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback7.jpg&quot; alt=&quot;Image: figure-10: &amp;lt;strong&amp;gt;DWy&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: &lt;strong&gt;DWy&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1095,9 +1091,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback8.jpg&quot; alt=&quot;Image: figure-11: &amp;lt;strong&amp;gt;DWy&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;Dby&amp;lt;/strong&amp;gt;. Only the gradients are calculated, the weights are adjusted once in the end.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: &lt;strong&gt;DWy&lt;/strong&gt; and &lt;strong&gt;Dby&lt;/strong&gt;. Only the gradients are calculated, the weights are adjusted once in the end.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1126,9 +1122,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback9.jpg&quot; alt=&quot;Image: figure-12: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1139,9 +1135,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback10.jpg&quot; alt=&quot;Image: figure-13: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: &lt;strong&gt;DHt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1152,9 +1148,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback11.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;DHt&amp;lt;/strong&amp;gt; Shape is the same as h, for this example it is (5X1).&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;DHt&lt;/strong&gt; Shape is the same as h, for this example it is (5X1).&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1169,9 +1165,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback12.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;DOt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1182,9 +1178,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback13.jpg&quot; alt=&quot;Image: figure-16: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: &lt;strong&gt;DOt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1196,9 +1192,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback14.jpg&quot; alt=&quot;Image: figure-17: &amp;lt;strong&amp;gt;DOt&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;DWo&amp;lt;/strong&amp;gt; and &amp;lt;strong&amp;gt;DBo&amp;lt;/strong&amp;gt; and there shapes&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17: &lt;strong&gt;DOt&lt;/strong&gt;, &lt;strong&gt;DWo&lt;/strong&gt; and &lt;strong&gt;DBo&lt;/strong&gt; and there shapes&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1213,9 +1209,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback15.jpg&quot; alt=&quot;Image: figure-18: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-18: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1226,9 +1222,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback16.jpg&quot; alt=&quot;Image: figure-19: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-19: &lt;strong&gt;DCt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1242,9 +1238,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback17.jpg&quot; alt=&quot;Image: figure-20: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-20: &lt;strong&gt;DCprojt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1255,9 +1251,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback18.jpg&quot; alt=&quot;Image: figure-21: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-21: &lt;strong&gt;DCprojt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1269,9 +1265,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback19.jpg&quot; alt=&quot;Image: figure-22: &amp;lt;strong&amp;gt;DCprojt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-22: &lt;strong&gt;DCprojt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1285,9 +1281,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback20.jpg&quot; alt=&quot;Image: figure-23: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-23: &lt;strong&gt;DFt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1298,9 +1294,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback21.jpg&quot; alt=&quot;Image: figure-24: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-24: &lt;strong&gt;DFt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1312,9 +1308,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback22.jpg&quot; alt=&quot;Image: figure-25: &amp;lt;strong&amp;gt;DFt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-25: &lt;strong&gt;DFt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1328,9 +1324,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback23.jpg&quot; alt=&quot;Image: figure-26: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-26: &lt;strong&gt;DIt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1341,9 +1337,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback24.jpg&quot; alt=&quot;Image: figure-27: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt; schematically.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-27: &lt;strong&gt;DIt&lt;/strong&gt; schematically.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1355,9 +1351,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback25.jpg&quot; alt=&quot;Image: figure-28: &amp;lt;strong&amp;gt;DIt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-28: &lt;strong&gt;DIt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1371,9 +1367,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback26.jpg&quot; alt=&quot;Image: figure-29: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-29: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1384,9 +1380,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback27.jpg&quot; alt=&quot;Image: figure-30: &amp;lt;strong&amp;gt;Dhx&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;Dh_next&amp;lt;/strong&amp;gt;, &amp;lt;strong&amp;gt;dxt&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-30: &lt;strong&gt;Dhx&lt;/strong&gt;, &lt;strong&gt;Dh_next&lt;/strong&gt;, &lt;strong&gt;dxt&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1400,9 +1396,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmback28.jpg&quot; alt=&quot;Image: figure-31: &amp;lt;strong&amp;gt;DCt&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-31: &lt;strong&gt;DCt&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1414,7 +1410,7 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 
   &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-). In a later article well demystify the multilayer LSTMcells and Bi-directional LSTMCells.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am not a trained mathematician. However, I have decent intuition and intuition by itself can only get you so far. So I used my programming skills to validate pure theoretical results often cited by pure/trained mathematicians. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-1:The Big Picture</title><link href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-1" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-1:The Big Picture" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-07/LSTMPart-1</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-07/LSTMPart-1">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-). In a later article well demystify the multilayer LSTMcells and Bi-directional LSTMCells.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am not a trained mathematician. However, I have decent intuition and intuition by itself can only get you so far. So I used my programming skills to validate pure theoretical results often cited by pure/trained mathematicians. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-1:The Big Picture</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-1" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-1:The Big Picture" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-1</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-1">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. &lt;strong&gt;This is a &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; approach for which I have pure python implementation (&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;) of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
@@ -1446,9 +1442,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn.jpeg&quot; alt=&quot;Image: figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1462,9 +1458,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1475,9 +1471,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn1.jpg&quot; alt=&quot;Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe'&amp;gt;DEEP-Breathe's&amp;lt;/a&amp;gt; &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285'&amp;gt;dynamic_rnn&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe's&lt;/a&gt; &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285&quot;&gt;dynamic_rnn&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1488,9 +1484,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn2.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;output(H-state across all time steps)&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1501,9 +1497,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn3.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;states(C-state and H-state for the lst time step)&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1514,9 +1510,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn4.jpg&quot; alt=&quot;Image: figure-6: So the shape of &amp;lt;strong&amp;gt;pred&amp;lt;/strong&amp;gt;(the first return from 'RNN()' function should be that of &amp;lt;strong&amp;gt;X&amp;lt;/strong&amp;gt;)&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: So the shape of &lt;strong&gt;pred&lt;/strong&gt;(the first return from 'RNN()' function should be that of &lt;strong&gt;X&lt;/strong&gt;)&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1527,9 +1523,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/rnn5.jpg&quot; alt=&quot;Image: figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1670,7 +1666,7 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;In summary, then, that was the walk through of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">LSTMs make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. This is a multi-part series that will unravel the mystery behind LSTMs. Especially it's gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-2:The Forward pass</title><link href="http://0.0.0.0:4000/articles/2019-07/LSTMPart-2" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-2:The Forward pass" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-07/LSTMPart-2</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-07/LSTMPart-2">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In summary, then, that was the walk through of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">LSTMs make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. This is a multi-part series that will unravel the mystery behind LSTMs. Especially it's gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-2:The Forward pass</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-2" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-2:The Forward pass" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-2</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-2">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt;, we look inside LSTM forward pass.&lt;/strong&gt; If you haven’t already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
@@ -1703,9 +1699,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm1.jpg&quot; alt=&quot;Image: figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1717,9 +1713,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm2.jpg&quot; alt=&quot;Image: figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these &amp;lt;strong&amp;gt;weights&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X15&amp;lt;/strong&amp;gt; individually and stacked vertically as shown they measure &amp;lt;strong&amp;gt;20X15&amp;lt;/strong&amp;gt;. The Shapes of the &amp;lt;strong&amp;gt;biases&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X1&amp;lt;/strong&amp;gt; individually and stacked up &amp;lt;strong&amp;gt;20X1&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these &lt;strong&gt;weights&lt;/strong&gt; are &lt;strong&gt;5X15&lt;/strong&gt; individually and stacked vertically as shown they measure &lt;strong&gt;20X15&lt;/strong&gt;. The Shapes of the &lt;strong&gt;biases&lt;/strong&gt; are &lt;strong&gt;5X1&lt;/strong&gt; individually and stacked up &lt;strong&gt;20X1&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1731,9 +1727,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm3.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&amp;lt;/strong&amp;gt;. Making it &amp;lt;strong&amp;gt;20X16&amp;lt;/strong&amp;gt;, biases allocated with weights is a matter of convenience and performance.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&lt;/strong&gt;. Making it &lt;strong&gt;20X16&lt;/strong&gt;, biases allocated with weights is a matter of convenience and performance.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1745,9 +1741,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm4.jpg&quot; alt=&quot;Image: figure-4: Equations of LSTM and their interplay with weights and biases.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: Equations of LSTM and their interplay with weights and biases.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1759,9 +1755,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm5.jpg&quot; alt=&quot;Image: figure-5: GEMM and running them though various gates.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: GEMM and running them though various gates.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1773,9 +1769,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm6.jpg&quot; alt=&quot;Image: figure-6: New cell state is a function of old cell state and new candidate state.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: New cell state is a function of old cell state and new candidate state.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1787,9 +1783,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm7.jpg&quot; alt=&quot;Image: figure-7: The previous steps already decided what to do, we just need to actually do it.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: The previous steps already decided what to do, we just need to actually do it.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1801,9 +1797,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm8.jpg&quot; alt=&quot;Image: figure-8: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case c&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case c&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1815,9 +1811,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm9.jpg&quot; alt=&quot;Image: figure-9: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case h&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1829,9 +1825,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm10.jpg&quot; alt=&quot;Image: figure-10: Wy shape is 10X5 multiplied by h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt; which is 5X1 and by added to it which is 10X1 as shown above.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: Wy shape is 10X5 multiplied by h&lt;sub&gt;t&lt;/sub&gt; which is 5X1 and by added to it which is 10X1 as shown above.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1843,9 +1839,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm11.jpg&quot; alt=&quot;Image: figure-11: DEEP-Breathe version of the &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109'&amp;gt;code&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1857,9 +1853,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm12.jpg&quot; alt=&quot;Image: figure-12: Traditionally called yhat.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: Traditionally called yhat.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1871,9 +1867,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm13.jpg&quot; alt=&quot;Image: figure-13: Similar to logistic regression and its cost function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: Similar to logistic regression and its cost function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1884,9 +1880,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmcelltemplate5.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;Summary with weights.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;Summary with weights.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1897,9 +1893,9 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstmforward.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;Summary as simple flow diagram.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;Summary as simple flow diagram.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1911,14 +1907,14 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/rnn/lstm14.jpg&quot; alt=&quot;Image: figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;In summary, then, that was the walk through of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time-step advanced. However, Let’s not get ahead of ourselves, before we get to a language model, let’s look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series, we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">Softmax and Cross-entropy</title><link href="http://0.0.0.0:4000/articles/2019-05/softmax-and-cross-entropy" rel="alternate" type="text/html" title="Softmax and Cross-entropy" /><published>2019-05-03T15:07:19+00:00</published><updated>2019-05-03T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-05/softmax-and-cross-entropy</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-05/softmax-and-cross-entropy">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In summary, then, that was the walk through of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time-step advanced. However, Let’s not get ahead of ourselves, before we get to a language model, let’s look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series, we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">Softmax and Cross-entropy</title><link href="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy" rel="alternate" type="text/html" title="Softmax and Cross-entropy" /><published>2019-05-03T15:07:19+00:00</published><updated>2019-05-03T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/softmax-and-cross-entropy</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/softmax-and-cross-entropy">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat). Cross entropy is a loss function that is defined as &lt;script type=&quot;math/tex&quot;&gt;\Large E = -y .log ({\hat{Y}})&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\Large E&lt;/script&gt;, is defined as the error, &lt;script type=&quot;math/tex&quot;&gt;\Large y&lt;/script&gt; is the label and &lt;script type=&quot;math/tex&quot;&gt;\Large \hat{Y}&lt;/script&gt; is defined as the &lt;script type=&quot;math/tex&quot;&gt;\Large softmax_j (logits)&lt;/script&gt; and logits are the weighted sum. One of the reasons to choose cross-entropy alongside softmax is that because softmax has an exponential element inside it. A cost function that has an element of the natural log will provide for a convex cost function. This is similar to logistic regression which uses sigmoid. Mathematically expressed as below.&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Large \hat{Y}=softmax_j (logits)&lt;/script&gt;
@@ -1962,9 +1958,9 @@ The output is illustrated in figure-1 and 2 below.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/cel.jpg&quot; alt=&quot;Image: figure-1:Cost is low because, the prediction is closer to the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1:Cost is low because, the prediction is closer to the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -1975,9 +1971,9 @@ The output is illustrated in figure-1 and 2 below.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/cel2.jpg&quot; alt=&quot;Image: figure-2:Cost is high because, the prediction is far away from the truth.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2:Cost is high because, the prediction is far away from the truth.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2041,9 +2037,9 @@ The output is illustrated in figure-1 and 2 below.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/cel3.jpg&quot; alt=&quot;Image: figure-3:The red arrow follows the gradient.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3:The red arrow follows the gradient.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2108,7 +2104,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/0c61d509643cd9abce816a9db388708fe3dc642f/org/mk/training/dl/softmaxtest.py#L52-L62&quot;&gt;Listing-5&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;As you can see the idea behind softmax and cross_entropy_loss and their combined use and implementation. Also, their combined gradient derivation is one of the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully, cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><summary type="html">The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat).</summary></entry><entry><title type="html">Introduction: Why another technical blog?</title><link href="http://0.0.0.0:4000/articles/2019-05/introduction" rel="alternate" type="text/html" title="Introduction: Why another technical blog?" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-05/introduction</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-05/introduction">&lt;p&gt;&lt;strong&gt;Artificial Intelligence especially deep learning employs extremely complex models.&lt;/strong&gt; Complexity stems from two major sources.&lt;/p&gt;
+&lt;p&gt;As you can see the idea behind softmax and cross_entropy_loss and their combined use and implementation. Also, their combined gradient derivation is one of the most used formulas in deep learning. Implemented code often lends perspective into theory as you see the various shapes of input and output. Hopefully, cross_entropy_loss’s combined gradient in Listing-5 does the same.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><summary type="html">The marriage of Softmax and CrossEntropy. This is a loss calculating function post the yhat(predicted value) that measures the difference between Labels and predicted value(yhat).</summary></entry><entry><title type="html">Introduction: Why another technical blog?</title><link href="http://localhost:4000/articles/2019-05/introduction" rel="alternate" type="text/html" title="Introduction: Why another technical blog?" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/introduction</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/introduction">&lt;p&gt;&lt;strong&gt;Artificial Intelligence especially deep learning employs extremely complex models.&lt;/strong&gt; Complexity stems from two major sources.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;ul&gt;
     &lt;li&gt;&lt;strong&gt;Firstly&lt;/strong&gt;, Models that have multiple dimensional representations have to be expressed mathematically. Often these models(RNNs, LSTMs, NMTs, BERTs) also has a time dimension that have to be represented as well adding to the complexity.&lt;/li&gt;
@@ -2143,9 +2139,9 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;Consider the above code where “main” calls “multstore” and “multstore” calls “mult2”.&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/x86reg.jpg&quot; alt=&quot;Image: figure-1&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2159,9 +2155,9 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/assemblercall.jpg&quot; alt=&quot;Image: figure-2&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2178,7 +2174,7 @@ softmax_i(1-softmax_j) &amp; i= j \\
               &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
               &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
                   &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-                  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
+                  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;    
                   &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
               &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
           &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -2272,9 +2268,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol1.jpe&quot; alt=&quot;Image: figure-3:CPU Cycles for the code in listing 1 and 2.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3:CPU Cycles for the code in listing 1 and 2.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2285,9 +2281,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol2.jpeg&quot; alt=&quot;Image: figure-4:Bottom of the screen is the size of the object using &amp;lt;a href='https://openjdk.java.net/projects/code-tools/jmh/' &amp;gt;JMH&amp;lt;/a&amp;gt;. &quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4:Bottom of the screen is the size of the object using &lt;a href=&quot;https://openjdk.java.net/projects/code-tools/jmh/&quot;&gt;JMH&lt;/a&gt;. &lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2298,9 +2294,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol3.jpeg&quot; alt=&quot;Image: figure-5&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2311,9 +2307,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol4.jpeg&quot; alt=&quot;Image: figure-6&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2324,9 +2320,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol5.jpeg&quot; alt=&quot;Image: figure-7:This is the big culprit, loading the next pointer. And this will show up as major resource consumer in figure-17.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7:This is the big culprit, loading the next pointer. And this will show up as major resource consumer in figure-17.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2337,11 +2333,11 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;
         &lt;img src=&quot;/img/introduction/sol6.jpeg&quot; alt=&quot;Image: figure-8: A &amp;lt;a href='https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766'&amp;gt;JVM safepoint&amp;lt;/a&amp;gt; is a range of execution where the state of the executing thread is well described.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
     &lt;/a&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: A &lt;a href=&quot;https://medium.com/software-under-the-hood/under-the-hood-java-peak-safepoints-dd45af07d766&quot;&gt;JVM safepoint&lt;/a&gt; is a range of execution where the state of the executing thread is well described.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2352,9 +2348,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol7.jpeg&quot; alt=&quot;Image: figure-9&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2365,9 +2361,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol8.jpeg&quot; alt=&quot;Image: figure-10&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2378,9 +2374,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol9.jpeg&quot; alt=&quot;Image: figure-11&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2391,9 +2387,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol10.jpeg&quot; alt=&quot;Image: figure-12&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2404,9 +2400,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol11.jpeg&quot; alt=&quot;Image: figure-13&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2417,9 +2413,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol12.jpeg&quot; alt=&quot;Image: figure-14:This is the big culprit, loading the next pointer except it is for y. This too will show up as major resource consumer in figure-17.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14:This is the big culprit, loading the next pointer except it is for y. This too will show up as major resource consumer in figure-17.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2430,9 +2426,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol13.jpeg&quot; alt=&quot;Image: figure-15&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2443,9 +2439,9 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol14.jpeg&quot; alt=&quot;Image: figure-16&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
@@ -2456,15 +2452,15 @@ Just before we get started a few things to keep in mind.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/introduction/sol15.jpeg&quot; alt=&quot;Image: figure-17&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-17&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
 
-&lt;p&gt;In summary, then, the figure-17 should clarify the resource stalls exhibited by the code. It is time-consuming to take the first-principles approach to understand deep technical concepts but ultimately it brings great joy. I would like to bring similar understanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, especially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt;. &lt;strong&gt;In the next few articles, I will go into the details of their inner workings. And in this blog, I will focus more on Pictures and Code.&lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><category term="Introduction" /><summary type="html">Pictures say a thousand words is a cliche, but I believe in it. I have made a career out of it. Complex programming or logical concepts should be understood with the help of pictures.</summary></entry><entry><title type="html">Softmax and its Gradient</title><link href="http://0.0.0.0:4000/articles/2019-05/softmax-and-its-gradient" rel="alternate" type="text/html" title="Softmax and its Gradient" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://0.0.0.0:4000/articles/2019-05/softmax-and-its-gradient</id><content type="html" xml:base="http://0.0.0.0:4000/articles/2019-05/softmax-and-its-gradient">&lt;p&gt;From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross-entropy loss and the combined gradient.
+&lt;p&gt;In summary, then, the figure-17 should clarify the resource stalls exhibited by the code. It is time-consuming to take the first-principles approach to understand deep technical concepts but ultimately it brings great joy. I would like to bring similar understanding to concepts in general and Deep Learning Concepts in particular. In fact, I have seen Neural Machine Translation Based systems grossly underperform and, it was simply because most of the hyperparameters were not understood at all. &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/strong&gt; is a complete and pure python implementation of these models, especially but not limited to &lt;strong&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/manualmachinetranslation.py&quot;&gt;Neural Machine Translator&lt;/a&gt;&lt;/strong&gt;. &lt;strong&gt;In the next few articles, I will go into the details of their inner workings. And in this blog, I will focus more on Pictures and Code.&lt;/strong&gt;&lt;/p&gt;</content><author><name></name></author><category term="Introduction" /><summary type="html">Pictures say a thousand words is a cliche, but I believe in it. I have made a career out of it. Complex programming or logical concepts should be understood with the help of pictures.</summary></entry><entry><title type="html">Softmax and its Gradient</title><link href="http://localhost:4000/articles/2019-05/softmax-and-its-gradient" rel="alternate" type="text/html" title="Softmax and its Gradient" /><published>2019-05-01T15:07:19+00:00</published><updated>2019-05-01T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-05/softmax-and-its-gradient</id><content type="html" xml:base="http://localhost:4000/articles/2019-05/softmax-and-its-gradient">&lt;p&gt;From the perspective of Deep Neural networks, softmax is one the most important activation function, maybe the most important. I had trouble understanding it in the beginning, especially its why its chosen, its gradient, its relationship with cross-entropy loss and the combined gradient.
 There are many softmax resources available on the internet. Among the many that are available, I found the link &lt;a href=&quot;https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/&quot;&gt;here&lt;/a&gt; to be the most complete. In this article, I “dumb” it down further and add code to the theory. Code, when associated with theory, makes the explanation very precise. &lt;strong&gt;But, there is another selfish reason for reproducing these here, I will be able to refer to these while explaining more complex concepts like LSTMs, NMT, BERT, etc.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Softmax is essentially a vector function. It takes n inputs and produces and n outputs. &lt;strong&gt;The out can be interpreted as a probabilistic output(summing up to 1). A multiway shootout if you will.&lt;strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -2626,9 +2622,9 @@ softmax_i(1-softmax_j) &amp; i= j \\
 &lt;p&gt;The above is the softmax grad code. As you can see it initializes a diagonal matrix that is then populated with the right values. On the main diagonal it has the values for case (i=j) and (i!=j) elsewhere. This is illustrated in the picture below.&lt;/p&gt;
 
 &lt;figure&gt;
-
+    
     &lt;img src=&quot;/img/softmaxgrad.png&quot; alt=&quot;Image: figure-1&quot; hight=&quot;120%&quot; width=&quot;120%&quot; /&gt;
-
+    
     &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
