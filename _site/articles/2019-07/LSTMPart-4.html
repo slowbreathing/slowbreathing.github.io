@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing">
   <meta name="twitter:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are co...">
   
-    <meta property="twitter:image" content="http://localhost:4000/img/leonids-logo.png">
+    <meta property="twitter:image" content="http://localhost:4000/img/rnn/bilstm7.jpg">
   
 
   <!-- Open Graph Tags -->
@@ -28,7 +28,7 @@
   <meta property="og:title" content="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing">
   <meta property="og:description" content="In this multi-part series(part-1,part-2,part-3) we look into composing LSTM into multiple higher layers and its directionality. Though Multiple layers are co...">
   
-    <meta property="og:image" content="http://localhost:4000/img/leonids-logo.png">
+    <meta property="og:image" content="http://localhost:4000/img/rnn/bilstm7.jpg">
   
   <title>RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs | Slowbreathing</title>
 
@@ -81,7 +81,7 @@
       <li class="nav-item">
         <a href="http://localhost:4000/archive/">Archive</a>
       </li>
-        
+          
       <li class="nav-item">
         <a href="http://localhost:4000/categories/">Categories</a>
       </li>
@@ -93,7 +93,7 @@
       <li class="nav-item">
         <a href="http://localhost:4000/tags/">Tags</a>
       </li>
-               
+                 
     </ul>
   </nav>
   <script type="text/javascript">
@@ -121,14 +121,14 @@
     <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
     
     
-    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
     
     <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
     
     
     
     
-    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
     
     
     
@@ -175,6 +175,16 @@
 
 
 
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/rnn/bilstm7.jpg"
+  
+  alt="RNN Series:LSTM internals:Part-4: MultiRNNCell and Bidirectional RNNs feature image">
+
+  
+</div><!-- /.image-wrap -->
+
 
 
 <div id="post">
@@ -198,7 +208,7 @@
 
   <article class="post-content">
     <h3 id="introduction">Introduction</h3>
-<p>In this <a href="/tags/#LSTM">multi-part series</a> (<a href="/articles/2019-07/LSTMPart-1">part-1</a>,<a href="/articles/2019-07/LSTMPart-2">part-2</a>,<a href="/articles/2019-07/LSTMPart-3">part-3</a>) we look into composing LSTM into multiple higher layers and its directionality. Though <strong>Multiple layers</strong> are compute-intensive, they have better accuracy and so does <strong>bidirectional connections.</strong> More importantly, a solid understanding of the above mentioned paves the way for concepts like <strong>Highway connections</strong>, <strong>Residual Connections</strong>, <strong>Pointer networks</strong>, <strong>Encoder-Decoder</strong> Architectures and so forth in future article. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models</strong>.</p>
+<p>In this <a href="/tags/#LSTM">multi-part series</a> (<a href="/articles/2019-07/LSTMPart-1">part-1</a>,<a href="/articles/2019-07/LSTMPart-2">part-2</a>,<a href="/articles/2019-07/LSTMPart-3">part-3</a>), we look into composing LSTM into multiple higher layers and its directionality. Though <strong>Multiple layers</strong> are compute-intensive, they have better accuracy and so does <strong>bidirectional connections.</strong> More importantly, a solid understanding of the above mentioned paves the way for concepts like <strong>Highway connections</strong>, <strong>Residual Connections</strong>, <strong>Pointer networks</strong>, <strong>Encoder-Decoder</strong> Architectures and so forth in future article. <strong>I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models</strong>.</p>
 
 <h3 id="what-this-article-is-not-about">What this article is not about?</h3>
 <blockquote>
@@ -547,6 +557,9 @@
   </article>
 </div>
 
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
 <div class="share-buttons">
   <h6>Share on: </h6>
   <ul>
@@ -585,19 +598,19 @@
   <div class="newsletter-container" >
                 <h4 class="newsletter-title">Subscribe</h4>
                 <!-- <p class="newsletter-text"></p> -->
-                <form class="newsletter-form" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=Slowbreathing', 'popupwindow', 'scrollbars=yes,width=550,height=220');return true">
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
 
                     <p class="newsletter-text">Get new posts to your inbox</p>
 
-                    <input type="hidden" value="Slowbreathing" name="uri" />
-
-                    <input type="hidden" name="loc" value="en_US" />
-
-                    <input class="newsletter-email" type="text" name="email" placeholder="name@example.com" />
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
 
                     <input class="newsletter-submit" type="submit" value="Subscribe" />
 
                 </form>
+
   </div>
 
 
