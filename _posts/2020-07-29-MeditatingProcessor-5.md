@@ -57,7 +57,7 @@ comments: true
         * [Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]
         * [Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]
       * [Core and Uncore:How much power can be saved]  
-    * [Summary][Summary3]  
+     * [Summary][Summary3]  
 4. [Artificial Intelligence guided Predictive MicroProcessor tuning][Meditating-with-microprocessors Part-4] <strong>([part-4][Meditating-with-microprocessors Part-4])<strong>
   * [Introduction][Introduction4]
   * [Is there a solution?]

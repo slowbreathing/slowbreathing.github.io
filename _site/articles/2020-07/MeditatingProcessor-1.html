@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  <meta name="description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra-Low-Latency ...">
   <meta name="keywords" content="blog and jekyll">
   <meta name="author" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
   <!-- Twitter Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
-  <meta name="twitter:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  <meta name="twitter:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra-Low-Latency ...">
   
     <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/c-states3.png">
   
@@ -26,7 +26,7 @@
   <meta property="og:type" content="blog">
   <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">
   <meta property="og:title" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
-  <meta property="og:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  <meta property="og:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra-Low-Latency ...">
   
     <meta property="og:image" content="http://localhost:4000/img/mwprocs/c-states3.png">
   
@@ -332,7 +332,7 @@
 
 <h1><a name="Introduction"></a></h1>
 <h3 id="introduction">Introduction</h3>
-<p>In the <strong><a href="/tags/#Meditating-with-microprocessors">multi-part series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. The techniques in general can be extended to other components of a computer system like the storage devices, memory etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using first principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency (part-3) (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools of the trade (part-5)</a></strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong></strong></strong></p>
+<p>In the <strong><a href="/tags/#Meditating-with-microprocessors">multi-part series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra-Low-Latency</strong> and <strong>Realtime</strong> loads. The techniques, in general, can be extended to other components of a computer system like the storage devices, memory etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using first principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency (part-3) (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools of the trade (part-5)</a></strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong></strong></strong></p>
 
 <h1 id="-1"><a name="Meditation and microprocessors: An extremely simple idea"></a></h1>
 <h4 id="meditation-and-microprocessors-an-extremely-simple-idea">Meditation and microprocessors: An extremely simple idea</h4>
