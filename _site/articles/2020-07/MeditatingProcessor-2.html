@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface | Slowbreathing">
+  <meta name="twitter:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/cpuidle-sub1.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-2">
+  <meta property="og:title" content="Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface | Slowbreathing">
+  <meta property="og:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/mwprocs/cpuidle-sub1.png">
+  
+  <title>Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2020-07/MeditatingProcessor-2">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/mwprocs/cpuidle-sub1.png"
+  
+  alt="Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface">Meditating with microprocessors Series: Part-2: A crashcourse in Microarchitecture and Linux CPUIDLE interface</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        29 JUL 2020
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    20 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="meditating-with-microprocessors"><a href="/tags/#Meditating-with-microprocessors">Meditating with microprocessors</a></h3>
+<ol>
+  <li><a href="MeditatingProcessor-1">Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</a> <strong>(<a href="MeditatingProcessor-1">part-1</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-1#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-1#Meditation and microprocessors: An extremely simple idea">Meditation and microprocessors: An extremely simple idea</a></li>
+      <li><a href="MeditatingProcessor-1#MicroProcessor C-states">MicroProcessor C-states</a></li>
+      <li><a href="MeditatingProcessor-1#A quick Summary of wakeup_latency">A quick Summary of wakeup_latency</a></li>
+      <li><a href="MeditatingProcessor-1#Artificial Intelligence based Hardware(Miroprocessor) tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</a></li>
+      <li><a href="MeditatingProcessor-1#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface</a> <strong>(<a href="MeditatingProcessor-2">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-2#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-2#MicroProcessor Components">MicroProcessor Components</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#Core">Core</a>
+            <ul>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Execution">Sandy Bridge Pipeline:Execution</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Backend (Data load and Store)">Sandy Bridge Pipeline:Backend (Data load and Store)</a></li>
+              <li><a href="MeditatingProcessor-2#Haswell Pipeline">Haswell Pipeline</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-2#Uncore">Uncore</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Linux Inteface to CPUIDLE">Linux Inteface to CPUIDLE</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem">CPUIDLE subsystem</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Driver load">CPUIDLE subsystem:Driver load</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Call the Driver">CPUIDLE subsystem:Call the Driver</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Governor">CPUIDLE subsystem:Governor</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency</a> <strong>(<a href="MeditatingProcessor-3">part-3</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-3#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:Core">Core and Uncore:Core</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-3#Power">Power</a>
+        <ul>
+          <li><a href="MeditatingProcessor-3#Power:Turn things off">Power:Turn things off</a></li>
+          <li><a href="MeditatingProcessor-3#Power:c-states">Power:c-states</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Tuned">Power:Tuned</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:c-states requests">Power:Tuned:c-states requests</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware State Residency">Power:Tuned:Hardware State Residency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:c-states">Power:Tuned:Influx:Grafana:c-states</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Measuring Latency">Power:Tuned:Measuring Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware Latency">Power:Tuned:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Wakeup Latency">Power:Tuned:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:latency">Power:Tuned:Influx:Grafana:latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Power:PMQOS">Power:PMQOS</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Turn things down">Power:Turn things down</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency">Power:Turn things down:P-states:Hardware Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a><br />
+      * <a href="MeditatingProcessor-3#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning</a> <strong>(<a href="MeditatingProcessor-4">part-4</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
+      <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
+      <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
+      <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
+      <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-5">Appendix:Tools of the trade</a> <strong>(<a href="MeditatingProcessor-5">part-5</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-5#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:An incisive but limited view">Linux Tools:An incisive but limited view</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:uprobes and kprobes">Linux Tools:Event Sources:uprobes and kprobes</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:Tracepoints">Linux Tools:Event Sources:Tracepoints</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools">Linux Tools:Extraction Tools</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering">Linux Tools:Extraction Tools:Ftrace:Engineering</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example">Linux Tools:Extraction Tools:BPF:A defining example</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Summary">Summary</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>The current article is part of a bigger <strong><a href="/tags/#Meditating-with-microprocessors">series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, in which I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools of the trade (part-5)</a></strong>.</p>
+
+<p>In the current article I lay the  technical groundwork for later articles in the series to build on. The term’s and technologies I’ll be using later must be understood really well. So we look at 3 concepts primarily.</p>
+<blockquote>
+  <ul>
+    <li>Firstly, Architecture of a modern microprocessor in short ,really really short. Just enough to make a mental model of the microprocessor to work with.</li>
+    <li>Secondly, How does does software(Linux) interface with the microprocessor. Again, just enough to make sense of the data we gather form the CPU using various UltraLowLatency profilers and tracers.</li>
+    <li>Thirdly, help programmers like you to get started quickly, explore further and help us.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-1"><a name="MicroProcessor Components"></a></h1>
+<h4 id="microprocessor-components">MicroProcessor Components</h4>
+<blockquote>
+  <ul>
+    <li><strong>Core:</strong> The modules/agents that compute are called the cores in a CPU. They may be general purpose CPU cores or special purpose GPGPU cores. Cores take instructions from a software program and execute them loads, stores, arithmatic and control flow.</li>
+    <li><strong>Cache:</strong> Caches frequently used data so that expensive memory access can be avoided. There is usually a hierarchy of multiple levels of cache. L1 and L2 are quick access (static RAM chips) small in size. L3 and L4, slower to access (dynamic RAM chips) but comparatively larger in size. Also, L3 and L4 are usually on the die as the core.</li>
+    <li><strong>On-chip-fabric:</strong> Interconnects exist on the CPU dies that are commonly called on-die or on-chip fabrics. These are not to be confused with fabrics that connect multiple CPU dies together at the data center level.</li>
+    <li><strong>Memory controller:</strong> Memory controllers provide an interface to main memory (DDR in many recent processor generations).</li>
+    <li><strong>PCIe:</strong> PCIe provides a mechanism to connect external devices such as network cards into the CPU.</li>
+    <li><strong>Chipset:</strong> The chipset can be thought of as a support entity to the CPU. In addition to supporting the boot process, it can also provide additional capabilities such as PCIe, hard drive access, networking, and manageability. Chipset functionality is integrated into the same die or package as the cores in the microserver space.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-2"><a name="Core"></a></h1>
+<h4 id="core">Core</h4>
+<p>Full-length books and courses have been dedicated to microarchitecture, so to illustrate the idea in a few pictures is foolhardy, to say the least. The complexity of this subject is second to none. And yet, I’ll give it a try, because the essence is not that difficult and worth understanding. Also, I have marked some links that do an excellent treatment of the subject in the references below. <strong>The first thing we look at is the flow of intruction and data inside the core at a relatively high level.<strong></strong></strong></p>
+
+<p>Cores can be designed for general purpose usage where they work well for wide range of workloads. The trade of with general pupose cores is relatively higher cost of design and construction. As a result, there are special purpose cores, that trade-off floating point performance, or 64 bit precision e.t.c. for smaller form factor or cost. In this section, we look at general purpose cores. Also, we look at <strong>Sandy Bridge</strong> as it is relatively modern and Intel make evolutionary changes moving forward to <strong>Haswell</strong> and <strong>*Lake pipelines</strong>.</p>
+
+<p><strong>Follow the color code.</strong></p>
+
+<blockquote>
+  <ul>
+    <li><strong>Core:</strong> Identifying various modules/units in the core.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/core.png" alt="Image: figure-1: &lt;strong&gt;Oncore modules/units&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>Oncore modules/units</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-3"><a name="Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)"></a></h1>
+<h4 id="sandy-bridge-pipelinefrontendinstruction-load-decode-cache">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</h4>
+<p>This details the frontend of the core. How the <strong>INSTRUCTIONS(NOT DATA)</strong> are loaded, decoded and cached.
+They have been designed in such a way that multiple μop(micro-operations) are available for execution at every cycle to increase parallelism.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Instruction fetch(figure-2(yellow)):</strong><span style="color:#ff9900">Instruction codes are fetched from the code cache(L1i-cache) in aligned 16-byte chunks into a double buffer that can hold two 16-byte chunks. The purpose of the double buffer is to make it possible to decode an instruction that crosses a 16-byte boundary.</span></li>
+    <li><strong>Instruction decoding(figure-2(yellow)):</strong><span style="color:#ff9900">This is a very critical stage in the pipeline because it limits the degree of parallelism that can be achieved. We want to fetch more than one instruction per clock cycle, decode more than one instruction per clock cycle, and execute more than one μop per clock cycle in order to gain speed. But decoding instructions in parallel is difficult when instructions have different lengths. You need to decode the first instruction in order to know how long it is and where the second instruction begins before you can start to decode the second instruction. So a simple instruction length decoder would only be able to handle one instruction per clock cycle. There are four decoders, which can handle instructions generating one or more ]=ops(Micro-operation) according to certain patterns.</span></li>
+    <li><strong>Micro-operation Cache(figure-2(yellow)):</strong><span style="color:#ff9900">The decoded μops(Micro-operation) are cached in a μops(Micro-operation) cache after the decoders in Sandy Bridge.This is useful because the limitation of 16 bytes per clock cycle in the fetch/decode units is a serious bottleneck if the average instruction length is more than four bytes. The throughput is doubled to 32 bytes per clock for code that fits into the μop(Micro-operation) cache.</span></li>
+  </ul>
+</blockquote>
+
+<h1 id="-4"><a name="Sandy Bridge Pipeline:Execution"></a></h1>
+<h4 id="sandy-bridge-pipelineexecution">Sandy Bridge Pipeline:Execution</h4>
+<p>This is where the execution happens. This is the critical source of performance in modern microprocessors. AFAIK, <a href="https://en.wikipedia.org/wiki/P5_(microarchitecture)">P5</a> is the first model from Intel that had multiple ports and an <strong>out-of-order( also called dynamic execution)</strong> scheduler. This scheme is used in most high-performance CPUs. <strong>In this scheme, the order of execution of instructions is determined by the availability of data and execution units and not the source order of the program(Thread).</strong> What this means is instructions within a thread may be reordered to suit the availability of data and execution units. The capacity(parallelism) of Sandy Bridge’s execution unit is quite high. Many μops have two or three execution ports to choose between and each unit.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Register Alias Table(RAT)(figure-2(green)):</strong><span style="color:#669900">The assembly code references logical/architectural registers(Think of them as place holders). Every logical register has a set of physical registers associated with it. The processor re-maps/transposes this name(for e.g. %rax) to one specific physical register on the fly. The physical registers are opaque and cannot be referenced directly but only via the canonical names.</span></li>
+    <li><strong>Register allocation and renaming(figure-1(green)):</strong><span style="color:#669900">Register renaming is controlled by the register alias table (RAT) and the reorder buffer (ROB).</span></li>
+    <li><strong>Execution Units(EU)(figure-2(green)):</strong><span style="color:#669900">The Sandy Bridge and Ivy Bridge have six execution ports. Port 0, 1 and 5 are for arithmetic and logic operations (ALU). There are two identical memory read ports on port 2 and 3 where previous processors had only one. Port 4 is for memory write. The memory write unit on port 4 has no address calculation. All write operations use port 2 or 3 for address calculation. The maximum throughput is one unfused μop on each port per clock cycle.</span></li>
+  </ul>
+</blockquote>
+
+<h1 id="-5"><a name="Sandy Bridge Pipeline:Backend (Data load and Store)"></a></h1>
+<h4 id="sandy-bridge-pipelinebackend-data-load-and-store">Sandy Bridge Pipeline:Backend (Data load and Store)</h4>
+<blockquote>
+  <ul>
+    <li><strong>Memory access(figure-2(pink)):</strong> <span style="color:#cc0099">The Sandy Bridge has two memory read ports where previous processors have only one. Cache bank conflicts are quite common when the maximum memory bandwidth is utilized.</span></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/microarchflow.png" alt="Image: figure-2: &lt;strong&gt;Core&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>Core</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>You can generate the below SOC layout using <a href="[https://linux.die.net/man/1/lstopo]">hwloc lstopo tool</a></strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/microarchflow3.png" alt="Image: figure-3: &lt;strong&gt;Entire SOC(System on chip)&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>Entire SOC(System on chip)</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-6"><a name="Haswell Pipeline"></a></h1>
+<h4 id="haswell-pipeline">Haswell Pipeline</h4>
+
+<p>Intel followed up Sandy and Ivy bridge with Haswell. The Haswell has several <strong>important but evolutionary</strong> improvements over previous designs. With a few changes, everything has been increased a little bit. Like number of execution units are 8. Compare figure-2 and figure-4 side by side.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Evolutionary changes in Haswell. &lt;/strong</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/microarchflow4.png" alt="Image: figure-4: &lt;strong&gt;Core&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>Core</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Evolutionary changes in Haswell. This SOC(System on Chip) view generated by <a href="[https://linux.die.net/man/1/lstopo]">hwloc lstopo tool</a>.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/microarchflow5.png" alt="Image: figure-5: &lt;strong&gt;Entire SOC(System on chip)&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>Entire SOC(System on chip)</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-7"><a name="Uncore"></a></h1>
+<h4 id="uncore">Uncore</h4>
+<p>All logic that is on the <a href="https://en.wikipedia.org/wiki/Die_(integrated_circuit)">die</a> is referred to as Uncore by Intel. As you may have guessed, that is quite a flimsy definition. But it makes sense because, as we integrate more into the single <strong>die</strong> or <strong>package</strong>, it results in a denser design and consumes much less power.</p>
+
+<p>In the Nehalem generation(preceding Sandy bridge ), this included the <strong>L3 cache</strong>, <strong>integrated memory controller</strong>, <strong>QuickPath Interconnect (QPI; for multi-socket communication)</strong>, and an <strong>interconnect</strong> that tied it all together. In the Sandy Bridge generation over and above Sandy Bridge, <strong>PCIe</strong> was integrated into the CPU uncore.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>L3 cache</strong></li>
+    <li><strong>integrated memory controller</strong></li>
+    <li><strong>QuickPath Interconnect (QPI; for multi-socket communication)</strong></li>
+    <li><strong>interconnect</strong></li>
+    <li><strong>PCIe</strong></li>
+    <li><strong>Integrated Grafics</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/uncore.png" alt="Image: figure-6: &lt;strong&gt;Uncore&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6: <strong>Uncore</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-8"><a name="Linux Inteface to CPUIDLE"></a></h1>
+<h4 id="linux-inteface-to-cpuidle">Linux Inteface to CPUIDLE</h4>
+<p>The idea here is to control the deeper c-states( deeper meditative states if you recall ) dynamically at run time. But before that, we need to understand Linux’s interface to a microprocessor. The reason why this is important is that it will help us understand the data gathered by the tracers on the microprocessor’s latency. Understanding this process of interaction allows us to visualize data in more flexible ways. Like mapping c-states to latencies etc.</p>
+
+<p>On most systems the microprocessor is doing some task, editing documents, sending or receiving emails, etc. But what does a microprocessor do when there is nothing to execute.
+As it turns out, doing nothing is quite complicated. In the olden days idling(doing nothing) was merely the lowest priority thread in a system on a busy spin. Until a new task popped in.
+Sooner rather than later, someone was going to realize that it is quite inefficient to expend power without any logical work being done. And this is where deeper c-states come in.</p>
+
+<figure>
+    
+    <img src="/img/mwprocs/c-states-desc.png" alt="Image: figure-7: &lt;strong&gt;c-states description&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7: <strong>c-states description</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-9"><a name="CPUIDLE subsystem"></a></h1>
+<h4 id="cpuidle-subsystem">CPUIDLE subsystem</h4>
+
+<p>Different processors may have different idle-state characteristics. In fact, even for the same manufacturer, there may be differences from one model to another. “cpuidle.h”(“include/linux/cpuidle.h”) is the generic framework defined for the purpose. “cpuidle.h” acts as an interface to separate platform-independent(rest of the kernel) code from manufacture-dependant(CPU Drivers) ones.</p>
+
+<h1 id="-10"><a name="CPUIDLE subsystem:Driver load"></a></h1>
+<h4 id="cpuidle-subsystemdriver-load">CPUIDLE subsystem:Driver load</h4>
+<p>The implementation has been handled in <strong>2 different ways.</strong></p>
+
+<blockquote>
+  <ul>
+    <li>For a hardware platform (for e.g. x86), a generic set of idle states may be supported in a manufacture independent way. This is implemented in <strong>“acpi_idle”(“drivers/acpi/processor_idle.c”)</strong> available at implements this behavior for all/most x86 vendors(Intel/AMD)</li>
+    <li>The other choice is to use the <strong>Intel driver</strong> which is implemented in <strong>“intel_idle”(“drivers/idle/intel_idle.c”)</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/idle.png" alt="Image: figure-8: &lt;strong&gt;CPUIdle_driver&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-8: <strong>CPUIdle_driver</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>The figure-9</strong> shows the implementation of <strong>“intel_idle”</strong> which is implemented in <strong>“intel_idle.c”(“drivers/idle/intel_idle.c”)</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/intel_idle.png" alt="Image: figure-9: &lt;strong&gt;cpuidle_state&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-9: <strong>cpuidle_state</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>CPUIDLE driver</strong> from Intel <strong>initialization function.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuinit.png" alt="Image: figure-10: &lt;strong&gt;CPU driver initialization(intel_idle)-1&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-10: <strong>CPU driver initialization(intel_idle)-1</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>CPUIDLE driver</strong> from Intel initialization function. <strong>Figure-(8,9,10,11,12)</strong> are to be looked at <strong>together</strong> to make sense.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuinit2.png" alt="Image: figure-11: &lt;strong&gt;cpuidle_device&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-11: <strong>cpuidle_device</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Finally the result of initialzation can be seen. The idle-states of a modern <strong>Intel processor</strong> through <strong>Linux ‘sysfs’ interface.</strong></li>
+  </ul>
+</blockquote>
+
+<h1 id="-11"><a name="State of initialized device through sysfs:Residency States"></a></h1>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuinit3.png" alt="Image: figure-12: &lt;strong&gt;State of initialized device through sysfs&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-12: <strong>State of initialized device through sysfs</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-12"><a name="CPUIDLE subsystem:Call the Driver"></a></h1>
+<h4 id="cpuidle-subsystemcall-the-driver">CPUIDLE subsystem:Call the Driver</h4>
+<p>The kernel’s scheduler cannot find a task to run on a CPU so it goes ahead and calls “do_idle”(“kernel/sched/idle.c”).
+Which idle-state is chosen is a matter of policy, but how then is communicated to the processor is illustrated next.</p>
+
+<blockquote>
+  <ul>
+    <li>When the kernel scheduler cannot find work to do, it calls <strong>“do_idle()” from “kernel/sched/idle.c”.</strong></li>
+    <li>The <strong>picture illustrates</strong> the interaction.</li>
+    <li>At the bottom right, is a trace generated from <strong><a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> for “intel_idle”</strong>. It shows the stack trace leading upto <strong>intel_idle</strong>.</li>
+    <li><strong><a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> is almost a magical tracer.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuidle-sub1.png" alt="Image: figure-13: &lt;strong&gt;CPUIDLE:Tracing intel_idle&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-13: <strong>CPUIDLE:Tracing intel_idle</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>This one shows the entry to <strong>processor specific</strong> code of <strong>“intel_idle”</strong> from <strong>“cpuidle_enter_state” (“drivers/cpuidle/cpuidle.c”)</strong>.</li>
+    <li>The target state accessed from driver(struct drv). This state structure is of type <strong>“cpuidle_state” shown earlier.</strong></li>
+    <li>I traced <strong>“sched_idle_set_state”</strong> into which <strong>“target_state”</strong> is getting passed.</li>
+    <li>I traced using <strong><a href="MeditatingProcessor-5#EBPF: The most flexible tracer">EBPF</a></strong>. <strong><a href="MeditatingProcessor-5#EBPF: The most flexible tracer">EBPF</a></strong> allows great <strong>flexibility in tracing</strong>. As you can see I am accessing the struct <strong>“cpuidle_state”</strong> at run time on a running kernel and printing it out.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuidle-intelidle1.png" alt="Image: figure-14: &lt;strong&gt;CPUIDLE:Tracing device_state&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-14: <strong>CPUIDLE:Tracing device_state</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Finally, call to <strong>“intel_idle”</strong> from <strong>“cpuidle_enter_state” (“drivers/cpuidle/cpuidle.c”)</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuidle-intelidle2.png" alt="Image: figure-15: &lt;strong&gt;CPUIDLE:intel_idle&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-15: <strong>CPUIDLE:intel_idle</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Rubber hits the road or the code hits the metal?</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/cpuidle-intelidle4.png" alt="Image: figure-16: &lt;strong&gt;CPUIDLE: code hits the metal&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-16: <strong>CPUIDLE: code hits the metal</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>“mwait_idle_with_hints”</strong> and <strong>__mwait</strong> are implemented in <strong>inline assembly.</strong></li>
+  </ul>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">mwait_idle_with_hints</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">eax</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ecx</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">static_cpu_has_bug</span><span class="p">(</span><span class="n">X86_BUG_MONITOR</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">current_set_polling_and_test</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">static_cpu_has_bug</span><span class="p">(</span><span class="n">X86_BUG_CLFLUSH_MONITOR</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">mb</span><span class="p">();</span>
+      <span class="n">clflush</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">current_thread_info</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">flags</span><span class="p">);</span>
+      <span class="n">mb</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">__monitor</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">current_thread_info</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">flags</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">need_resched</span><span class="p">())</span>
+      <span class="n">__mwait</span><span class="p">(</span><span class="n">eax</span><span class="p">,</span> <span class="n">ecx</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">current_clr_polling</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">1</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">__mwait</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">eax</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ecx</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="cm">/* "mwait %eax, %ecx;" */</span>
+  <span class="n">asm</span> <span class="k">volatile</span><span class="p">(</span><span class="s">".byte 0x0f, 0x01, 0xc9;"</span>
+         <span class="o">::</span> <span class="s">"a"</span> <span class="p">(</span><span class="n">eax</span><span class="p">),</span> <span class="s">"c"</span> <span class="p">(</span><span class="n">ecx</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">Listing</span><span class="o">-</span><span class="mi">2</span></code></pre></figure>
+
+<h1 id="-13"><a name="CPUIDLE subsystem:Call the Driver"></a></h1>
+<h4 id="cpuidle-subsystemgovernor">CPUIDLE subsystem:Governor</h4>
+
+<p>Governor is a part of the CPUIDLE subsystem and implements the policy part. Policies can be expressed in many ways.</p>
+
+<blockquote>
+  <ul>
+    <li>One policy can be, restrict deeper idle-states for lower latency. These policies are more direct in nature.</li>
+    <li>Others can be based on some QOS requiremment. For example, respond within a latency of a few 100 microseconds or powersave.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li><strong>Many governors may exist in a kernel but only one of them can be in control.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/governor.png" alt="Image: figure-17: &lt;strong&gt;CPUIDLE:Governor&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>CPUIDLE:Governor</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-14"><a name="CPUIDLE subsystem:Gathering and undertanding latency data"></a></h1>
+<h4 id="cpuidle-subsystemgathering-and-undertanding-latency-data">CPUIDLE subsystem:Gathering and undertanding latency data</h4>
+
+<p>The next step is to gather and understand latency data.  there are two challenges here. First,  to find a tracer that can gather CPUIDLE latency data without a huge observer effect. This can be achieved by using “<a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a>”. <a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">“ftrace” is the coolest tracing dude on the planet</a>. Second, is to make sense of the data.  <strong>At a very high level, what we want to understand is the impact of deep idle-states on latency.</strong></p>
+
+<blockquote>
+  <ul>
+    <li><strong><a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> event tracing</strong> for <strong>cpu_idle</strong>. Which state a <strong>cpu enters and exits</strong> with respect to time lapse as duration.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/latency1.png" alt="Image: figure-18: &lt;strong&gt;CPUIDLE:ftrace raw data&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-18: <strong>CPUIDLE:ftrace raw data</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Filtered by cpu.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/latency2.png" alt="Image: figure-19: &lt;strong&gt;CPUIDLE:ftrace:Filtered by cpu&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>CPUIDLE:ftrace:Filtered by cpu</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>What the numbers mean, and <strong>corresponding latency calculation.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/latency3.png" alt="Image: figure-20: &lt;strong&gt;CPUIDLE:ftrace:latency calculation&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-20: <strong>CPUIDLE:ftrace:latency calculation</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Latency by <strong>state exit and entry</strong> respectively in CSV form.</li>
+    <li>The <strong>time series property</strong> has been retained. That will tell us if a <strong>configuration change has effected latency.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/latency4.png" alt="Image: figure-17: &lt;strong&gt;CPUIDLE:ftrace:csv&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>CPUIDLE:ftrace:csv</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Pushed to <strong>influxdb and then visualized by grafana.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/latency5.png" alt="Image: figure-17: &lt;strong&gt;CPUIDLE:ftrace:influx:grafana:visualization&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>CPUIDLE:ftrace:influx:grafana:visualization</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Summary"></a></p>
+<h3 id="summary">Summary</h3>
+<p>We looked at 2 primary concepts. Firstly, a sketch of what units a CPU Core has and how it executes code and processes data. The pipeline of the core should provide a high level idea of the flow instruction and data. Secondly, the interaction of software(Linux) with the CPU. This information is really interesting and in the field of performance absolutely indispensable. Once understood well, debugging becomes a lot easier. Fancy profilers are all very good, but have a huge observer effect. ‘Ftrace’ like tools are built for this purpose. However the data they generate may not be easily digestible. Now that we have a basic understanding, we can use these tools to measure after effects of performance configurations in the rest of the <a href="/tags/#Meditating-with-microprocessors">series</a>.</p>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--Doc3-->
+
+<!--Doc4-->
+
+<!--Doc5-->
+
+<!--External-->
+
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2020-07/MeditatingProcessor-2" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-2" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-2" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-2" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-2" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

@@ -19,24 +19,43 @@ In this short post, <strong>which has nothing to do with Artificial Intelligence
 
 ### Importance of understanding stuff under-the-hood
 Let us say that one wants to understand the underlying assembler for a high-level language and the way it executes on a CPU( at least theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general-purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Let us understand this with a very simple C program before we do this for a higher-level language.
-{% highlight c %}
-  int main() {
-      long d;
-      multstore(2, 3, &d);
-      printf("2 * 3 --> %ld\n", d);
-      return 0;
+
+{% highlight assembler %}
+static inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
+{
+  if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
+    if (static_cpu_has_bug(X86_BUG_CLFLUSH_MONITOR)) {
+      mb();
+      clflush((void *)&current_thread_info()->flags);
+      mb();
+    }
+
+    __monitor((void *)&current_thread_info()->flags, 0, 0);
+    if (!need_resched())
+      __mwait(eax, ecx);
   }
-
-  long mult2(long a, long b) {
-      long s = a * b;
-      return s;
-   }
-
-   void multstore(long x, long y, long *dest) {
-       long t = mult2(x, y);
-       *dest = t;
-   }
+  current_clr_polling();
+}
 Listing-1
+{% endhighlight %}
+
+{% highlight assembler %}
+static inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
+{
+  if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
+    if (static_cpu_has_bug(X86_BUG_CLFLUSH_MONITOR)) {
+      mb();
+      clflush((void *)&current_thread_info()->flags);
+      mb();
+    }
+
+    __monitor((void *)&current_thread_info()->flags, 0, 0);
+    if (!need_resched())
+      __mwait(eax, ecx);
+  }
+  current_clr_polling();
+}
+Listing-2
 {% endhighlight %}
 
 Consider the above code where "main" calls "multstore" and "multstore" calls "mult2".

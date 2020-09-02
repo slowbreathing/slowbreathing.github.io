@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning | Slowbreathing">
+  <meta name="twitter:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/asymmetrictransformer3.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-4">
+  <meta property="og:title" content="Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning | Slowbreathing">
+  <meta property="og:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/mwprocs/asymmetrictransformer3.png">
+  
+  <title>Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2020-07/MeditatingProcessor-4">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/mwprocs/asymmetrictransformer3.png"
+  
+  alt="Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning">Meditating with microprocessors Series: Part-4: Artificial Intelligence guided Predictive MicroProcessor tuning</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        29 JUL 2020
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    15 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="meditating-with-microprocessors"><a href="/tags/#Meditating-with-microprocessors">Meditating with microprocessors</a></h3>
+<ol>
+  <li><a href="MeditatingProcessor-1">Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</a> <strong>(<a href="MeditatingProcessor-1">part-1</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-1#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-1#Meditation and microprocessors: An extremely simple idea">Meditation and microprocessors: An extremely simple idea</a></li>
+      <li><a href="MeditatingProcessor-1#MicroProcessor C-states">MicroProcessor C-states</a></li>
+      <li><a href="MeditatingProcessor-1#A quick Summary of wakeup_latency">A quick Summary of wakeup_latency</a></li>
+      <li><a href="MeditatingProcessor-1#Artificial Intelligence based Hardware(Miroprocessor) tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</a></li>
+      <li><a href="MeditatingProcessor-1#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface</a> <strong>(<a href="MeditatingProcessor-2">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-2#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-2#MicroProcessor Components">MicroProcessor Components</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#Core">Core</a>
+            <ul>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Execution">Sandy Bridge Pipeline:Execution</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Backend (Data load and Store)">Sandy Bridge Pipeline:Backend (Data load and Store)</a></li>
+              <li><a href="MeditatingProcessor-2#Haswell Pipeline">Haswell Pipeline</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-2#Uncore">Uncore</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Linux Inteface to CPUIDLE">Linux Inteface to CPUIDLE</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem">CPUIDLE subsystem</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Driver load">CPUIDLE subsystem:Driver load</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Call the Driver">CPUIDLE subsystem:Call the Driver</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Governor">CPUIDLE subsystem:Governor</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency</a> <strong>(<a href="MeditatingProcessor-3">part-3</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-3#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:Core">Core and Uncore:Core</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-3#Power">Power</a>
+        <ul>
+          <li><a href="MeditatingProcessor-3#Power:Turn things off">Power:Turn things off</a></li>
+          <li><a href="MeditatingProcessor-3#Power:c-states">Power:c-states</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Tuned">Power:Tuned</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:c-states requests">Power:Tuned:c-states requests</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware State Residency">Power:Tuned:Hardware State Residency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:c-states">Power:Tuned:Influx:Grafana:c-states</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Measuring Latency">Power:Tuned:Measuring Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware Latency">Power:Tuned:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Wakeup Latency">Power:Tuned:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:latency">Power:Tuned:Influx:Grafana:latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Power:PMQOS">Power:PMQOS</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Turn things down">Power:Turn things down</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency">Power:Turn things down:P-states:Hardware Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-3#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning</a> <strong>(<a href="MeditatingProcessor-4">part-4</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
+      <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
+      <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
+      <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
+      <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-5">Appendix:Tools of the trade</a> <strong>(<a href="MeditatingProcessor-5">part-5</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-5#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:An incisive but limited view">Linux Tools:An incisive but limited view</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:uprobes and kprobes">Linux Tools:Event Sources:uprobes and kprobes</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:Tracepoints">Linux Tools:Event Sources:Tracepoints</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools">Linux Tools:Extraction Tools</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering">Linux Tools:Extraction Tools:Ftrace:Engineering</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example">Linux Tools:Extraction Tools:BPF:A defining example</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Summary">Summary</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>The current article is part of a bigger <strong><a href="/tags/#Meditating-with-microprocessors">series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, in which I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Core (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Uncore (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools (part-5)</a></strong>.
+In the current article, we explore the use of Artificial Intelligence to reduce latency and save power at the same time. As we have understood, left to itself, the microprocessor will sense the load and configure itself for it(suitable c-states, P-states, etc. ). <strong>However, this process is reactive at best, and if latency matters then it is already late. By reactive, I mean the arrival of a remote message triggers an interrupt and from there, one thing leads to another before the microprocessor configures itself for the load. Causal is another word for it.</strong> Let me put this in perspective. On a modern microprocessor with an average clock speed of roughly 2.5 gigahertz, there are 2500000000 cycles executed per second or 2.5 cycles per nanoseconds. A single instruction can take anywhere between a single cycle to a few tens of cycles depending upon the complexity of the instruction. At this granularity, the moment the CPU can spare a few hundred to a few thousands of nanoseconds of no work, it looks for an opportunity to get into a deep c-state or a low p-state. This is all guided by the policy of the system enforced by the OS. As a result, there are far too many transitions in a short time, costing valuable time in terms of latency and inducing jitter. We are not even talking about a millisecond granularity. Here is <strong><a href="MeditatingProcessor-1#c-state transitions">an example</a></strong> of roughly 25000 transitions in a period of 15 seconds. <strong>With an Artificial Intelligence based model can we reduce latency by predicting load and preconfigure the microprocessor for load and then postconfigure it to save power once the load has tided over. In other words making the process more proactive and predictive.</strong></p>
+
+<p><a name="Is there a solution?"></a></p>
+<h4 id="is-there-a-solution">Is there a solution?</h4>
+
+<p>Well, one solution can be the other extreme. Configure the CPU such that it can never transition out to deeper c-states or lower p-states. This is what I did in the earlier articles. However, this causes a power drain, especially if done for a long time.
+The other issue is crossing the Thermal Design Point(TDP). A TDP condition identifies this (power, frequency) pair. This is the limit, operating under which the CPU will never exceed its thermal envelope. TDP marks the worst-case real workload that a customer may run without causing thermal throttling. However, TDP is not a standard that every manufacturer agrees on and is often underestimated. This results in applications causing the CPU to exceed its TDP often times. On an average, everything still works fine but occasionally things may go wrong(I burnt one of my laptops(Not the CPU) 9-10 years ago testing things out).
+Lastly, long term wear and tear may be an issue if the CPU deepest state is C0 and the CPU is overclocked for a long time or permanently. That being said, most modern devices are fairly tolerant of overclocking.</p>
+
+<p><a name="Is there a smarter solution?: Artificial Intelligence model based proactive descision making"></a></p>
+<h4 id="is-there-a-smarter-solution-artificial-intelligence-model-based-proactive-descision-making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</h4>
+
+<p>The idea is quite simple. Use Artificial Intelligence to predict an oncoming load, and change the microprocessor settings to high performance to suit the load. Isolate the high-performance settings on a fraction of cores depending on the requirement and not the complete system. Reset it back to normal once the load has passed over. If an Artificial Intelligence model can recognize a pattern of load much before it occurs then we have a winner here. <strong>And we can then call it proactive instead of reactive or causal.</strong></p>
+
+<p><a name="Recognizing the pattern"></a></p>
+<h4 id="recognizing-the-pattern">Recognizing the pattern</h4>
+
+<p><strong>This part is a bit proprietary so the details will be sketchy but the ideas will be clear.<strong> Just like a signature or fingerprint is unique to a person, is there unique signature to a load. And if a particular load has a unique signature, is there a way to identify it? Last but not least, the identification process must be least interfering. Remember, the idea is to reduce latency. If the whole process of identification of load has a huge observer effect, then it may not be worth the effort. <strong>As it turns out, there are ways to capture the pattern of load in a non intrusive way. And I take solid inspiration from NLP for that.</strong></strong></strong></p>
+
+<p><a name="Transformer as the backbone"></a></p>
+<h4 id="transformer-as-the-backbone">Transformer as the backbone</h4>
+<p><a href="/tags/#NMT">NeuralMachineTranslators</a> (<a href="/tags/#NMT">NMT</a>) based on <a href="/tags/#LSTM">LSTM</a> had excellent results but had few major challenges. Foremost was the <strong>inability</strong> to feed data parallelly that impacted not just the speed of training these models but also the amount of data fed in.
+Transformer’s architecture in many ways changed the course of NLP with a lot of improvements over the previous generation <a href="/tags/#NMT">NMT</a> architectures that were based on <a href="/tags/#LSTM">LSTM</a>s. While Transformers retained the core encoder-decoder setup there were some vital changes.</p>
+
+<blockquote>
+  <ul>
+    <li>First improvement was <strong>positional encoding</strong>. Allowing sequential data to be fed in parallelly and yet retain positional information is one of the greatest simple ideas in AI in along time.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>Using <strong>sinusoidal wave embeddings as position markers</strong> is a solid idea. This allowed data to be fed in parallelly, but even more crucially a bidirectional context could be built without physically feeding the data in both directions.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>In terms of <strong>training speed alone this was light years faster especially with GPUs.<strong>With much faster training speeds, there are other positive side effects like a much bigger corpus of data could be trained with.</strong></strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/nlpmp0.png" alt="Image: figure-1: &lt;strong&gt;Transformer:Encoder-Decoder&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>Transformer:Encoder-Decoder</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Second big change was <strong>Multi-Headed-Attention</strong>. Attention by itself has been in the industry for quite some time. However with Multi-Headed-Attention, the model can fixate on multiple patterns within a sequence. And the number of patterns depends on the configurable number of <strong>AttentionHeads</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/nlpmp2.png" alt="Image: figure-2: &lt;strong&gt;Multi-headed Attention visualization(One head being highlighted)&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>Multi-headed Attention visualization(One head being highlighted)</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Transfer Learning inspiration from NLP"></a></p>
+<h4 id="transfer-learning-inspiration-from-nlp">Transfer Learning inspiration from NLP</h4>
+<p>I have taken a lot of inspiration from the use of Transfer Learning in Artificial Intelligence and especially in Natural Language Processing.</p>
+
+<p><strong>Here are the key ideas</strong>.</p>
+
+<blockquote>
+  <ul>
+    <li>Annotated and labeled data is difficult to find but <strong>unlabelled data is plentiful</strong>. Wikipedia, Online books are just some examples.</li>
+    <li><a href="https://ruder.io/transfer-learning/">Transfer Learning</a> exemplifies learning with unlabelled data.</li>
+    <li>The NLP breakthroughs of 2018 and 2019 were triggered in a big way by Transfer Learning’s application on <a href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformers</a>.</li>
+    <li><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a> was a breakthrough performer in NLP when it had come out in 2018.</li>
+    <li>The idea of <strong>masking</strong> was a breath of fresh air, inspiring other techniques like <a href="https://arxiv.org/abs/1904.08779">SpecAugment</a> used in speech processing.</li>
+    <li>One of the ideas behind Random masking is that the context(self-attention calculations) can be bidirectional. This is one of the major reasons for <a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a> to outperform <a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">GPT</a> which uses causal masking.</li>
+  </ul>
+</blockquote>
+
+<p><a name="BERT:A Pretrained Tranformers"></a></p>
+
+<figure>
+    
+    <img src="/img/mwprocs/nlpmp1.png" alt="Image: figure-3: &lt;strong&gt;BERT:A Pretrained Tranformers&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>BERT:A Pretrained Tranformers</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The recent success of transfer learning was ignited in 2018 by <strong><a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">GPT</a></strong>, <strong><a href="https://arxiv.org/abs/1801.06146">ULMFiT</a></strong>, <strong><a href="https://arxiv.org/abs/1802.05365">ELMo</a></strong>, and <strong><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a></strong>, and 2019 saw the development of a huge diversity of new methods like <strong><a href="https://arxiv.org/abs/1906.08237">XLNet</a></strong>, <strong><a href="https://arxiv.org/abs/1907.11692">RoBERTa</a></strong>, <strong><a href="https://ai.googleblog.com/2019/12/albert-lite-bert-for-self-supervised.html">ALBERT</a></strong>, <strong><a href="https://ai.googleblog.com/2020/01/reformer-efficient-transformer.html">Reformer</a></strong>, and <strong><a href="https://arxiv.org/abs/1901.11504">MT-DNN</a></strong>.</li>
+    <li>The rate of progress in the field has made it difficult to evaluate which improvements are most meaningful and how effective they are when combined.</li>
+    <li>Most <strong>pre-trained models drop either encoder or decoder from the transformer stack</strong>. <strong><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a> drops the decoder</strong> and <strong><a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">GPT</a> drops the encoder</strong>.</li>
+    <li>However, our experiments have shown that a complete stack <strong>(encoder-decoder) generally out performs a decoder-only or an encoder-only stack</strong>. <strong><a href="https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html">T5</a></strong> from google also supports a similar architecture for generally better results.</li>
+    <li><strong>The above transformer networks are called pretrained networks</strong>. BERT, GPT, T5 are examples of pretrained networks.</li>
+  </ul>
+</blockquote>
+
+<p><a name="Fine tuning pre-trained networks"></a></p>
+<h4 id="fine-tuning-pre-trained-networks">Fine tuning pre-trained networks</h4>
+
+<p>Maybe it is time for another quick analogy. Let’s say that I need support staff to handle queries from our clients. When we do hire the support staff we assume a <strong>basic knowledge of conversational languages and current affairs</strong>. Post hiring however, we need to <strong>train them on our specific processes</strong>. For e.g. if a particular issue has been solved for another client, this information is likely to be found in JIRA, LOGs, mailtrail e.t.c.  <br />
+The <strong>pre-trained transformer</strong> of the previous section is analogous to <strong>basic knowledge of conversational languages</strong>.
+The <strong>fine-tuned transformer</strong> is analogous to <strong>post hiring training specific to our processes</strong>. The fine-tuning takes for granted pre-training and does not have to start from scratch. Also, the flexibility to train the interns for different specific tasks.</p>
+
+<figure>
+    
+    <img src="/img/mwprocs/finetune.png" alt="Image: figure-4: &lt;strong&gt;BERT:A Fine tuning example&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>BERT:A Fine tuning example</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Artificial Intelligence model based proactive and predictive descision making"></a></p>
+<h4 id="artificial-intelligence-model-based-proactive-and-predictive-descision-making">Artificial Intelligence model based proactive and predictive descision making</h4>
+
+<p>This journey has been exhausting but fruitful. Finally, We treat the sequence of events captured by a tracer similar to a sequence of words in a sentence in NLP. Apart from that, from an Artificial Intelligence perspective, the setup is nearly identical.</p>
+
+<blockquote>
+  <ul>
+    <li>As discussed in the previous section, our transformer setup is asymmetric. We have more encoders than decoders.</li>
+    <li>The reason being, we wanted to exploit encoder-decoder attention, without paying the price of a complete decoder stack. I believe <a href="https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html">T5</a> has a similar setup. It is a good trade-off in my opinion.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/asymmetrictransformer2.png" alt="Image: figure-5: &lt;strong&gt;Custom Transformer setup&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>Custom Transformer setup</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The pre-training is standard. We have been doing performance work for quite some time. So we have lots of data. And the great thing about pre-training is it needs to be done off-line. This is the beauty of <a href="https://ruder.io/transfer-learning/">Transfer Learning</a>.</li>
+    <li><strong>Elapsed time is the implicit time signal</strong> and <strong>no explicit positional encoding is applied</strong> unlike NLP.</li>
+    <li><strong>The only possible trap is running pre-training with less data that there are chances of overfit.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/asymmetrictransformer3.png" alt="Image: figure-6: &lt;strong&gt;System event sequence: Pretraining&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6: <strong>System event sequence: Pretraining</strong></span></center></figcaption>
+</figure>
+
+<p><a name="The Final Cut"></a></p>
+<h4 id="the-final-cut">The Final Cut</h4>
+
+<p>Regardless of the fine-tuning process, the pre-trained checkpoint remains the same. The fine tuning process itself can have many variations. The variations may be in terms of the goal, regression or classification with both having their pros and cons. I’ll illustrate a regression version here.</p>
+
+<blockquote>
+  <ul>
+    <li>The idea here is to select a state based on estimated idle time.</li>
+    <li>The <a href="MeditatingProcessor-2#State of initialized device through sysfs:Residency States">target residency</a> is the minimum time the hardware must spend in the given state, including the time needed to enter it (which may be substantial), in order to save more energy than it would save by entering one of the shallower idle states instead.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/asymmetrictransformer5.png" alt="Image: figure-7: &lt;strong&gt;System event sequence: Fine-tuning for regression&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7: <strong>System event sequence: Fine-tuning for regression</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Summary"></a></p>
+<h3 id="summary">Summary</h3>
+<p>In summary, <strong>this is the bird’s-eye view of the working of our system</strong>. We kept our focus on the core CPU for now but we plan to extend it to other components of the system. The Artificial Intelligence bit is quite interesting and we were helped a great deal by work done in the past on NLP. <strong>To the best of our knowledge, this has not been attempted before</strong>.
+Transformers are not the only model we have tried. We tried LSTMs with very encouraging results. However, as the data grew bigger, and with an inherent lack of parallelism in training it was a tad bit slow. Inferencing was OK though. Last but not least, Deep Reinforcement Learning is another approach that we are currently integrating. We will post results in time to come.
+Last year has been phenomenal in terms of Artificial Intelligence in general and Natural Language in Particular. But many of these models can be used in cross-discipline domains. They are just waiting to be tried out.</p>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--Doc3-->
+
+<!--Doc4-->
+
+<!--Doc5-->
+
+<!-- NMT LSTM -->
+
+<!--External-->
+
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2020-07/MeditatingProcessor-4" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-4" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-4" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-4" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-4" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

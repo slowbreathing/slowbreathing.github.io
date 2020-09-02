@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5) | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5) | Slowbreathing">
+  <meta name="twitter:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/bpfsw2.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-5">
+  <meta property="og:title" content="Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5) | Slowbreathing">
+  <meta property="og:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/mwprocs/bpfsw2.png">
+  
+  <title>Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5) | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2020-07/MeditatingProcessor-5">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/mwprocs/bpfsw2.png"
+  
+  alt="Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5) feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5)">Meditating with microprocessors Series: Part-5: Appendix:Tools of the trade(part-5)</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        29 JUL 2020
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    19 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="meditating-with-microprocessors"><a href="/tags/#Meditating-with-microprocessors">Meditating with microprocessors</a></h3>
+<ol>
+  <li><a href="MeditatingProcessor-1">Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</a> <strong>(<a href="MeditatingProcessor-1">part-1</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-1#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-1#Meditation and microprocessors: An extremely simple idea">Meditation and microprocessors: An extremely simple idea</a></li>
+      <li><a href="MeditatingProcessor-1#MicroProcessor C-states">MicroProcessor C-states</a></li>
+      <li><a href="MeditatingProcessor-1#A quick Summary of wakeup_latency">A quick Summary of wakeup_latency</a></li>
+      <li><a href="MeditatingProcessor-1#Artificial Intelligence based Hardware(Miroprocessor) tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</a></li>
+      <li><a href="MeditatingProcessor-1#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface</a> <strong>(<a href="MeditatingProcessor-2">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-2#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-2#MicroProcessor Components">MicroProcessor Components</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#Core">Core</a>
+            <ul>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Execution">Sandy Bridge Pipeline:Execution</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Backend (Data load and Store)">Sandy Bridge Pipeline:Backend (Data load and Store)</a></li>
+              <li><a href="MeditatingProcessor-2#Haswell Pipeline">Haswell Pipeline</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-2#Uncore">Uncore</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Linux Inteface to CPUIDLE">Linux Inteface to CPUIDLE</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem">CPUIDLE subsystem</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Driver load">CPUIDLE subsystem:Driver load</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Call the Driver">CPUIDLE subsystem:Call the Driver</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Governor">CPUIDLE subsystem:Governor</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency</a> <strong>(<a href="MeditatingProcessor-3">part-3</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-3#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:Core">Core and Uncore:Core</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-3#Power">Power</a>
+        <ul>
+          <li><a href="MeditatingProcessor-3#Power:Turn things off">Power:Turn things off</a></li>
+          <li><a href="MeditatingProcessor-3#Power:c-states">Power:c-states</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Tuned">Power:Tuned</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:c-states requests">Power:Tuned:c-states requests</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware State Residency">Power:Tuned:Hardware State Residency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:c-states">Power:Tuned:Influx:Grafana:c-states</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Measuring Latency">Power:Tuned:Measuring Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware Latency">Power:Tuned:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Wakeup Latency">Power:Tuned:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:latency">Power:Tuned:Influx:Grafana:latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Power:PMQOS">Power:PMQOS</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Turn things down">Power:Turn things down</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency">Power:Turn things down:P-states:Hardware Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-3#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning</a> <strong>(<a href="MeditatingProcessor-4">part-4</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
+      <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
+      <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
+      <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
+      <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-5">Appendix:Tools of the trade</a> <strong>(<a href="MeditatingProcessor-5">part-5</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-5#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:An incisive but limited view">Linux Tools:An incisive but limited view</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:uprobes and kprobes">Linux Tools:Event Sources:uprobes and kprobes</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:Tracepoints">Linux Tools:Event Sources:Tracepoints</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools">Linux Tools:Extraction Tools</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering">Linux Tools:Extraction Tools:Ftrace:Engineering</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example">Linux Tools:Extraction Tools:BPF:A defining example</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Summary">Summary</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>The current article is part of a bigger <strong><a href="/tags/#Meditating-with-microprocessors">series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, in which I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Core (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Uncore (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools (part-5)</a></strong>. In the current article, we drill down into the inner workings of <strong>Ftrace</strong> and <strong>EBPF</strong>. With <strong>EBPF based techniques and frameworks</strong> Linux tooling has gained <strong>tracing superpowers</strong>. It has capabilities that now exceed that of Dtrace on Solaris. This is not an exhaustive section and it does not do a breadth-first scan of Linux tooling. I am highlighting a couple of tools, why they work for us, and what makes them special. Moreover, tools play a vital role in verifying or rebutting the theories we make about the systems we design. Building/designing a system is like building a beehive, little blocks you put together making it a whole. But these little blocks fit more snuggly if the theory is rock-solid. Tools provide us the evidence for that.</p>
+
+<h1 id="-1"><a name="Linux Tools:An incisive but limited view"></a></h1>
+<h4 id="linux-toolsan-incisive-but-limited-view">Linux Tools:An incisive but limited view</h4>
+
+<p>There is a <a href="https://jvns.ca/blog/2017/07/05/linux-tracing-systems/">great article</a> that takes an expansive look at linux tooling and declutters the theory behind it. Here we look at the details of how a couple of them work and what makes them special.</p>
+
+<blockquote>
+  <ul>
+    <li>The original picture can be found <a href="https://drawings.jvns.ca/drawings/linux-tracing-1.png">here</a>. I have modified it to bit highlight our focus in this article.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtooling.png" alt="Image: figure-1: &lt;strong&gt;Linux Tooling: Our focus&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>Linux Tooling: Our focus</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-2"><a name="Linux Tools:Event Sources:uprobes and kprobes"></a></h1>
+<h4 id="linux-toolsevent-sourcesuprobes-and-kprobes">Linux Tools:Event Sources:uprobes and kprobes</h4>
+<p>The technique of dynamic instrumentation is quite old(1990s if my memory serves me right) and reasonably mature. However, its application to Linux is relatively recent(mid 2000). Similar to techniques used in debuggers. They are called uprobes , uretprobes, kprobes and kretprobes in Linux. uprobes and uretprobes are for user-space processes. uprobes are funtion entries and uretprobes are function exits. kprobes and kretprobes are for kernel space. The technique of application is nearly identical.</p>
+
+<blockquote>
+  <ul>
+    <li>When a CPU hits the breakpoint instruction, a trap occurs, the CPU’s registers are saved, and control passes to kprobes/uprobe via the notifier_call_chain mechanism.</li>
+    <li>The original instructions are then executed, and instruction flow resumes.</li>
+    <li>When the kprobe/uprobe is no longer needed, the original bytes are copied back to the target address, restoring the instructions to their original state.</li>
+    <li>Since <strong>kprobes</strong> can probe into a running kernel code, it can change the register set, including instruction pointer. This operation requires maximum care, such as keeping the stack frame, recovering the execution path etc. Since it operates on a running kernel and needs <strong>deep knowledge of computer architecture and concurrent computing</strong>, <strong>you can easily shoot your foot</strong>.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>Instrumenting bash’s readline with bpftrace.</li>
+  </ul>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">sudo </span>gdb <span class="nt">-p</span> &lt;bashpid&gt;
+file /usr/lib/debug/bin/bash
+disas /r readline
+
+<span class="nb">sudo </span>bpftrace <span class="nt">-e</span> <span class="s1">'uprobe:/bin/bash:readline { @ = count() }'</span>
+
+<span class="nb">sudo </span>gdb <span class="nt">-p</span> &lt;bashpid&gt;
+file /usr/lib/debug/bin/bash
+disas /r readline</code></pre></figure>
+
+<blockquote>
+  <ul>
+    <li>The figure below shows before and after instrumentation.</li>
+    <li>Notice the insertion of int3 breakpoint instruction.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtooling2.png" alt="Image: figure-2: &lt;strong&gt;Uprobe in action&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>Uprobe in action</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>When instruction flow hits this breakpoint, the breakpoint handler checks if it was installed by kprobes, and, if so, executes a kprobe handler.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtooling3.png" alt="Image: figure-3: &lt;strong&gt;Uprobe in action&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>Uprobe in action</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-3"><a name="Linux Tools:Event Sources:Tracepoints"></a></h1>
+<h4 id="linux-toolsevent-sourcestracepoints">Linux Tools:Event Sources:Tracepoints</h4>
+
+<p>Tracepoints are used for kernel static instrumentation. They involve tracing calls that developers have inserted into the kernel code at logical places, which are then compiled into the kernel binary. <strong>Tracepoints are a burden for kernel developers</strong> to maintain, and tracepoints are far more limited in scope than kprobes. The advantage is that tracepoints provide a <strong>stable API: Tools written to use tracepoints should continue working across newer kernel versions<strong>, whereas those written using kprobes may break if the traced function is renamed or changed.</strong></strong></p>
+
+<blockquote>
+  <ul>
+    <li><strong>Try using tracepoints first, if available and sufficient, and turn to kprobes only as a backup.</strong></li>
+    <li>A tracepoint is inserted using the TRACE_EVENT macro.</li>
+    <li>It inserts a callback in the kernel source that gets called with the tracepoint parameters as arguments.</li>
+    <li>Tracepoints added with the TRACE_EVENT macro allow ftrace or any other tracer to use them.</li>
+    <li>The callback inserts the trace at the calling tracer’s ring buffer.–To insert a new tracepoint into the Linux kernel, define a new header file with a special format.</li>
+    <li>By default, tracepoint kernel files are located in include/trace/events(scheduling related tracepoints are declared in (“include/trace/events/sched.h”)). If they are not located in this directory, then other configurations are necessary.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtools4.png" alt="Image: figure-4: &lt;strong&gt;Tracepoints:TRACE_EVENT macro for sched_switch&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>Tracepoints:TRACE_EVENT macro for sched_switch</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Scheduling trace captured using tracepoint.</li>
+    <li>This particular tracepoint is <strong>sched_switch</strong>.</li>
+    <li><strong>trace_sched_switch</strong> is statically placed in the code by the TRACE_EVENT macro.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtools5.png" alt="Image: figure-5: &lt;strong&gt;Tracepoints:sched_switch trace by ftrace&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>Tracepoints:sched_switch trace by ftrace</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-4"><a name="Linux Tools:Extraction Tools"></a></h1>
+<h4 id="linux-toolsextraction-tools">Linux Tools:Extraction Tools</h4>
+
+<p>We will look at 2 of these tools. One of them quite old and other one relatively new.</p>
+
+<figure>
+    
+    <img src="/img/mwprocs/linuxtools6.png" alt="Image: figure-6: &lt;strong&gt;Extraction Tools&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6: <strong>Extraction Tools</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-5"><a name="Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet"></a></h1>
+<h4 id="linux-toolsextraction-toolsftracethe-coolest-tracing-dude-on-the-planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</h4>
+
+<p>Ftrace as the coolest tracing dude on the planet. What makes ftrace such a fire-cracker.</p>
+<blockquote>
+  <ul>
+    <li>It is a <strong>part of Linux kernel</strong> since 2.6.28 (which in ancient times) and is the <strong>official Linux tracer</strong>.</li>
+    <li>It means there is <strong>no installation or compatibility</strong> overhead at all.</li>
+    <li>People in the <strong>embedded domain</strong> <strong>(<a href="https://www.raspberrypi.org/">Raspberry Pi</a>)</strong> or even distributions like <strong><a href="https://www.busybox.net/">Busybox</a></strong> adore ftrace as it’s <strong>foot print</strong> is <strong>negligible</strong> and <strong>absolutely NIL installation requirements</strong>.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-6"><a name="Linux Tools:Extraction Tools:Ftrace:Engineering"></a></h1>
+<h4 id="linux-toolsextraction-toolsftraceengineering">Linux Tools:Extraction Tools:Ftrace:Engineering</h4>
+
+<p>How is it possible to instrument all(most) kernel functions with almost nil overhead. The way this is done, in my mind, is one of the best pieces of engineering that I have seen. Here is the <a href="https://www.youtube.com/watch?v=93uE_kWWQjs&amp;t=333s">original video</a> by <a href="https://blogs.vmware.com/opensource/author/steven-rostedt/">Steven Rostedt</a> that describes ftrace engineering in all it’s gory details. Below is much simplified version of the same.</p>
+
+<blockquote>
+  <ul>
+    <li>When the Linux kernel is compiled with <strong>“-pg -mfentry”</strong> option, the GCC compiler adds special <strong>“__fentry__”</strong> call to all non-inlined functions.</li>
+    <li>All non inlined functions call <strong>“__fentry__”</strong> function at the <strong>beginning of the function</strong>.</li>
+    <li>The figure below shows <strong>“schedule”</strong> when compiled with the above option.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/ftrace.png" alt="Image: figure-7: &lt;strong&gt;Ftrace Engineering: __fentry__&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7: <strong>Ftrace Engineering: __fentry__</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Recall, that the broad goal here is the trace kernel functions with minimal overhead when turned off. “__fentry__” is placed for exactly the same reason.</li>
+    <li><strong>But calling “__fentry__” function from every non inlined function</strong> is going to be <strong>huge overhead</strong> even if the function does not do anything.</li>
+    <li>The cost of calling and returning from nearly 40 thousand kernel function is nearly <strong>13-15%</strong> and clearly not acceptable.</li>
+    <li><strong>“recordmcount.c”</strong> reads the object file one at a time and finds the <strong>“__fentry__” call location(call-site address)</strong> and creates an array called <strong>“mcount_loc</strong>.”</li>
+    <li><strong>“__start_mcount_loc” and “__stop_mcount_loc” are variables</strong> that define the start and stop of a section in vmlinux object file. These are inserted into the vmlinux file by the linker and have all the call-site addresses.</li>
+    <li><strong>At boot time</strong> we find the addresses of the functions in the array between “__start_mcount_loc” and “__stop_mcount_loc” and <strong>convert them to NOPs(figure-8)</strong>.</li>
+    <li>GCC-5 adds -mnop-mcount for the same purpose.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/ftrace2.png" alt="Image: figure-8: &lt;strong&gt;Ftrace Engineering: NOPs at boot time using array section at __start_mcount_loc &lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-8: <strong>Ftrace Engineering: NOPs at boot time using array section at __start_mcount_loc </strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>However, The array between “__start_mcount_loc” and “__stop_mcount_loc” is not enough for ftrace framework to work.</li>
+    <li>We need <strong>state information</strong> along with the <strong>function addresses</strong> to be stored per each kernel function to track the functions to be dynamically traced.</li>
+    <li>This state information is stored in pages using struct <strong>“ftrace_page”</strong>.</li>
+    <li>Each <strong>“ftrace_page”</strong> has multiple <strong>“dyn_ftrace”</strong> as an array of structs. <strong>“ip” stores the class-site addresses</strong> and the <strong>flags stores the state of that particular call-site</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">  struct ftrace_page <span class="o">{</span>
+  	struct ftrace_page <span class="k">*</span>next<span class="p">;</span>
+  	struct dyn_ftrace	<span class="k">*</span>records<span class="p">;</span>
+  	int			index<span class="p">;</span>
+  	int			size<span class="p">;</span>
+  <span class="o">}</span>
+
+  struct dyn_ftrace <span class="o">{</span>
+  	unsigned long		ip<span class="p">;</span> /<span class="k">*</span> address of mcount call-site <span class="k">*</span>/
+  	unsigned long		flags<span class="p">;</span>
+  	struct dyn_arch_ftrace	arch<span class="p">;</span>
+  <span class="o">}</span><span class="p">;</span></code></pre></figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Figure-9</strong> below depicts <strong>“ftrace_page”</strong> and <strong>array of struct “dyn_ftrace”</strong>.</li>
+    <li>The memory consumed by <strong>“ftrace_pages”</strong> is <strong>roughly 630 kilobytes</strong> in approximately <strong>154 pages</strong> for close to <strong>40 thousand kernel functions</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/ftrace3.png" alt="Image: figure-9: &lt;strong&gt;Ftrace Engineering&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-9: <strong>Ftrace Engineering</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>struct “dyn_ftrace” <strong>field flags</strong> holds the various flags for ftrace to work. For e.g. Bit 29 is to save the CPU registers while tracing, Bit 30 Needs to call ftrace_regs_caller, and Bit 31 means function is being traced.</li>
+    <li>Very long story short, while enabling tracing sometimes CPU registers have to be saved and sometimes not. This results in slightly different ftrace callbacks as shown figure-10.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/ftrace4.png" alt="Image: figure-10: &lt;strong&gt;Ftrace Engineering&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-10: <strong>Ftrace Engineering</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-7"><a name="Linux Tools:Extraction Tools:Ftrace:Summary"></a></h1>
+<h4 id="linux-toolsextraction-toolsftracesummary">Linux Tools:Extraction Tools:Ftrace:Summary</h4>
+
+<p>Nearly 40 thousand traceable functions in the kernel with negligible overhead is some engineering feet. As you opt-in for events or functions to be traced your overhead goes up in a pay-as-you-go manner. Add to that is the fact that it comes baked in with the kernel. This is not a tutorial of ftrace. Will think of planning one later.</p>
+
+<blockquote>
+  <ul>
+    <li>Can be used with “cat” and “echo”.</li>
+    <li>Interface is the tracefs/debugfs usually mounted at “/sys/kernel/debug/tracing”. It may be slightly different depending on your distribution.</li>
+    <li>Last but not least, ftrace is not just a function tracer. It is a <strong>collection of tracers</strong> including <strong>Hardware Latency Tracer(hwlat)</strong>, <strong>Wakeup(wakeup)</strong> and many more.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/ftrace5.png" alt="Image: figure-11: &lt;strong&gt;Ftrace Example&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-11: <strong>Ftrace Example</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Finally ftrace comes with a few front end tools like the <a href="https://github.com/rostedt/trace-cmd">command-line trace-cmd</a> and a <a href="https://kernelshark.org/">visualizer called kernelshark</a>. However, understanding the data captured by a tracer is often much more important. The the subsystem being traced is understood, then the captured data can be <a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">post processed</a> to suit any visualizer.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-8"><a name="Linux Tools:Extraction Tools:BPF:The most flexible tracer"></a></h1>
+<h4 id="linux-toolsextraction-toolsbpfthe-most-flexible-tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</h4>
+
+<p><strong>EBPF(Extended Berkeley Packet Filters)</strong> or just <strong>BPF(Berkeley Packet Filters)</strong> is like a <strong>swiss army knife of performance tools</strong>. I am avoiding it’s history completely in the interest of brevity. There is an excellent resource on <a href="http://www.brendangregg.com/ebpf.html">BPF</a> by one of it’s <a href="http://www.brendangregg.com/">authors</a>. To be more precise, the author of tools like <a href="https://github.com/iovisor/bcc">bcc</a> and <a href="https://github.com/iovisor/bpftrace">bpftrace</a> built on top of BPF. As an aside, the only thing that does not resonate with me is its name(BPF…Really?? ). We could have a more attractive name but I guess that horse has already bolted. It is a highly capable tool and is one reason why it is a bit difficult to explain. This post is about <strong>it’s engineering</strong>, what <strong>makes it capable</strong> and a few examples to <strong>illustrate it superpowers over other tools</strong>.</p>
+
+<p>BPF has many capabilities. But here we focus on a couple of it’s defining features.</p>
+<ol>
+  <li>It’s ability to post-process data in kernel safely and securely in a <strong><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">BPF Virtual Machine</a></strong>.</li>
+  <li>It’s <strong><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">In Kernel rich Data Structures</a></strong> for ease of processing.</li>
+  <li>It’s detailed <strong><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Stack Trace Walking</a></strong></li>
+</ol>
+
+<h1 id="-9"><a name="Linux Tools:Extraction Tools:BPF:BPF Virtual Machine"></a></h1>
+<h4 id="linux-toolsextraction-toolsbpfbpf-virtual-machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</h4>
+
+<blockquote>
+  <ul>
+    <li>The post-processing carried out by <strong>BPF Virtual Machine</strong> has been attempted by many techniques before. One such technique was to use kernel modules. However, they were all not safe in production because they were all executed in a running kernel with practically no checks.</li>
+    <li>BPF provides a <strong>BPF Virtual Machine</strong> with a verifier that checks for harmful code before executing them.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpf11.png" alt="Image: figure-12: &lt;strong&gt;BPF Virtual Machine&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-12: <strong>BPF Virtual Machine</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The <strong>BPF Virtual Machine</strong> has a verifier that reject unsafe operations.</li>
+    <li>A Virtual Machine does not necessarily mean slow execution.</li>
+    <li>A JIT compiler generates native instruction for direct and faster execution.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpf12.png" alt="Image: figure-13: &lt;strong&gt;BPF Virtual Machine&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-13: <strong>BPF Virtual Machine</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Figure-14 shows a classic BPF before and after example.</li>
+    <li>In kernel summary and in general in kernel pre/post execution/processing opens up enough and more avenues for making excellent tools for all kinds of purposes.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpf13.png" alt="Image: figure-14: &lt;strong&gt;BPF Virtual Machine&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-14: <strong>BPF Virtual Machine</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-10"><a name="Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures"></a></h1>
+<h4 id="linux-toolsextraction-toolsbpfin-kernel-rich-data-structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</h4>
+
+<p>BPF provides <strong>rich data structures</strong> via <strong>maps(Figure-12,13), histograms(Figure-12,13)</strong>, e.t.c to process in kernel summaries. Many tools like <a href="https://perf.wiki.kernel.org/index.php/Tutorial">Perf</a> can gather data from <a href="https://en.wikipedia.org/wiki/Hardware_performance_counter">PMC</a>s but they have to push it the user space to be post-processed. What this means is a lot more data get transferred to the user-land. With rich data structures and in-kernel processing, this can be minimized. Also, the ability to in-kernel processing by itself is awesome and opens up huge possibilities.</p>
+
+<h1 id="-11"><a name="Linux Tools:Extraction Tools:BPF:Stack Trace Walking"></a></h1>
+<h4 id="linux-toolsextraction-toolsbpfstack-trace-walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</h4>
+
+<p>Stack traces are an invaluable tool for understanding the code path that led to an event, as well as profiling kernel and user code to observe where execution time is spent. While there are other ways to walk the stack, framepointer based stack walking is quite popular and BPF uses it.</p>
+
+<blockquote>
+  <ul>
+    <li>This is how a call is setup in X86.</li>
+    <li>The figure-15 depicts the address to jump back to when the callee has finished execution.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpfsw1.png" alt="Image: figure-15: &lt;strong&gt;Coming Soon&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-15: <strong>Coming Soon</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>This figure-16 depicts the stack trace walking using frame pointers.</li>
+    <li>This will show the trace leading up to the event.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpfsw2.png" alt="Image: figure-16: &lt;strong&gt;Coming Soon&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-16: <strong>Coming Soon</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Some code in C++ to traverse the frame, however, this would usually be acomplished by a tool. BPF in our case.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpfsw3.png" alt="Image: figure-17: &lt;strong&gt;Coming Soon&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>Coming Soon</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-12"><a name="Linux Tools:Extraction Tools:BPF:A defining example"></a></h1>
+<h4 id="linux-toolsextraction-toolsbpfa-defining-example">Linux Tools:Extraction Tools:BPF:A defining example</h4>
+
+<p>This example explores the tracing of kernel function and even traversing and processing kernel structures. This would not have been possible earlier without compromising the safety of the kernel. BPF makes this possible.</p>
+
+<blockquote>
+  <ul>
+    <li>Consider <strong>“sched_idle_set_state”</strong> kernel function. It is a part of CPUIDLE generic driver interface. It takes the <strong>struct “cpuidle_state” as parameter</strong>.</li>
+    <li>Tracing the above function with ftrace I am only able to access the “cpuidle_state” <strong>parameter as an address</strong> as it is a structure that is of no practical use. This is illustrated in figure-18 below.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpf1.png" alt="Image: figure-18: &lt;strong&gt;Tracing sched_idle_set_state parameters&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-18: <strong>Tracing sched_idle_set_state parameters</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Identical setup as above, except this time I use a BPF script to trace and traverse the struct “cpuidle_state”.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/bpf2.png" alt="Image: figure-19: &lt;strong&gt;Tracing sched_idle_set_state parameters with BPF&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>Tracing sched_idle_set_state parameters with BPF</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-13"><a name="Linux Tools:Extraction Tools:Ftrace:Summary"></a></h1>
+<h4 id="linux-toolsextraction-toolsftracesummary-1">Linux Tools:Extraction Tools:Ftrace:Summary</h4>
+
+<p>BPF performance tools make use of many technologies, including extended BPF, kernel and user dynamic instrumentation (kprobes and uprobes), kernel and user static tracing (tracepoints and user markers), and perf_events.</p>
+
+<p><a name="Summary"></a></p>
+<h3 id="summary">Summary</h3>
+<p>These are not the only tools. There are a couple of <strong>notable omissions</strong>. The biggest one being <strong><a href="https://en.wikipedia.org/wiki/Hardware_performance_counter">Performance Monitoring Counters</a></strong> as an event source and <strong><a href="https://perf.wiki.kernel.org/index.php/Tutorial">PERF</a></strong> and an extraction tool. It is a <strong>frequency-based profiling tool</strong> and something we use heavily as one can <strong>control the frequency of recording to vary the overhead of the recording being done</strong>.</p>
+
+<p>In summary, these are tools that we take to the trenches of performance tuning and monitoring. The important thing being that if used right they have the capability to transform your understanding and take it to the next level. <strong>By the next level I mean, the ability to use this information to impress upon the design stage of your application</strong>.</p>
+
+<p>“<a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a>” for example is an always installed <strong>(on most Linux distributions)</strong> and can be used with just <strong>“echo”</strong> and <strong>“cat”</strong>. Yes, It does not have a fancy UI but the captured data can be post-processed to be rendered by any visualizer. <strong>Here are  few sample csv files(<a href="/img/mwprocs/cpu0.csv">file1</a>,<a href="/img/mwprocs/cpu5.csv">file2</a>)</strong>.</p>
+
+<p>[BPF] is a different beast altogether. It can look inside the kernel and most userland applications including Java/JVM python with kprobes/uprobes/USDTs respectively. <strong>It’s safe in-kernel/in-application processing is a powerful feature that lends modern Linux Kernel it’s amazing superpowers</strong>.</p>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--Doc3-->
+
+<!--Doc4-->
+
+<!--Doc5-->
+
+<!--External-->
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2020-07/MeditatingProcessor-5" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-5" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-5" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-5" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-5" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency | Slowbreathing">
+  <meta name="twitter:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/pcm-inf-graf2.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-3">
+  <meta property="og:title" content="Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency | Slowbreathing">
+  <meta property="og:description" content="The current article is part of a bigger series titled Meditating-with-microprocessors,in which I demonstrate the use of Artificial Intelligence to tune micro...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/mwprocs/pcm-inf-graf2.png">
+  
+  <title>Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2020-07/MeditatingProcessor-3">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/mwprocs/pcm-inf-graf2.png"
+  
+  alt="Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency">Meditating with microprocessors Series: Part-3: Trading off power for UltraLowLatency</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        29 JUL 2020
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    19 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="meditating-with-microprocessors"><a href="/tags/#Meditating-with-microprocessors">Meditating with microprocessors</a></h3>
+<ol>
+  <li><a href="MeditatingProcessor-1">Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</a> <strong>(<a href="MeditatingProcessor-1">part-1</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-1#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-1#Meditation and microprocessors: An extremely simple idea">Meditation and microprocessors: An extremely simple idea</a></li>
+      <li><a href="MeditatingProcessor-1#MicroProcessor C-states">MicroProcessor C-states</a></li>
+      <li><a href="MeditatingProcessor-1#A quick Summary of wakeup_latency">A quick Summary of wakeup_latency</a></li>
+      <li><a href="MeditatingProcessor-1#Artificial Intelligence based Hardware(Miroprocessor) tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</a></li>
+      <li><a href="MeditatingProcessor-1#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface</a> <strong>(<a href="MeditatingProcessor-2">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-2#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-2#MicroProcessor Components">MicroProcessor Components</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#Core">Core</a>
+            <ul>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Execution">Sandy Bridge Pipeline:Execution</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Backend (Data load and Store)">Sandy Bridge Pipeline:Backend (Data load and Store)</a></li>
+              <li><a href="MeditatingProcessor-2#Haswell Pipeline">Haswell Pipeline</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-2#Uncore">Uncore</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Linux Inteface to CPUIDLE">Linux Inteface to CPUIDLE</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem">CPUIDLE subsystem</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Driver load">CPUIDLE subsystem:Driver load</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Call the Driver">CPUIDLE subsystem:Call the Driver</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Governor">CPUIDLE subsystem:Governor</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency</a> <strong>(<a href="MeditatingProcessor-3">part-3</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-3#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:Core">Core and Uncore:Core</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-3#Power">Power</a>
+        <ul>
+          <li><a href="MeditatingProcessor-3#Power:Turn things off">Power:Turn things off</a></li>
+          <li><a href="MeditatingProcessor-3#Power:c-states">Power:c-states</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Tuned">Power:Tuned</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:c-states requests">Power:Tuned:c-states requests</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware State Residency">Power:Tuned:Hardware State Residency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:c-states">Power:Tuned:Influx:Grafana:c-states</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Measuring Latency">Power:Tuned:Measuring Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware Latency">Power:Tuned:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Wakeup Latency">Power:Tuned:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:latency">Power:Tuned:Influx:Grafana:latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Power:PMQOS">Power:PMQOS</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Turn things down">Power:Turn things down</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency">Power:Turn things down:P-states:Hardware Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-3#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning</a> <strong>(<a href="MeditatingProcessor-4">part-4</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
+      <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
+      <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
+      <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
+      <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-5">Appendix:Tools of the trade</a> <strong>(<a href="MeditatingProcessor-5">part-5</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-5#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:An incisive but limited view">Linux Tools:An incisive but limited view</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:uprobes and kprobes">Linux Tools:Event Sources:uprobes and kprobes</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:Tracepoints">Linux Tools:Event Sources:Tracepoints</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools">Linux Tools:Extraction Tools</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering">Linux Tools:Extraction Tools:Ftrace:Engineering</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example">Linux Tools:Extraction Tools:BPF:A defining example</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Summary">Summary</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>The current article is part of a bigger <strong><a href="/tags/#Meditating-with-microprocessors">series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, in which I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools of the trade (part-5)</a></strong>.
+In the current article, I present irrefutable evidence that if the processor is configured correctly with a goal in mind(for e.g. UltraLowLatency), the OS jitter caused by the processor can nearly be eliminated. The system can be much more predictable. Furthermore, It has a huge impact on the latency of the system for good. A <strong>substantial</strong> improvement in latency due to configuration on the <strong>Core</strong>, but beyond substantial due to  <strong>Uncore</strong>. <strong>The improvement due to Uncore is to be expected because there is a whole lot more circuitry on the Uncore</strong>. However, this is a trade off that comes at the cost of expending more power.</p>
+
+<h1 id="-1"><a name="Core and Uncore:Core"></a></h1>
+<h4 id="core-and-uncorecore">Core and Uncore:Core</h4>
+<p>We’ll look at <a href="MeditatingProcessor-2#Core">Core</a> and <a href="MeditatingProcessor-2#Uncore">Uncore</a> again but this time from the perspective of the power interface. How much
+Power can be saved and how much is the tradeoff in terms of latency.</p>
+
+<blockquote>
+  <ul>
+    <li>On the core we have L1(data), L1(instruction), L2, Execution-units, and a whole lot of buffers. Maybe, you could quickly refresh the discussion on <a href="MeditatingProcessor-2#Core">Core</a> before you proceed.</li>
+    <li>On the uncore we have L3 cache, integrated memory controller, QuickPath Interconnect (QPI; for multi-socket communication), and an interconnect that tied it all together. In the Sandy Bridge generation over and above Sandy Bridge, PCIe was integrated into the CPU uncore.</li>
+    <li>The complete package is called a package(core + uncore). <strong>core + uncore=package</strong></li>
+  </ul>
+</blockquote>
+
+<h1 id="-2"><a name="Power"></a></h1>
+<h4 id="power">Power</h4>
+<p>Active power of the CPU is when executing logic it transitions between ‘0’ and ‘1’. The transistors are charging and discharging to represent states. There are 2 primary components</p>
+<blockquote>
+  <ul>
+    <li>The power that runs the clock of the CPU</li>
+    <li>The power consumed by execution of logic</li>
+  </ul>
+</blockquote>
+
+<p>There are 2 ways to save power.</p>
+
+<blockquote>
+  <ul>
+    <li><a href="MeditatingProcessor-3#Power:Turn things off">Turn things off</a></li>
+    <li><a href="MeditatingProcessor-3#Power:Turn things down">Turn things down</a></li>
+  </ul>
+</blockquote>
+
+<h1 id="-3"><a name="Power:Turn things off"></a></h1>
+<h4 id="powerturn-things-off">Power:Turn things off</h4>
+<p>Within the CPU there are 2 ways of doing this. <strong>(1)</strong> Clock gating stops the clock, saving active power. The latency incurred is approximately 10ns-1μs. <strong>(2)</strong> Power gating removes all power, saving both leakage and active power. The latency incurred is approximately 1μs-10μs.</p>
+
+<h1 id="-4"><a name="Power:c-states"></a></h1>
+<h4 id="powerc-states">Power:c-states</h4>
+<p>Core c-states and package(core+uncore) c-states. Abbreviated as cc-states(c-states) and pc-states. So CPU designers have developed ways for the processor to go into a lower-power state when there is nothing for it to do. Typically, when put into this state, the CPU will stop clocks and power down part or all of its circuitry until the next interrupt arrives. Intel servers commonly target a worst case of about 40 microseconds in order to restore the path to main memory for PCIe devices.</p>
+
+<figure>
+    
+    <img src="/img/mwprocs/ccpc.png" alt="Image: figure-1: &lt;strong&gt;core c-states and package c-states&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>core c-states and package c-states</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-5"><a name="Power:Tuned"></a></h1>
+<h4 id="powertuned">Power:Tuned</h4>
+<p>Tuned-adm, developed by Redhat, allows tuning of certain settings in the operating system to suit certain use-cases. There are many predefined profiles to cater to common use cases. Custom profiles can also be defined from scratch or built on existing profiles. Few example profiles are “Low latency for storage and network”,  “high throughput for storage and network” etc.</p>
+
+<blockquote>
+  <ul>
+    <li>List of profiler.</li>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>“/dev/cpu_dma_latency”</strong> is the response time for the cpu in the current configuration.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned1.png" alt="Image: figure-2: &lt;strong&gt;Tuned:Active:Spindown-disk&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>Tuned:Active:Spindown-disk</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>latency-performance</strong>.</li>
+    <li><strong>“/dev/cpu_dma_latency”</strong> is the response time for the cpu in the current configuration.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned2.png" alt="Image: figure-3: &lt;strong&gt;Tuned:Active:latency-performance&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>Tuned:Active:latency-performance</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-6"><a name="Power:Tuned:c-states requests"></a></h1>
+<h4 id="powertunedc-states-requests">Power:Tuned:c-states requests</h4>
+<p>But does this change have an impact on c-state request. Measurements are done using an excellent tool called <a href="https://www.linux.org/docs/man8/turbostat.html">turbostat</a>.</p>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>c-state residency</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate1.png" alt="Image: figure-4: &lt;strong&gt;Tuned:Active:Spindown-disk&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>Tuned:Active:Spindown-disk</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>c-state residency</strong>.</li>
+    <li><strong>c-state residency: C10 has the highest number of requests. It is the lowest powersave mode or borderline Mokshaa.</strong>.</li>
+    <li><strong><a href="MeditatingProcessor-3#Glossary of terms">Glossary of terms</a></strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate2.png" alt="Image: figure-5: &lt;strong&gt;Tuned:Active:Spindown-disk&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-5: <strong>Tuned:Active:Spindown-disk</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>latency-performance</strong>.</li>
+    <li><strong>c-state residency</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate1.png" alt="Image: figure-6: &lt;strong&gt;Tuned:Active:latency-performance&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-6: <strong>Tuned:Active:latency-performance</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-7"><a name="Power:Tuned:Hardware State Residency"></a></h1>
+<h4 id="powertunedhardware-state-residency">Power:Tuned:Hardware State Residency</h4>
+<p>The hardware c-state are requests made by the operating system on behalf of software control policies. However, not all of them may be granted by hardware. Part of the reason for this is 2 logical processors ( Hyper Threads on the same physical core ) may not agree upon the c-states requested. The lower(C1 for e.g.) of the 2 c-state may be granted and the higher one(C6) would report as not granted. The core after all is the same unit. And unlike quantum physics, there is no duality here.</p>
+
+<p>The important thing is how do we measure hardware state residency. Well, there are <strong>MSRs (model-specific registers )</strong> on the CPU that can be queried for this.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>MSRs (model-specific registers )</strong> introduced in Sandy Bridge carried through to later microarchitecture pipelines.</li>
+    <li><strong>Some register for measuring these values may change.</strong>.</li>
+    <li><strong><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html">Intel’s documentation</a> is the authentic source here. But, it is incredibly difficult to read. It is as if Intel’s employee were given a raise to make it “impossible to comprehend” kind of document.</strong></li>
+    <li><strong>Prior to <a href="https://en.wikipedia.org/wiki/Cannon_Lake_(microarchitecture)">Cannonlake</a> there was no MSR to measure C1 and had to be measure via softawre means. Post <a href="https://en.wikipedia.org/wiki/Cannon_Lake_(microarchitecture)">Cannonlake</a> it can be measured 0x660H register.</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-hsr1.png" alt="Image: figure-7: &lt;strong&gt;Tuned:Active:Hardware-State-Residency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-7: <strong>Tuned:Active:Hardware-State-Residency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>Hardware State Residency</strong>.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-8"><a name="figure-8"></a></h1>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-hsr2.png" alt="Image: figure-8: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active::spindown-disk:Hardware-State-Residency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-8: <strong>Tuned:Active:spindown-disk:Tuned:Active::spindown-disk:Hardware-State-Residency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>latency-performance</strong>.</li>
+    <li><strong>Hardware State Residency</strong>.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-9"><a name="figure-9"></a></h1>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-hsr3.png" alt="Image: figure-9: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active::latency-performance:Hardware-State-Residency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-9: <strong>Tuned:Active:spindown-disk:Tuned:Active::latency-performance:Hardware-State-Residency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-10"><a name="Power:Tuned:Influx:Grafana:c-states"></a></h1>
+<h4 id="powertunedinfluxgrafanac-states">Power:Tuned:Influx:Grafana:c-states</h4>
+
+<p>This is visualizing <strong>c-states transitions</strong> as a time series. We looked at this in the <a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a> section. The processed CSV files are then moved to influxdb and visualized with grafana.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Tuned Low latency setting applied midway through the 30 second <a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> recording</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/influx-graf.png" alt="Image: figure-10: &lt;strong&gt;Tuned:ftrace-influx-grafana&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-10: <strong>Tuned:ftrace-influx-grafana</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>This is a recording with <a href="[https://github.com/opcm/pcm]">PCM</a> from Intel now open-sourced.</strong>.</li>
+    <li><strong>It has many dashboards showing various metrics. I am showing a couple of relevant ones like c-state Hardware Residency and L2/L3 Misses</strong>.</li>
+    <li><strong>These experiments have been done on my laptop with coffeelake client.(I have not been going to office because of covid19. The point is, that the difference is more stark on Xeon CPUs).</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/pcm-inf-graf1.png" alt="Image: figure-11: &lt;strong&gt;Tuned:PCM-influx-grafana&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-11: <strong>Tuned:PCM-influx-grafana</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>With Low latency setting applied.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/pcm-inf-graf2.png" alt="Image: figure-12: &lt;strong&gt;Tuned:PCM-influx-grafana&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-12: <strong>Tuned:PCM-influx-grafana</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-11"><a name="Power:Tuned:Measuring Latency"></a></h1>
+<h4 id="powertunedmeasuring-latency">Power:Tuned:Measuring Latency</h4>
+
+<p>Measuring latency is relatively easy. Just so that we are on the same page. Latency is the elapsed time between when an event should occur and it actually occurs. What is relatively more difficult is apportioning it to a subsystem. In modern computer systems, how or what do we apportion the measured latency to? Is it the Hardware, Operating System, or the Application causing it. And yet, there are underrated tools(ftrace) that are exactly for that purpose. But mind you, ftrace is a low-level tool, and post-processing of data may be required.</p>
+
+<h1 id="-12"><a name="Power:Tuned:Hardware Latency"></a></h1>
+<h4 id="powertunedhardware-latency">Power:Tuned:Hardware Latency</h4>
+
+<p>This is <a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a>’s hwlat tracer from the ftrace collection of tracers. What is does is simple yet elegant. It hogs a CPU in a busy loop taking timestamps for a configured amount of time. It does so with interrupts disabled. It then reports the gaps in the timestamp. Not all code paths are covered obviously but give us a fair idea of hardware latency.</p>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-hl1.png" alt="Image: figure-13: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active:spindown-disk:Hardware Latency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-13: <strong>Tuned:Active:spindown-disk:Tuned:Active:spindown-disk:Hardware Latency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>latency-performance</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-hl2.png" alt="Image: figure-14: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active:latency-performance:Hardware Latency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-14: <strong>Tuned:Active:spindown-disk:Tuned:Active:latency-performance:Hardware Latency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-13"><a name="Power:Tuned:Wakeup Latency"></a></h1>
+<h4 id="powertunedwakeup-latency">Power:Tuned:Wakeup Latency</h4>
+
+<p>Wakeup tracer from <a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> traces the elapsed time from a task being woken up to actually waking up. There are too many variables here, for e.g. other tasks in the queue. In order for this to make sense, one has to look at this relatively and pick the latency numbers for the same task.</p>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>spindown-disk</strong>.</li>
+    <li><strong>Wakeup Latency of the system</strong>.</li>
+    <li><strong>Notice the latency of “__schedule”, you can interpret that as the latency of the OS scheduler.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-wul1.png" alt="Image: figure-15: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active:spindown-disk:Wakeup Latency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-15: <strong>Tuned:Active:spindown-disk:Tuned:Active:spindown-disk:Wakeup Latency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Active Profile is <strong>latency-performance</strong>.</li>
+    <li><strong>Wakeup Latency of the system</strong>.</li>
+    <li><strong>Notice the latency of “__schedule”, you can interpret that as the latency of the OS scheduler.</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-wul2.png" alt="Image: figure-16: &lt;strong&gt;Tuned:Active:spindown-disk:Tuned:Active:latency-performance:Wakeup Latency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-16: <strong>Tuned:Active:spindown-disk:Tuned:Active:latency-performance:Wakeup Latency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-14"><a name="Power:Tuned:Influx:Grafana:latency"></a></h1>
+<h4 id="powertunedinfluxgrafanalatency">Power:Tuned:Influx:Grafana:latency</h4>
+
+<p>This is visualizing <strong>latency</strong> as a time series. We looked at this in the <a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a> section. The processed CSV files are then moved to influxdb and visualized with grafana.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Tuned Low latency setting applied midway through the 22 second <a href="MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet">ftrace</a> recording</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/influx-graf2.png" alt="Image: figure-17: &lt;strong&gt;Tuned:ftrace-influx-grafana:latency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-17: <strong>Tuned:ftrace-influx-grafana:latency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-15"><a name="Power:PMQOS"></a></h1>
+<h4 id="powerpmqos">Power:PMQOS</h4>
+
+<p>This interface provides a kernel and user mode interface for registering performance expectations by drivers, subsystems and user space applications on one of the parameters. Two different PM QoS(Power Management Quality of Service) frameworks are available:</p>
+<ol>
+  <li>PM QoS classes for <strong>cpu_dma_latency, network_latency, network_throughput, memory_bandwidth.</strong></li>
+  <li>The per-device PM QoS framework provides the API to manage the <strong>per-device latency constraints and PM QoS flags</strong>.</li>
+</ol>
+
+<p>Here are the benefits</p>
+<ol>
+  <li>Provides flexibility, variety and degree of options</li>
+  <li>Uses available tools and infrastructure</li>
+  <li>Scalable and can be easily included early in application design</li>
+</ol>
+
+<p>Let me simplify this. Refer back to <a href="MeditatingProcessor-3#figure-8">figure-8</a> and <a href="MeditatingProcessor-3#figure-9">figure-9</a>. You’ll notice that the settings take effect for all the cores in the system. “pm_qos” is a much more fine-grained interface. Now let’s look at figure-10 below especially virtual cores 3 and 9.</p>
+
+<blockquote>
+  <ul>
+    <li><strong>Hardware-State-Residency with “pm_qos”</strong>.</li>
+    <li><strong>Notice the latency of “__schedule”, you can interpret that as the latency of the OS scheduler.</strong>.</li>
+    <li><strong>Allows user to specify a resume latency constraint</strong></li>
+    <li><strong>CPU idle governor limits C states with exit latencies lower than the constraint</strong></li>
+    <li><strong>Application can change constraint at different phases</strong></li>
+    <li><strong>C states can be controlled in each core independently</strong></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/tuned-cstate-pmqos.png" alt="Image: figure-18: &lt;strong&gt;pm_qos:Hardware-State-Residency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-18: <strong>pm_qos:Hardware-State-Residency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-16"><a name="Power:Turn things down"></a></h1>
+<h4 id="powerturn-things-down">Power:Turn things down</h4>
+<p>Changing the frequency and voltage of a subset of the system: Traditionally these states have been focused on the cores, but changing the frequencies of other components of the CPU is also possible (such as a shared L3 cache). Execution can continue at varied performance and power levels when using <strong>P-states</strong>. Voltage/frequency scaling If high frequency is not required, it can be dynamically reduced in order to achieve a lower power level. When frequency is reduced, it may also be possible to reduce the voltage. Voltage/frequency(vret) required to maintain state in a circuit can be lower than the voltage required to operate that circuit.</p>
+
+<h1 id="-17"><a name="Power:Turn things down:P-states:Hardware Latency"></a></h1>
+<h4 id="powerturn-things-downp-stateshardware-latency">Power:Turn things down:P-states:Hardware Latency</h4>
+<blockquote>
+  <ul>
+    <li>Frequency can be changed using tools like <a href="https://github.com/RRZE-HPC/likwid">likwid</a></li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/pstate-lw1.png" alt="Image: figure-19: &lt;strong&gt;likwid-setfrequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-19: <strong>likwid-setfrequency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>Low Frequency</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/pstate-lw2.png" alt="Image: figure-20: &lt;strong&gt;Hardware Latency: Low frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-20: <strong>Hardware Latency: Low frequency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>High Frequency</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/pstate-lw3.png" alt="Image: figure-21: &lt;strong&gt;Hardware Latency: High frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-21: <strong>Hardware Latency: High frequency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-18"><a name="Core and Uncore:Uncore"></a></h1>
+<h4 id="core-and-uncoreuncore">Core and Uncore:Uncore</h4>
+<p>We’ll look at <a href="MeditatingProcessor-2#Core">Core</a> and <a href="MeditatingProcessor-2#Uncore">Uncore</a> again but this time from the perspective of the power interface. How much
+Power can be saved and how much is the tradeoff in terms of latency.</p>
+
+<blockquote>
+  <ul>
+    <li>On the uncore we have L3 cache, integrated memory controller, QuickPath Interconnect (QPI; for multi-socket communication), and an interconnect that tied it all together. In the Sandy Bridge generation over and above Sandy Bridge, PCIe was integrated into the CPU uncore.</li>
+    <li>However, just bu looking at the size and number or units on the <a href="MeditatingProcessor-2#Uncore">Uncore</a>, the potential of latency improvements here are huge</li>
+  </ul>
+</blockquote>
+
+<h1 id="-19"><a name="Core and Uncore:Uncore:montioring and Tuning"></a></h1>
+<h4 id="core-and-uncoreuncoremontioring-and-tuning">Core and Uncore:Uncore:montioring and Tuning</h4>
+<p>Unlike core performance monitoring, the performance monitoring architecture in the uncore is not standardized across all generations and product lines. A common architecture is used on Xeon E5/E7 products starting in the Sandy Bridge generation. Very few <strong>uncore</strong> performance monitoring capabilities have been productized on other Intel products. We read from and write to the <strong>MSRs</strong> directly. This is one of the reasons why less importance is paid to <strong>uncore</strong>. The interface to <strong>uncore</strong> is not standard. But good news is on the horizon, the Intel’s UNCORE frequency driver may be part of mainline kernel as soon as <strong>kernel version 5.6</strong>. Till such time <strong>MSRs</strong> are our only hope as we are still on <strong>kernel version 4.15</strong>. But we are itching to get on to 5 series.</p>
+
+<p>The <strong>uncore</strong> makes a far bigger difference because of it’s sheer size.</p>
+
+<h1 id="-20"><a name="Core and Uncore:Uncore:montioring and Tuning:Hardware Latency"></a></h1>
+<h4 id="core-and-uncoreuncoremontioring-and-tuninghardware-latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</h4>
+
+<blockquote>
+  <ul>
+    <li><strong>Low Frequency</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/uncore1.png" alt="Image: figure-22: &lt;strong&gt;Uncore:Hardware Latency:Low frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-22: <strong>Uncore:Hardware Latency:Low frequency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>High Frequency</strong>.</li>
+    <li><strong>Hardware Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/uncore2.png" alt="Image: figure-23: &lt;strong&gt;Uncore:Hardware Latency:High frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-23: <strong>Uncore:Hardware Latency:High frequency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-21"><a name="Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency"></a></h1>
+<h4 id="core-and-uncoreuncoremontioring-and-tuningwakeup-latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</h4>
+
+<blockquote>
+  <ul>
+    <li><strong>Low Frequency</strong>.</li>
+    <li><strong>Wakeup Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/uncore3.png" alt="Image: figure-24: &lt;strong&gt;Uncore:Wakeup Latency:Low frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-24: <strong>Uncore:Wakeup Latency:Low frequency</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li><strong>High Frequency</strong>.</li>
+    <li><strong>Wakeup Latency of the system</strong>.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/uncore4.png" alt="Image: figure-25: &lt;strong&gt;Uncore:Wakeup Latency:High frequency&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-25: <strong>Uncore:Wakeup Latency:High frequency</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-22"><a name="Core and Uncore:How much power can be saved"></a></h1>
+<h4 id="core-and-uncorehow-much-power-can-be-saved">Core and Uncore:How much power can be saved</h4>
+
+<p>But what about power are we saving? The whole premise here is that once the load has passed over, post-configure the setting back to power save settings again based on load predictions.</p>
+
+<blockquote>
+  <ul>
+    <li>This has been measured in quad socket system using [PMC].</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/power.png" alt="Image: figure-26: &lt;strong&gt;Power Save&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-26: <strong>Power Save</strong></span></center></figcaption>
+</figure>
+
+<p><a name="Summary"></a></p>
+<h3 id="summary">Summary</h3>
+<p>Based on the experiments that I ran with my team, our conclusions are simple. If we consider latency, the OS jitter caused by the microprocessor per se can be almost completely eliminated. I only presented the evidence related to c-states and p-states. But this must be combined with <strong>isolcpus, affinity, irqaffinity, nohz_full, rcu_nocb</strong>, etc to have a holistic approach to eliminating jitter. A similar approach can be used for storage and network devices.<br />
+We can meditate with the whole computer system, but that would be a much bigger article series than what it already is. Last but not least, latency is the goal for this article series and the most crucial type of load we handle. But it is not the only one, it could very well be throughput or something more custom.</p>
+
+<p><a name="Glossary of terms"></a></p>
+<h3 id="glossary-of-terms">Glossary of terms</h3>
+<ol>
+  <li><strong>PLL:</strong>A phase locked loop, or PLL, is a circuit that is used to generate a stable frequency that has a specific mathematical relationship to some reference frequenc</li>
+  <li><strong>VCCSA:</strong> Starting with the second-generation Core i processors (“Sandy Bridge”), the VTT voltage was renamed to VCCSA, and is called “system agent(SA).”It feeds the integrated PCI Express controller, memory controller, and display engine (i.e., the “2D” part of the graphics engine)</li>
+  <li><strong>VCCIO:</strong> Available starting with the second-generation Core i CPUs (“Sandy Bridge”), this voltage is used for feeding all input/output (I/O) pins of the CPU, except memory-related pins.</li>
+  <li><strong>GT:</strong> Integrated Grafics unit</li>
+  <li><strong>IA:</strong> Core CPU</li>
+  <li><strong>PS4:</strong> Low power mode</li>
+  <li><strong>VR:</strong>  Voltage regulators</li>
+</ol>
+
+<h3 id="references">References</h3>
+<ol>
+  <li><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html"><strong>Intels documenation: (The source and comprehensive, but difficult to read)</strong></a></li>
+  <li><a href="https://www.agner.org/optimize/"><strong>Agner Fog: (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong></a></li>
+</ol>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--Doc3-->
+
+<!--Doc4-->
+
+<!--Doc5-->
+
+<!--External-->
+
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2020-07/MeditatingProcessor-3" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-3" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-3" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-3" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-3" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

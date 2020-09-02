@@ -211,23 +211,39 @@
 <h3 id="importance-of-understanding-stuff-under-the-hood">Importance of understanding stuff under-the-hood</h3>
 <p>Let us say that one wants to understand the underlying assembler for a high-level language and the way it executes on a CPU( at least theoretically ;-)). An easy way to understand this is to look at the usage convention for x86 general-purpose registers and do a light reading on the various operations support by the x86 architecture. Once this is known the code becomes extremely clear. Let us understand this with a very simple C program before we do this for a higher-level language.</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c">  <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-      <span class="kt">long</span> <span class="n">d</span><span class="p">;</span>
-      <span class="n">multstore</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
-      <span class="n">printf</span><span class="p">(</span><span class="s">"2 * 3 --&gt; %ld</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
-      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
+<figure class="highlight"><pre><code class="language-assembler" data-lang="assembler">static inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
+{
+  if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
+    if (static_cpu_has_bug(X86_BUG_CLFLUSH_MONITOR)) {
+      mb();
+      clflush((void *)&amp;current_thread_info()-&gt;flags);
+      mb();
+    }
 
-  <span class="kt">long</span> <span class="nf">mult2</span><span class="p">(</span><span class="kt">long</span> <span class="n">a</span><span class="p">,</span> <span class="kt">long</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kt">long</span> <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
-      <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
-   <span class="p">}</span>
+    __monitor((void *)&amp;current_thread_info()-&gt;flags, 0, 0);
+    if (!need_resched())
+      __mwait(eax, ecx);
+  }
+  current_clr_polling();
+}
+Listing-1</code></pre></figure>
 
-   <span class="kt">void</span> <span class="nf">multstore</span><span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">y</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
-       <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mult2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-       <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
-   <span class="p">}</span>
-<span class="n">Listing</span><span class="o">-</span><span class="mi">1</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-assembler" data-lang="assembler">static inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
+{
+  if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
+    if (static_cpu_has_bug(X86_BUG_CLFLUSH_MONITOR)) {
+      mb();
+      clflush((void *)&amp;current_thread_info()-&gt;flags);
+      mb();
+    }
+
+    __monitor((void *)&amp;current_thread_info()-&gt;flags, 0, 0);
+    if (!need_resched())
+      __mwait(eax, ecx);
+  }
+  current_clr_polling();
+}
+Listing-2</code></pre></figure>
 
 <p>Consider the above code where “main” calls “multstore” and “multstore” calls “mult2”.</p>
 
@@ -595,7 +611,7 @@ As some of you had requested, Login has been removed from subscription form.
 
 
         <footer>
-  <strong>MIT License</strong> &copy; 2019 Mohit Kumar.
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
   <div class="newsletter-container" >
                 <h4 class="newsletter-title">Subscribe</h4>
                 <!-- <p class="newsletter-text"></p> -->

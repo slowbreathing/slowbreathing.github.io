@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
+  <meta name="twitter:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/mwprocs/c-states3.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">
+  <meta property="og:title" content="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing">
+  <meta property="og:description" content="In the current series titled Meditating-with-microprocessors, I demonstrate the use of Artificial Intelligence to tune microprocessors for Ultra Low Latency ...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/mwprocs/c-states3.png">
+  
+  <title>Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-36050a65" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/mwprocs/c-states3.png"
+  
+  alt="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea">Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        29 JUL 2020
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    10 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="meditating-with-microprocessors"><a href="/tags/#Meditating-with-microprocessors">Meditating with microprocessors</a></h3>
+<ol>
+  <li><a href="MeditatingProcessor-1">Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</a> <strong>(<a href="MeditatingProcessor-1">part-1</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-1#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-1#Meditation and microprocessors: An extremely simple idea">Meditation and microprocessors: An extremely simple idea</a></li>
+      <li><a href="MeditatingProcessor-1#MicroProcessor C-states">MicroProcessor C-states</a></li>
+      <li><a href="MeditatingProcessor-1#A quick Summary of wakeup_latency">A quick Summary of wakeup_latency</a></li>
+      <li><a href="MeditatingProcessor-1#Artificial Intelligence based Hardware(Miroprocessor) tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</a></li>
+      <li><a href="MeditatingProcessor-1#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface</a> <strong>(<a href="MeditatingProcessor-2">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-2#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-2#MicroProcessor Components">MicroProcessor Components</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#Core">Core</a>
+            <ul>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)">Sandy Bridge Pipeline:Frontend(Instruction load, decode, cache)</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Execution">Sandy Bridge Pipeline:Execution</a></li>
+              <li><a href="MeditatingProcessor-2#Sandy Bridge Pipeline:Backend (Data load and Store)">Sandy Bridge Pipeline:Backend (Data load and Store)</a></li>
+              <li><a href="MeditatingProcessor-2#Haswell Pipeline">Haswell Pipeline</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-2#Uncore">Uncore</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Linux Inteface to CPUIDLE">Linux Inteface to CPUIDLE</a>
+        <ul>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem">CPUIDLE subsystem</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Driver load">CPUIDLE subsystem:Driver load</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Call the Driver">CPUIDLE subsystem:Call the Driver</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Governor">CPUIDLE subsystem:Governor</a></li>
+          <li><a href="MeditatingProcessor-2#CPUIDLE subsystem:Gathering and undertanding latency data">CPUIDLE subsystem:Gathering and undertanding latency data</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-2#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency</a> <strong>(<a href="MeditatingProcessor-3">part-3</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-3#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-3#Core and Uncore:Core">Core and Uncore:Core</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-3#Power">Power</a>
+        <ul>
+          <li><a href="MeditatingProcessor-3#Power:Turn things off">Power:Turn things off</a></li>
+          <li><a href="MeditatingProcessor-3#Power:c-states">Power:c-states</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Tuned">Power:Tuned</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:c-states requests">Power:Tuned:c-states requests</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware State Residency">Power:Tuned:Hardware State Residency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:c-states">Power:Tuned:Influx:Grafana:c-states</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Measuring Latency">Power:Tuned:Measuring Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Hardware Latency">Power:Tuned:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Wakeup Latency">Power:Tuned:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Power:Tuned:Influx:Grafana:latency">Power:Tuned:Influx:Grafana:latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Power:PMQOS">Power:PMQOS</a></li>
+          <li><a href="MeditatingProcessor-3#Power:Turn things down">Power:Turn things down</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency">Power:Turn things down:P-states:Hardware Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
+            <ul>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+            </ul>
+          </li>
+          <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-3#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning</a> <strong>(<a href="MeditatingProcessor-4">part-4</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
+      <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
+      <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
+      <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
+      <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="MeditatingProcessor-5">Appendix:Tools of the trade</a> <strong>(<a href="MeditatingProcessor-5">part-5</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="MeditatingProcessor-5#Introduction">Introduction</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:An incisive but limited view">Linux Tools:An incisive but limited view</a></li>
+    </ul>
+    <ul>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:uprobes and kprobes">Linux Tools:Event Sources:uprobes and kprobes</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Event Sources:Tracepoints">Linux Tools:Event Sources:Tracepoints</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools">Linux Tools:Extraction Tools</a></li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet">Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering">Linux Tools:Extraction Tools:Ftrace:Engineering</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+        <ul>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking">Linux Tools:Extraction Tools:BPF:Stack Trace Walking</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example">Linux Tools:Extraction Tools:BPF:A defining example</a></li>
+          <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
+        </ul>
+      </li>
+      <li><a href="MeditatingProcessor-5#Summary">Summary</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>In the <strong><a href="/tags/#Meditating-with-microprocessors">multi-part series</a></strong> titled <strong><a href="/tags/#Meditating-with-microprocessors">Meditating-with-microprocessors</a></strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra Low Latency</strong> and <strong>Realtime</strong> loads. The techniques in general can be extended to other components of a computer system like the storage devices, memory etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using first principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series, <strong><a href="MeditatingProcessor-1">Meditating with Microprocessors: An essentially simple idea(part-1)</a></strong> , <strong><a href="MeditatingProcessor-2">A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href="MeditatingProcessor-3">Trading off power for UltraLowLatency (part-3) (part-3)</a></strong> , <strong><a href="MeditatingProcessor-4">Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href="MeditatingProcessor-5">Appendix:Tools of the trade (part-5)</a></strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong></strong></strong></p>
+
+<h1 id="-1"><a name="Meditation and microprocessors: An extremely simple idea"></a></h1>
+<h4 id="meditation-and-microprocessors-an-extremely-simple-idea">Meditation and microprocessors: An extremely simple idea</h4>
+<p>The idea is so simple, it is actually ridiculous. Also, it pays to know of an analogy to compare it to just in case the technology sounds complicated. In our daily lives, we go through cycles of work time and relaxation ( I’ll call it meditation, you may call it meditation or sleep ). The work time is our livelihood, pays our bills but also stresses us out. The meditation time is the recuperation time. It helps us stay sane.</p>
+
+<p>As it turns out, microprocessors, for lack of a better phrase, have a similar sleeping pattern. In fact, modern microprocessors have a very sophisticated sleeping pattern. When they have work to do (execute instructions) they are in waking state (duh) getting vital work done but expending much energy. On the other hand, when there is a lack of work (no instructions to be executed) they spiral into deeper and deeper sleeping states with the intention of saving power and conserving energy. The catch is that the deeper they go into sleep states, the more is the time they take to come back to full awareness to execute instructions again.</p>
+
+<h1 id="-2"><a name="MicroProcessor C-states"></a></h1>
+<h4 id="microprocessor-c-states">MicroProcessor C-states</h4>
+
+<blockquote>
+  <ul>
+    <li>This is c-states as documented in the <a href="[https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]">Intel 8th and 9th datasheeet manual</a>.</li>
+    <li>The actual states may differ depending on the exact model of the Microprocessor.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/c-states.png" alt="Image: figure-1: &lt;strong&gt;C-states from Intel's Documentation&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>C-states from Intel's Documentation</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>This can be queried using the “/sys/devices/system” interface on Linux</li>
+    <li>The actual states may differ depending on the exact model of the Microprocessor.</li>
+    <li>Names can be confusing too. So there are 9 c-states(c-state0-c-state8) and they are called C0,C1,C1E,C3,C6,C7s,C8,C9,C10.</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/c-states2.png" alt="Image: figure-2: &lt;strong&gt;c-states on my current microprocessor&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-2: <strong>c-states on my current microprocessor</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>Each of the green lines ending on a positive number represents entry into a c-state.</li>
+    <li>Again, Each one of the green line ending on a negative number (-5) represents the exit from the previous c-state.</li>
+    <li>The value returned to denote an exit is actually 4294967295 which is -1. size_t is an unsigned integral type, it is the largest possible representable value for this type</li>
+  </ul>
+</blockquote>
+
+<h1 id="-3"><a name="c-state transitions"></a></h1>
+
+<figure>
+    
+    <img src="/img/mwprocs/c-states3.png" alt="Image: figure-3: &lt;strong&gt;c-states transitions&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-3: <strong>c-states transitions</strong></span></center></figcaption>
+</figure>
+
+<blockquote>
+  <ul>
+    <li>The C0 is the state where the code is executing. So there is O ‘wakeup latency’. ‘Wakeup latency’ refers to the time it takes for the microprocessor to wake up from a sleep state. What you see marked in red is application latency.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>The rest of the picture c-state1(C1) to c-state8(C10) refers to the ‘wakeup latency’ and it goes up as the microprocessor goes into deeper c-states</li>
+  </ul>
+</blockquote>
+
+<figure>
+    
+    <img src="/img/mwprocs/c-states_latency.png" alt="Image: figure-4: &lt;strong&gt;Latency(us) on x axis C-state on y axis&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-4: <strong>Latency(us) on x axis C-state on y axis</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-4"><a name="A quick Summary of wakeup_latency"></a></h1>
+<h4 id="a-quick-summary-of-wakeup_latency">A quick Summary of wakeup_latency:</h4>
+<p>Hopefully, the above illustrations were helpful in understanding the crux of the matter, and references to meditation were not distracting. Here is a quick summary, modern Microprocessors switch states(deeper c-states as illustrated in figure-{1,2,3,4}) to save energy when there are no instructions to execute. And fling back to C0 when there are instructions to execute. This flinging back time is called <strong>‘wakeup_latency’</strong> and is higher for deeper states as illustrated in figure-4. And this ‘wakeup_latency’ is problematic for Ultra-Low-Latency applications. The source of the problem</p>
+
+<h1 id="-5"><a name="Artificial Intelligence based Hardware(Miroprocessor) tuning"></a></h1>
+<h4 id="artificial-intelligence-based-hardwaremiroprocessor-tuning">Artificial Intelligence based Hardware(Miroprocessor) tuning</h4>
+<p>If you consider figure-3 there were close to 25000 transitions (give or take) in a stretch of 15 seconds. Each of those costing valuable hundreds of microseconds. The effect can also get magnified because there might be multiple application threads vying for microprocessor resources. It can get worse. There might be a <a href="https://en.wikipedia.org/wiki/Domino_effect">Domino</a> effect of these occurrences. There is a specific term coined for Domino effect in the software world. I believe it is called <a href="https://www.azul.com/files/HowNotToMeasureLatency_LLSummit_NYC_12Nov2013.pdf">coordinated omission</a> and <a href="https://www.azul.com/files/HowNotToMeasureLatency_LLSummit_NYC_12Nov2013.pdf">here is a great reference to it</a>.</p>
+
+<blockquote>
+  <ul>
+    <li>Is there a microprocessor setting that restricts spiraling into deeper c-states so that the wakeup latency is effectively ‘0’? Yes, there is, but it will drain a lot of energy/power and may be detrimental to the microprocessor’s health in the long run ( Similar to life without meditation ).</li>
+    <li>Can we look at the historical load and predict when it might occur again. If yes, then can we configure it to a setting which is suited to Ultra-Low-Latency or Realtime workloads. <strong>The answer to that is a huge yes.</strong> Understandably this has to be done on the fly at runtime using the software controls provided by the Hardware and the OS.</li>
+    <li><strong>This is one of the things that our software intends to do</strong>. So once we have the load being predicted by Artificial Intelligence based model, we tune the microprocessor to the settings which reduces latency if the goal is to lower latency.</li>
+    <li>We reset the settings to power save(normal mode) when high load had tided over. <strong>As of now, the implementation is only for Intel microprocessors.</strong> But in future, we believe we can extend it to Memory chips, HDDs and SSDs, and so forth.</li>
+    <li><strong>There is something else.</strong> Just like there is unique signature that every person has, in a similar manner there is a unique signature for a particular load. This signature can be recognized using pre-training using techniques similar to <strong>transfer-learning</strong> in NLP and BERT.</li>
+  </ul>
+</blockquote>
+
+<p><a name="Summary"></a></p>
+<h3 id="summary">Summary</h3>
+
+<p>In summary then, modern microprocessors have power saving states they enter into when there is no work to do. All very good, till you consider that they have to get back to “full click” when they have to perform work. Ordinarily, this is not a problem but for some latency(performance) sensitive application. This approach is reactive or causal. Can we make this proactive based on some Artificial Intelligence based load prediction. Rest of the articles in the series is an under-the-hood look at how the processors interface with software(OS) and if there is a case to be made for Artificial Intelligence. Also there are things to explore for performance minded programmers. So get your hands dirty.</p>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--Doc3-->
+
+<!--Doc4-->
+
+<!--Doc5-->
+
+<!--External references-->
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2020-07/MeditatingProcessor-1" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-1" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-1" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2020-07/MeditatingProcessor-1" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2020-07/MeditatingProcessor-1" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2020 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+
+                </form>
+
+  </div>
+
+
+
+
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>
