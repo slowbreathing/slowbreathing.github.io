@@ -7,7 +7,7 @@ date:   2020-07-29 15:07:19
 categories: [article]
 tags: Artificial-Intelligence Deep-Learning LSTM NLP Microarchitecture UltraLowLatency RealTime Performance Meditating-with-microprocessors
 image:
-  feature: mwprocs/c-states3.png
+  feature: mwprocs/c-states3.jpeg
 comments: true
 ---
 
