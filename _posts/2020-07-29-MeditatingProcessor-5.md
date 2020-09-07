@@ -519,7 +519,6 @@ In summary, these are tools that we take to the trenches of performance tuning a
 [file1]: /img/mwprocs/cpu0.csv
 [file2]: /img/mwprocs/cpu5.csv
 [Summary5]: MeditatingProcessor-5#Summary
-
 <!--External-->
 [Intel 8th and 9th datasheeet manual]: [https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]
 [Domino]: https://en.wikipedia.org/wiki/Domino_effect

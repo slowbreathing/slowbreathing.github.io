@@ -258,7 +258,6 @@ In summary then, modern microprocessors have power saving states they enter into
 [Linux Tools:Extraction Tools:BPF:A defining example]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:A defining example
 [Linux Tools:Extraction Tools:Ftrace:Summary]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary
 [Summary5]: MeditatingProcessor-5#Summary
-
 <!--External references-->
 [Intel 8th and 9th datasheeet manual]: [https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]
 [Domino]: https://en.wikipedia.org/wiki/Domino_effect

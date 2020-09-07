@@ -337,7 +337,6 @@ Last year has been phenomenal in terms of Artificial Intelligence in general and
 [Attention]: /tags/#Attention
 [LSTM series]: /tags/#LSTM
 
-
 <!--External-->
 
 [Intel 8th and 9th datasheeet manual]: [https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]

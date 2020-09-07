@@ -613,7 +613,6 @@ We can meditate with the whole computer system, but that would be a much bigger 
 [Linux Tools:Extraction Tools:Ftrace:Summary]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary
 [Summary5]: MeditatingProcessor-5#Summary
 
-
 <!--External-->
 
 [Intel 8th and 9th datasheeet manual]: [https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]
