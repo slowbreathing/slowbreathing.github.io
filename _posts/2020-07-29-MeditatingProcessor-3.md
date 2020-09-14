@@ -489,7 +489,7 @@ The <strong>uncore</strong> makes a far bigger difference because of it's sheer 
 
 But what about power are we saving? The whole premise here is that once the load has passed over, post-configure the setting back to power save settings again based on load predictions.
 
-> * This has been measured in quad socket system using [PMC].
+> * This has been measured in quad socket system using [PCM].
 
 {%
     include image.html

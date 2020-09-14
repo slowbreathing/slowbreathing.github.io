@@ -520,7 +520,7 @@ We looked at 2 primary concepts. Firstly, a sketch of what units a CPU Core has 
 
 <!--Doc5-->
 [ftrace]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
-[EBPF]: MeditatingProcessor-5#EBPF: The most flexible tracer
+[EBPF]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer
 [“ftrace” is the coolest tracing dude on the planet]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
 [Introduction5]: MeditatingProcessor-5#Introduction
 [Linux Tools:An incisive but limited view]: MeditatingProcessor-5#Linux Tools:An incisive but limited view

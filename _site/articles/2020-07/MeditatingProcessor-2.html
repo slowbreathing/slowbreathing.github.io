@@ -603,7 +603,7 @@ Which idle-state is chosen is a matter of policy, but how then is communicated t
     <li>This one shows the entry to <strong>processor specific</strong> code of <strong>“intel_idle”</strong> from <strong>“cpuidle_enter_state” (“drivers/cpuidle/cpuidle.c”)</strong>.</li>
     <li>The target state accessed from driver(struct drv). This state structure is of type <strong>“cpuidle_state” shown earlier.</strong></li>
     <li>I traced <strong>“sched_idle_set_state”</strong> into which <strong>“target_state”</strong> is getting passed.</li>
-    <li>I traced using <strong><a href="MeditatingProcessor-5#EBPF: The most flexible tracer">EBPF</a></strong>. <strong><a href="MeditatingProcessor-5#EBPF: The most flexible tracer">EBPF</a></strong> allows great <strong>flexibility in tracing</strong>. As you can see I am accessing the struct <strong>“cpuidle_state”</strong> at run time on a running kernel and printing it out.</li>
+    <li>I traced using <strong><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">EBPF</a></strong>. <strong><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">EBPF</a></strong> allows great <strong>flexibility in tracing</strong>. As you can see I am accessing the struct <strong>“cpuidle_state”</strong> at run time on a running kernel and printing it out.</li>
   </ul>
 </blockquote>
 
