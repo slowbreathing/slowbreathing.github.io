@@ -616,7 +616,7 @@ We can meditate with the whole computer system, but that would be a much bigger 
 <!--External-->
 
 [Intel 8th and 9th datasheeet manual]: [https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/8th-gen-core-family-datasheet-vol-1.pdf]
-[PCM]: [https://github.com/opcm/pcm]
+[PCM]: https://github.com/opcm/pcm
 [Domino]: https://en.wikipedia.org/wiki/Domino_effect
 [coordinated omission]: https://www.azul.com/files/HowNotToMeasureLatency_LLSummit_NYC_12Nov2013.pdf
 [here is a great reference to it]: https://www.azul.com/files/HowNotToMeasureLatency_LLSummit_NYC_12Nov2013.pdf
