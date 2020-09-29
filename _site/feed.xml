@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-09-14T13:55:57+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</title><link href="http://localhost:4000/articles/2020-07/MeditatingProcessor-1" rel="alternate" type="text/html" title="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea" /><published>2020-07-29T15:07:19+00:00</published><updated>2020-07-29T15:07:19+00:00</updated><id>http://localhost:4000/articles/2020-07/MeditatingProcessor-1</id><content type="html" xml:base="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">&lt;h3 id=&quot;meditating-with-microprocessors&quot;&gt;&lt;a href=&quot;/tags/#Meditating-with-microprocessors&quot;&gt;Meditating with microprocessors&lt;/a&gt;&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-09-14T14:00:14+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</title><link href="http://localhost:4000/articles/2020-07/MeditatingProcessor-1" rel="alternate" type="text/html" title="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea" /><published>2020-07-29T15:07:19+00:00</published><updated>2020-07-29T15:07:19+00:00</updated><id>http://localhost:4000/articles/2020-07/MeditatingProcessor-1</id><content type="html" xml:base="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">&lt;h3 id=&quot;meditating-with-microprocessors&quot;&gt;&lt;a href=&quot;/tags/#Meditating-with-microprocessors&quot;&gt;Meditating with microprocessors&lt;/a&gt;&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;MeditatingProcessor-1&quot;&gt;Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;MeditatingProcessor-1&quot;&gt;part-1&lt;/a&gt;)&lt;strong&gt;
 &lt;/strong&gt;&lt;/strong&gt;    &lt;ul&gt;
@@ -1139,7 +1139,7 @@ Power can be saved and how much is the tradeoff in terms of latency.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;This is a recording with &lt;a href=&quot;[https://github.com/opcm/pcm]&quot;&gt;PCM&lt;/a&gt; from Intel now open-sourced.&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;This is a recording with &lt;a href=&quot;https://github.com/opcm/pcm&quot;&gt;PCM&lt;/a&gt; from Intel now open-sourced.&lt;/strong&gt;.&lt;/li&gt;
     &lt;li&gt;&lt;strong&gt;It has many dashboards showing various metrics. I am showing a couple of relevant ones like c-state Hardware Residency and L2/L3 Misses&lt;/strong&gt;.&lt;/li&gt;
     &lt;li&gt;&lt;strong&gt;These experiments have been done on my laptop with coffeelake client.(I have not been going to office because of covid19. The point is, that the difference is more stark on Xeon CPUs).&lt;/strong&gt;&lt;/li&gt;
   &lt;/ul&gt;
@@ -1426,7 +1426,7 @@ Power can be saved and how much is the tradeoff in terms of latency.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;ul&gt;
-    &lt;li&gt;This has been measured in quad socket system using &lt;a href=&quot;[https://github.com/opcm/pcm]&quot;&gt;PCM&lt;/a&gt;.&lt;/li&gt;
+    &lt;li&gt;This has been measured in quad socket system using &lt;a href=&quot;https://github.com/opcm/pcm&quot;&gt;PCM&lt;/a&gt;.&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 

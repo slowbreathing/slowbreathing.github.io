@@ -203,7 +203,7 @@ The important thing is how do we measure hardware state residency. Well, there a
 
 > * <strong>MSRs (model-specific registers )</strong> introduced in Sandy Bridge carried through to later microarchitecture pipelines.
 > * <strong>Some register for measuring these values may change.</strong>.
-> * <strong>[Intel's documentation] is the authentic source here. But, it is incredibly difficult to read. It is as if Intel's employee were given a raise to make it "impossible to comprehend" kind of document.</strong>
+> * <strong>[Intel's documentation] is the authentic source here. But, it is incredibly difficult to read. It is as if Intel's employees were given a raise to make it "impossible to comprehend" kind of document.</strong>
 > * <strong>Prior to [Cannonlake] there was no MSR to measure C1 and had to be measure via softawre means. Post [Cannonlake] it can be measured 0x660H register.</strong>
 
 {%
