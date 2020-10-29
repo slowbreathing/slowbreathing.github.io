@@ -53,20 +53,20 @@ comments: true
       * [Power:Turn things down]
         * [Power:Turn things down:P-states:Hardware Latency]
       * [Core and Uncore:Uncore]
-        * [Core and Uncore:Uncore:montioring and Tuning]
-        * [Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]
-        * [Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]
       * [Core and Uncore:How much power can be saved]      
     * [Summary][Summary3]  
 4. [Artificial Intelligence guided Predictive MicroProcessor tuning][Meditating-with-microprocessors Part-4] <strong>([part-4][Meditating-with-microprocessors Part-4])<strong>
   * [Introduction][Introduction4]
   * [Is there a solution?]
-  * [Is there a smarter solution?: Artificial Intelligence model based proactive descision making]
+  * [Is there a smarter solution?: Artificial Intelligence model based proactive decision making]
   * [Recognizing the pattern]
   * [Transformer as the backbone]
   * [Transfer Learning inspiration from NLP]
   * [Fine tuning pre-trained networks]  
-  * [Artificial Intelligence model based proactive and predictive descision making]
+  * [Artificial Intelligence model based proactive and predictive decision making]
   * [The Final Cut]
   * [Summary][Summary4]
 5. [Appendix:Tools of the trade][Meditating-with-microprocessors Part-5] <strong>([part-5][Meditating-with-microprocessors Part-5])<strong>
@@ -78,7 +78,7 @@ comments: true
     * [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]
       * [Linux Tools:Extraction Tools:Ftrace:Engineering]  
       * [Linux Tools:Extraction Tools:Ftrace:Summary]
-    * [Linux Tools:Extraction Tools:BPF:The most flexible tracer]
+    * [Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]
       * [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]
       * [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]  
       * [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]
@@ -119,7 +119,7 @@ Within the CPU there are 2 ways of doing this. <strong>(1)</strong> Clock gating
 
 # <a name="Power:c-states"></a>
 #### Power:c-states
-Core c-states and package(core+uncore) c-states. Abbreviated as cc-states(c-states) and pc-states. So CPU designers have developed ways for the processor to go into a lower-power state when there is nothing for it to do. Typically, when put into this state, the CPU will stop clocks and power down part or all of its circuitry until the next interrupt arrives. Intel servers commonly target a worst case of about 40 microseconds in order to restore the path to main memory for PCIe devices.
+Core c-states and package(core+uncore) c-states. Abbreviated as cc-states(c-states) and pc-states. So CPU designers have developed ways for the processor to go into a lower-power state when there is nothing for it to do. Typically, when put into this state, the CPU will stop clocks and power down part or all of its circuitry until the next interrupt arrives. Intel servers commonly target a worst-case of about 40 microseconds in order to restore the path to the main memory for PCIe devices.
 
 {%
     include image.html
@@ -356,7 +356,7 @@ This is visualizing <strong>latency</strong> as a time series. We looked at this
 # <a name="Power:PMQOS"></a>
 #### Power:PMQOS
 
-This interface provides a kernel and user mode interface for registering performance expectations by drivers, subsystems and user space applications on one of the parameters. Two different PM QoS(Power Management Quality of Service) frameworks are available:
+This interface provides a kernel and user mode interface for registering performance expectations by drivers, subsystems, and user space applications on one of the parameters. Two different PM QoS(Power Management Quality of Service) frameworks are available:
 1. PM QoS classes for <strong>cpu_dma_latency, network_latency, network_throughput, memory_bandwidth.</strong>
 2. The per-device PM QoS framework provides the API to manage the <strong>per-device latency constraints and PM QoS flags</strong>.
 
@@ -365,7 +365,7 @@ Here are the benefits
 2. Uses available tools and infrastructure
 3. Scalable and can be easily included early in application design
 
-Let me simplify this. Refer back to [figure-8] and [figure-9]. You’ll notice that the settings take effect for all the cores in the system. “pm_qos” is a much more fine-grained interface. Now let’s look at figure-10 below especially virtual cores 3 and 9.
+Let me simplify this. Refer back to [figure-8] and  [figure-9]. You’ll notice that the settings take effect for all the cores in the system. “pm_qos” is a much more fine-grained interface. Now let’s look at figure-10 below especially virtual cores 3 and 9.
 
 > * <strong>Hardware-State-Residency with "pm_qos"</strong>.
 > * <strong>Notice the latency of "\__schedule", you can interpret that as the latency of the OS scheduler.</strong>.
@@ -423,19 +423,19 @@ Changing the frequency and voltage of a subset of the system: Traditionally thes
 # <a name="Core and Uncore:Uncore"></a>
 #### Core and Uncore:Uncore
 We'll look at [Core] and [Uncore] again but this time from the perspective of the power interface. How much
-Power can be saved and how much is the tradeoff in terms of latency.
+power can be saved and how much is the tradeoff in terms of latency.
 
 > * On the uncore we have L3 cache, integrated memory controller, QuickPath Interconnect (QPI; for multi-socket communication), and an interconnect that tied it all together. In the Sandy Bridge generation over and above Sandy Bridge, PCIe was integrated into the CPU uncore.
 > * However, just bu looking at the size and number or units on the [Uncore], the potential of latency improvements here are huge
 
-# <a name="Core and Uncore:Uncore:montioring and Tuning"></a>
-#### Core and Uncore:Uncore:montioring and Tuning
-Unlike core performance monitoring, the performance monitoring architecture in the uncore is not standardized across all generations and product lines. A common architecture is used on Xeon E5/E7 products starting in the Sandy Bridge generation. Very few <strong>uncore</strong> performance monitoring capabilities have been productized on other Intel products. We read from and write to the <strong>MSRs</strong> directly. This is one of the reasons why less importance is paid to <strong>uncore</strong>. The interface to <strong>uncore</strong> is not standard. But good news is on the horizon, the Intel's UNCORE frequency driver may be part of mainline kernel as soon as <strong>kernel version 5.6</strong>. Till such time <strong>MSRs</strong> are our only hope as we are still on <strong>kernel version 4.15</strong>. But we are itching to get on to 5 series.
+# <a name="Core and Uncore:Uncore:monitoring and Tuning"></a>
+#### Core and Uncore:Uncore:monitoring and Tuning
+Unlike core performance monitoring, the performance monitoring architecture in the uncore is not standardized across all generations and product lines. A common architecture is used on Xeon E5/E7 products starting in the Sandy Bridge generation. Very few <strong>uncore</strong> performance monitoring capabilities have been productized on other Intel products. We read from and write to the <strong>MSRs</strong> directly. This is one of the reasons why less importance is paid to <strong>uncore</strong>. The interface to <strong>uncore</strong> is not standard. But good news is on the horizon, Intel's UNCORE frequency driver may be part of mainline kernel as soon as <strong>kernel version 5.6</strong>. Till such time <strong>MSRs</strong> are our only hope as we are still on <strong>kernel version 4.15</strong>. But we are itching to get on to 5 series.
 
 The <strong>uncore</strong> makes a far bigger difference because of it's sheer size.  
 
-# <a name="Core and Uncore:Uncore:montioring and Tuning:Hardware Latency"></a>
-#### Core and Uncore:Uncore:montioring and Tuning:Hardware Latency
+# <a name="Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency"></a>
+#### Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency
 
 > * <strong>Low Frequency</strong>.
 > * <strong>Hardware Latency of the system</strong>.
@@ -459,8 +459,8 @@ The <strong>uncore</strong> makes a far bigger difference because of it's sheer 
     width="110%"
 %}
 
-# <a name="Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency"></a>
-#### Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency
+# <a name="Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency"></a>
+#### Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency
 
 > * <strong>Low Frequency</strong>.
 > * <strong>Wakeup Latency of the system</strong>.
@@ -517,8 +517,17 @@ We can meditate with the whole computer system, but that would be a much bigger 
 7. <strong>VR:</strong>  Voltage regulators
 
 ### References
-1. <a href='https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html'><strong>Intels documenation: (The source and comprehensive, but difficult to read)</strong></a>
-2. <a href='https://www.agner.org/optimize/'><strong>Agner Fog: (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong></a>
+1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often.)</strong>
+2. <a href='https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html'><strong>Intels documenation:</strong></a><strong> (Intel's documentation is the authentic source here. But, it is incredibly difficult to read. It is as if Intel's employees were given a raise to make it "impossible to comprehend" kind of document.)</strong>
+3. <a href='https://www.agner.org/optimize/'><strong>Agner Fog:</strong></a><strong> (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong>
+4. <a href='https://github.com/torvalds/linux'><strong>Linux Source:</strong></a><strong> (If you are going to trace your programs/applications then having the Linux source is a must. Tracers will tell you half the story, the other half will come from here. )</strong>
+5. <a href='https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html'><strong>Transformer:</strong></a><strong> (Modern Natural Language processing, in general, must be indebted to Transformer architecture. We however, use an asymmetric transformer setup.)</strong>
+6. <a href='https://arxiv.org/pdf/2009.14794.pdf'><strong>Performer-A Sparse Transformer:</strong></a><strong> (This is as cutting edge as it can get. The transformer at the heart of it is a stacked multi-headed-attention unit. As the sequences(of words or System events or stock prices or vehicle positions e.t.c.) get longer, the quadratic computation and quadratic memory for matrix cannot keep up. Performer, a Transformer architecture with attention mechanisms that scale linearly. The framework is implemented by Fast Attention Via Positive Orthogonal Random Features (FAVOR+) algorithm.)</strong>
+7. <a href='https://www.youtube.com/watch?v=93uE_kWWQjs&t=1178s'><strong>Ftrace: The Inner workings</strong></a><strong> ( I dont think there is a better explaination of Ftrace's inner workings.)</strong>
+8. <a href='https://lwn.net/Articles/608497/'><strong>Ftrace: The hidden light switch:</strong></a><strong> ( This article demonstrates the tools based on Ftrace.)</strong>
+9. <a href='http://www.brendangregg.com/ebpf.html'><strong>BPF:</strong></a><strong> ( eBPF or just BPF is changing the way programming is done on Linux. Linux now has observability superpowers beyond most OSes. A detailed post on BPF is the need of the hour and I am planning as much. In the meantime, the attached link can be treated as a virtual BPF homepage.)</strong>
+
+
 
 <!--Series-->
 [Stillwaters]: https://www.stillwaters.ai
@@ -572,9 +581,9 @@ We can meditate with the whole computer system, but that would be a much bigger 
 [Power:Turn things down]: MeditatingProcessor-3#Power:Turn things down
 [Power:Turn things down:P-states:Hardware Latency]: MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency
 [Core and Uncore:Uncore]: MeditatingProcessor-3#Core and Uncore:Uncore
-[Core and Uncore:Uncore:montioring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning
-[Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency
-[Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency
+[Core and Uncore:Uncore:monitoring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning
+[Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency
+[Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency
 [Core and Uncore:How much power can be saved]: MeditatingProcessor-3#Core and Uncore:How much power can be saved
 [Summary3]: MeditatingProcessor-3#Summary
 [Glossary of terms]: MeditatingProcessor-3#Glossary of terms
@@ -584,18 +593,18 @@ We can meditate with the whole computer system, but that would be a much bigger 
 <!--Doc4-->
 [Introduction4]: MeditatingProcessor-4#Introduction
 [Is there a solution?]: MeditatingProcessor-4#Is there a solution?
-[Is there a smarter solution?: Artificial Intelligence model based proactive descision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making
+[Is there a smarter solution?: Artificial Intelligence model based proactive decision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive decision making
 [Recognizing the pattern]: MeditatingProcessor-4#Recognizing the pattern
 [Transformer as the backbone]: MeditatingProcessor-4#Transformer as the backbone
 [Transfer Learning inspiration from NLP]: MeditatingProcessor-4#Transfer Learning inspiration from NLP
 [Fine tuning pre-trained networks]: MeditatingProcessor-4#Fine tuning pre-trained networks
-[Artificial Intelligence model based proactive and predictive descision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making
+[Artificial Intelligence model based proactive and predictive decision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive decision making
 [The Final Cut]: MeditatingProcessor-4#The Final Cut
 [Summary4]: MeditatingProcessor-4#Summary
 
 <!--Doc5-->
 [ftrace]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
-[EBPF]: MeditatingProcessor-5#EBPF: The most flexible tracer
+[EBPF]: MeditatingProcessor-5#EBPF: The most powerful and flexible tracer
 [“ftrace” is the coolest tracing dude on the planet]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
 [Introduction5]: MeditatingProcessor-5#Introduction
 [Linux Tools:An incisive but limited view]: MeditatingProcessor-5#Linux Tools:An incisive but limited view
@@ -605,7 +614,7 @@ We can meditate with the whole computer system, but that would be a much bigger 
 [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet
 [Linux Tools:Extraction Tools:Ftrace:Engineering]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering
 [Linux Tools:Extraction Tools:Ftrace:Summary]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary
-[Linux Tools:Extraction Tools:BPF:The most flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer
+[Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer
 [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine
 [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures
 [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking

@@ -53,20 +53,20 @@ comments: true
       * [Power:Turn things down]
         * [Power:Turn things down:P-states:Hardware Latency]
       * [Core and Uncore:Uncore]
-        * [Core and Uncore:Uncore:montioring and Tuning]
-        * [Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]
-        * [Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]
       * [Core and Uncore:How much power can be saved]  
      * [Summary][Summary3]  
 4. [Artificial Intelligence guided Predictive MicroProcessor tuning][Meditating-with-microprocessors Part-4] <strong>([part-4][Meditating-with-microprocessors Part-4])<strong>
   * [Introduction][Introduction4]
   * [Is there a solution?]
-  * [Is there a smarter solution?: Artificial Intelligence model based proactive descision making]
+  * [Is there a smarter solution?: Artificial Intelligence model based proactive decision making]
   * [Recognizing the pattern]
   * [Transformer as the backbone]
   * [Transfer Learning inspiration from NLP]
   * [Fine tuning pre-trained networks]  
-  * [Artificial Intelligence model based proactive and predictive descision making]
+  * [Artificial Intelligence model based proactive and predictive decision making]
   * [The Final Cut]
   * [Summary][Summary4]
 5. [Appendix:Tools of the trade][Meditating-with-microprocessors Part-5] <strong>([part-5][Meditating-with-microprocessors Part-5])<strong>
@@ -78,7 +78,7 @@ comments: true
     * [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]
       * [Linux Tools:Extraction Tools:Ftrace:Engineering]  
       * [Linux Tools:Extraction Tools:Ftrace:Summary]
-    * [Linux Tools:Extraction Tools:BPF:The most flexible tracer]
+    * [Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]
       * [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]
       * [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]  
       * [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]
@@ -107,7 +107,7 @@ There is a [great article][Linux Tooling] that takes an expansive look at linux 
 
 # <a name="Linux Tools:Event Sources:uprobes and kprobes"></a>
 #### Linux Tools:Event Sources:uprobes and kprobes
-The technique of dynamic instrumentation is quite old(1990s if my memory serves me right) and reasonably mature. However, its application to Linux is relatively recent(mid 2000). Similar to techniques used in debuggers. They are called uprobes , uretprobes, kprobes and kretprobes in Linux. uprobes and uretprobes are for user-space processes. uprobes are funtion entries and uretprobes are function exits. kprobes and kretprobes are for kernel space. The technique of application is nearly identical.
+The technique of dynamic instrumentation is quite old(1990s if my memory serves me right) and reasonably mature. However, its application to Linux is relatively recent(mid 2000). Similar to techniques used in debuggers. They are called uprobes , uretprobes, kprobes and kretprobes in Linux. uprobes and uretprobes are for user-space processes. uprobes are function entries and uretprobes are function exits. kprobes and kretprobes are for kernel space. The technique of application is nearly identical.
 
 > * When a CPU hits the breakpoint instruction, a trap occurs, the CPU's registers are saved, and control passes to kprobes/uprobe via the notifier_call_chain mechanism.
 > * The original instructions are then executed, and instruction flow resumes.
@@ -297,8 +297,8 @@ Nearly 40 thousand traceable functions in the kernel with negligible overhead is
 
 > * Finally ftrace comes with a few front end tools like the [command-line trace-cmd] and a [visualizer called kernelshark]. However, understanding the data captured by a tracer is often much more important. The the subsystem being traced is understood, then the captured data can be [post processed][CPUIDLE subsystem:Gathering and undertanding latency data] to suit any visualizer.   
 
-# <a name="Linux Tools:Extraction Tools:BPF:The most flexible tracer"></a>
-#### Linux Tools:Extraction Tools:BPF:The most flexible tracer
+# <a name="Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer"></a>
+#### Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer
 
 <strong>EBPF(Extended Berkeley Packet Filters)</strong> or just <strong>BPF(Berkeley Packet Filters)</strong> is like a <strong>swiss army knife of performance tools</strong>. I am avoiding it's history completely in the interest of brevity. There is an excellent resource on [BPF][bpfexternal] by one of it's [authors][bpfauthor]. To be more precise, the author of tools like [bcc] and [bpftrace] built on top of BPF. As an aside, the only thing that does not resonate with me is its name(BPF...Really?? ). We could have a more attractive name but I guess that horse has already bolted. It is a highly capable tool and is one reason why it is a bit difficult to explain. This post is about <strong>it's engineering</strong>, what <strong>makes it capable</strong> and a few examples to <strong>illustrate it superpowers over other tools</strong>.
 
@@ -427,6 +427,17 @@ In summary, these are tools that we take to the trenches of performance tuning a
 
 [BPF] is a different beast altogether. It can look inside the kernel and most userland applications including Java/JVM python with kprobes/uprobes/USDTs respectively. <strong>It's safe in-kernel/in-application processing is a powerful feature that lends modern Linux Kernel it's amazing superpowers</strong>.
 
+### References
+1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often.)</strong>
+2. <a href='https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html'><strong>Intels documenation:</strong></a><strong> (Intel's documentation is the authentic source here. But, it is incredibly difficult to read. It is as if Intel's employees were given a raise to make it "impossible to comprehend" kind of document.)</strong>
+3. <a href='https://www.agner.org/optimize/'><strong>Agner Fog:</strong></a><strong> (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong>
+4. <a href='https://github.com/torvalds/linux'><strong>Linux Source:</strong></a><strong> (If you are going to trace your programs/applications then having the Linux source is a must. Tracers will tell you half the story, the other half will come from here. )</strong>
+5. <a href='https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html'><strong>Transformer:</strong></a><strong> (Modern Natural Language processing, in general, must be indebted to Transformer architecture. We however, use an asymmetric transformer setup.)</strong>
+6. <a href='https://arxiv.org/pdf/2009.14794.pdf'><strong>Performer-A Sparse Transformer:</strong></a><strong> (This is as cutting edge as it can get. The transformer at the heart of it is a stacked multi-headed-attention unit. As the sequences(of words or System events or stock prices or vehicle positions e.t.c.) get longer, the quadratic computation and quadratic memory for matrix cannot keep up. Performer, a Transformer architecture with attention mechanisms that scale linearly. The framework is implemented by Fast Attention Via Positive Orthogonal Random Features (FAVOR+) algorithm.)</strong>
+7. <a href='https://www.youtube.com/watch?v=93uE_kWWQjs&t=1178s'><strong>Ftrace: The Inner workings</strong></a><strong> ( I dont think there is a better explaination of Ftrace's inner workings.)</strong>
+8. <a href='https://lwn.net/Articles/608497/'><strong>Ftrace: The hidden light switch:</strong></a><strong> ( This article demonstrates the tools based on Ftrace.)</strong>
+9. <a href='http://www.brendangregg.com/ebpf.html'><strong>BPF:</strong></a><strong> ( eBPF or just BPF is changing the way programming is done on Linux. Linux now has observability superpowers beyond most OSes. A detailed post on BPF is the need of the hour and I am planning as much. In the meantime, the attached link can be treated as a virtual BPF homepage.)</strong>
+
 <!--Series-->
 [Stillwaters]: https://www.stillwaters.ai
 [Meditating-with-microprocessors]: /tags/#Meditating-with-microprocessors
@@ -479,9 +490,9 @@ In summary, these are tools that we take to the trenches of performance tuning a
 [Power:Turn things down]: MeditatingProcessor-3#Power:Turn things down
 [Power:Turn things down:P-states:Hardware Latency]: MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency
 [Core and Uncore:Uncore]: MeditatingProcessor-3#Core and Uncore:Uncore
-[Core and Uncore:Uncore:montioring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning
-[Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency
-[Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency
+[Core and Uncore:Uncore:monitoring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning
+[Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency
+[Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency
 [Core and Uncore:How much power can be saved]: MeditatingProcessor-3#Core and Uncore:How much power can be saved
 [Summary3]: MeditatingProcessor-3#Summary
 
@@ -489,18 +500,18 @@ In summary, these are tools that we take to the trenches of performance tuning a
 <!--Doc4-->
 [Introduction4]: MeditatingProcessor-4#Introduction
 [Is there a solution?]: MeditatingProcessor-4#Is there a solution?
-[Is there a smarter solution?: Artificial Intelligence model based proactive descision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making
+[Is there a smarter solution?: Artificial Intelligence model based proactive decision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive decision making
 [Recognizing the pattern]: MeditatingProcessor-4#Recognizing the pattern
 [Transformer as the backbone]: MeditatingProcessor-4#Transformer as the backbone
 [Transfer Learning inspiration from NLP]: MeditatingProcessor-4#Transfer Learning inspiration from NLP
 [Fine tuning pre-trained networks]: MeditatingProcessor-4#Fine tuning pre-trained networks
-[Artificial Intelligence model based proactive and predictive descision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making
+[Artificial Intelligence model based proactive and predictive decision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive decision making
 [The Final Cut]: MeditatingProcessor-4#The Final Cut
 [Summary4]: MeditatingProcessor-4#Summary
 
 <!--Doc5-->
 [ftrace]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
-[EBPF]: MeditatingProcessor-5#EBPF: The most flexible tracer
+[EBPF]: MeditatingProcessor-5#EBPF: The most powerful and flexible tracer
 [“ftrace” is the coolest tracing dude on the planet]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
 [Introduction5]: MeditatingProcessor-5#Introduction
 [Linux Tools:An incisive but limited view]: MeditatingProcessor-5#Linux Tools:An incisive but limited view
@@ -510,7 +521,7 @@ In summary, these are tools that we take to the trenches of performance tuning a
 [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet
 [Linux Tools:Extraction Tools:Ftrace:Engineering]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering
 [Linux Tools:Extraction Tools:Ftrace:Summary]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary
-[Linux Tools:Extraction Tools:BPF:The most flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer
+[Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer
 [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine
 [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures
 [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking

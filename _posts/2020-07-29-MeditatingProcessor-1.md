@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea"
-excerpt: "In the <strong><a href='/tags/#Meditating-with-microprocessors'>current series</a></strong> titled <strong><a href='/tags/#Meditating-with-microprocessors'>Meditating-with-microprocessors</a></strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra-Low-Latency</strong> and <strong>Realtime</strong> loads. The techniques, in general, can be extended to other components of a computer system like the storage devices, memory etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using first principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series <strong><a href='/articles/2020-07/MeditatingProcessor-1'>Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea(part-1)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-2'>A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-3'>Trading off power for UltraLowLatency (part-3)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-4'>Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-5'>Appendix:Tools of the trade(part-5) </a></strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong> "
+excerpt: "In the <strong><a href='/tags/#Meditating-with-microprocessors'>current series</a></strong> titled <strong><a href='/tags/#Meditating-with-microprocessors'>Meditating-with-microprocessors</a></strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra-Low-Latency</strong> and <strong>Realtime</strong> loads. The techniques, in general, can be extended to other components of a computer system like storage devices, memory, etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using the first-principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series <strong><a href='/articles/2020-07/MeditatingProcessor-1'>Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea(part-1)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-2'>A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-3'>Trading off power for UltraLowLatency (part-3)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-4'>Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)</a></strong>, <strong><a href='/articles/2020-07/MeditatingProcessor-5'>Appendix:Tools of the trade(part-5) </a></strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong> "
 mathjax: true
 date:   2020-07-29 15:07:19
 categories: [article]
@@ -53,20 +53,20 @@ comments: true
       * [Power:Turn things down]
         * [Power:Turn things down:P-states:Hardware Latency]
       * [Core and Uncore:Uncore]
-        * [Core and Uncore:Uncore:montioring and Tuning]
-        * [Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]
-        * [Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]
+        * [Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]
       * [Core and Uncore:How much power can be saved]  
    * [Summary][Summary3]  
 4. [Artificial Intelligence guided Predictive MicroProcessor tuning][Meditating-with-microprocessors Part-4] <strong>([part-4][Meditating-with-microprocessors Part-4])<strong>
   * [Introduction][Introduction4]
   * [Is there a solution?]
-  * [Is there a smarter solution?: Artificial Intelligence model based proactive descision making]
+  * [Is there a smarter solution?: Artificial Intelligence model based proactive decision making]
   * [Recognizing the pattern]
   * [Transformer as the backbone]
   * [Transfer Learning inspiration from NLP]
   * [Fine tuning pre-trained networks]  
-  * [Artificial Intelligence model based proactive and predictive descision making]
+  * [Artificial Intelligence model based proactive and predictive decision making]
   * [The Final Cut]
   * [Summary][Summary4]
 5. [Appendix:Tools of the trade][Meditating-with-microprocessors Part-5] <strong>([part-5][Meditating-with-microprocessors Part-5])<strong>
@@ -78,7 +78,7 @@ comments: true
     * [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]
       * [Linux Tools:Extraction Tools:Ftrace:Engineering]  
       * [Linux Tools:Extraction Tools:Ftrace:Summary]
-    * [Linux Tools:Extraction Tools:BPF:The most flexible tracer]
+    * [Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]
       * [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]
       * [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]  
       * [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]
@@ -89,13 +89,13 @@ comments: true
 
 # <a name="Introduction"></a>
 ### Introduction
-In the <strong>[multi-part series][Meditating-with-microprocessors]</strong> titled <strong>[Meditating-with-microprocessors][Meditating-with-microprocessors]</strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra-Low-Latency</strong> and <strong>Realtime</strong> loads. The techniques, in general, can be extended to other components of a computer system like the storage devices, memory etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using first principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series, <strong>[Meditating with Microprocessors: An essentially simple idea(part-1)][Meditating-with-microprocessors Part-1]</strong> , <strong>[A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)][Meditating-with-microprocessors Part-2]</strong>, <strong>[Trading off power for UltraLowLatency (part-3) (part-3)][Meditating-with-microprocessors Part-3]</strong> , <strong>[Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)][Meditating-with-microprocessors Part-4]</strong>, <strong>[Appendix:Tools of the trade (part-5)][Meditating-with-microprocessors Part-5]</strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong>
+In the <strong>[multi-part series][Meditating-with-microprocessors]</strong> titled <strong>[Meditating-with-microprocessors][Meditating-with-microprocessors]</strong>, I demonstrate the use of <strong>Artificial Intelligence</strong> to tune <strong>microprocessors</strong> for <strong>Ultra-Low-Latency</strong> and <strong>Realtime</strong> loads. The techniques, in general, can be extended to other components of a computer system like storage devices, memory, etc. However, the article series and my work is currently restricted to <strong>Intel microprocessors only</strong>. <strong>In future</strong>, we may extend this to other hardware components of a computer system. This is a very <strong>specialized</strong> and <strong>intense</strong> field and hence I intend to break it down using the first-principles approach into simpler pieces of technology that are easy to understand. There are 5 parts to the series, <strong>[Meditating with Microprocessors: An essentially simple idea(part-1)][Meditating-with-microprocessors Part-1]</strong> , <strong>[A crashcourse in Microarchitecture and Linux CPUIDLE interface(part-2)][Meditating-with-microprocessors Part-2]</strong>, <strong>[Trading off power for UltraLowLatency (part-3) (part-3)][Meditating-with-microprocessors Part-3]</strong> , <strong>[Artificial Intelligence guided Predictive MicroProcessor tuning (part-4)][Meditating-with-microprocessors Part-4]</strong>, <strong>[Appendix:Tools of the trade (part-5)][Meditating-with-microprocessors Part-5]</strong>. <strong>In the balance then, this is a documentation of my journey navigating these utterly specialized fields ( microarchitecture and Artificial Intelligence ), how to marry them together, the issues I faced, the respective solutions, what (how much) are the benefits if any, and what to have in the toolbox.<strong>
 
 # <a name="Meditation and microprocessors: An extremely simple idea"></a>
 #### Meditation and microprocessors: An extremely simple idea
 The idea is so simple, it is actually ridiculous. Also, it pays to know of an analogy to compare it to just in case the technology sounds complicated. In our daily lives, we go through cycles of work time and relaxation ( I’ll call it meditation, you may call it meditation or sleep ). The work time is our livelihood, pays our bills but also stresses us out. The meditation time is the recuperation time. It helps us stay sane.
 
-As it turns out, microprocessors, for lack of a better phrase, have a similar sleeping pattern. In fact, modern microprocessors have a very sophisticated sleeping pattern. When they have work to do (execute instructions) they are in waking state (duh) getting vital work done but expending much energy. On the other hand, when there is a lack of work (no instructions to be executed) they spiral into deeper and deeper sleeping states with the intention of saving power and conserving energy. The catch is that the deeper they go into sleep states, the more is the time they take to come back to full awareness to execute instructions again.
+As it turns out, microprocessors, for lack of a better phrase, have a similar sleeping pattern. In fact, modern microprocessors have a very sophisticated sleeping pattern. When they have work to do (execute instructions) they are in a waking state (duh) getting vital work done but expending much energy. On the other hand, when there is a lack of work (no instructions to be executed) they spiral into deeper and deeper sleeping states with the intention of saving power and conserving energy. The catch is that the deeper they go into sleep states, the more is the time they take to come back to full awareness to execute instructions again.
 
 # <a name="MicroProcessor C-states"></a>
 #### MicroProcessor C-states
@@ -154,20 +154,29 @@ Hopefully, the above illustrations were helpful in understanding the crux of the
 
 # <a name="Artificial Intelligence based Hardware(Miroprocessor) tuning"></a>
 #### Artificial Intelligence based Hardware(Miroprocessor) tuning
-If you consider figure-3 there were close to 25000 transitions (give or take) in a stretch of 15 seconds. Each of those costing valuable hundreds of microseconds. The effect can also get magnified because there might be multiple application threads vying for microprocessor resources. It can get worse. There might be a [Domino] effect of these occurrences. There is a specific term coined for Domino effect in the software world. I believe it is called [coordinated omission] and [here is a great reference to it].
+If you consider figure-3 there were close to 25000 transitions (give or take) in a stretch of 15 seconds. Each of those costing valuable hundreds of microseconds. The effect can also get magnified because there might be multiple application threads vying for microprocessor resources. It can get worse. There might be a [Domino] effect of these occurrences. There is a specific term coined for the Domino effect in the software world. I believe it is called [coordinated omission] and [here is a great reference to it].
 
-> * Is there a microprocessor setting that restricts spiraling into deeper c-states so that the wakeup latency is effectively ‘0’? Yes, there is, but it will drain a lot of energy/power and may be detrimental to the microprocessor’s health in the long run ( Similar to life without meditation ).
+> * Is there a microprocessor setting that restricts spiraling into deeper c-states so that wakeup latency is effectively ‘0’? Yes, there is, but it will drain a lot of energy/power and may be detrimental to the microprocessor’s health in the long run ( Similar to life without meditation ).
 > * Can we look at the historical load and predict when it might occur again. If yes, then can we configure it to a setting which is suited to Ultra-Low-Latency or Realtime workloads. <strong>The answer to that is a huge yes.</strong> Understandably this has to be done on the fly at runtime using the software controls provided by the Hardware and the OS.
 > * <strong>This is one of the things that our software intends to do</strong>. So once we have the load being predicted by Artificial Intelligence based model, we tune the microprocessor to the settings which reduces latency if the goal is to lower latency.
-> * We reset the settings to power save(normal mode) when high load had tided over. <strong>As of now, the implementation is only for Intel microprocessors.</strong> But in future, we believe we can extend it to Memory chips, HDDs and SSDs, and so forth.
-> * <strong>There is something else.</strong> Just like there is unique signature that every person has, in a similar manner there is a unique signature for a particular load. This signature can be recognized using pre-training using techniques similar to <strong>transfer-learning</strong> in NLP and BERT.  
+> * We reset the settings to power save(normal mode) when the high load had tided over. <strong>As of now, the implementation is only for Intel microprocessors.</strong> But in the future, we believe we can extend it to Memory chips, HDDs and SSDs, and so forth.
+> * <strong>There is something else.</strong> Just like there is a unique signature that every person has, in a similar manner there is a unique signature for a particular load. This signature can be recognized using pre-training using techniques similar to <strong>transfer-learning</strong> in NLP and BERT.  
 
 <a name="Summary">
 ### Summary
 
 In summary then, modern microprocessors have power saving states they enter into when there is no work to do. All very good, till you consider that they have to get back to “full click” when they have to perform work. Ordinarily, this is not a problem but for some latency(performance) sensitive application. This approach is reactive or causal. Can we make this proactive based on some Artificial Intelligence based load prediction. Rest of the articles in the series is an under-the-hood look at how the processors interface with software(OS) and if there is a case to be made for Artificial Intelligence. Also there are things to explore for performance minded programmers. So get your hands dirty.
 
-
+### References
+1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often.)</strong>
+2. <a href='https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html'><strong>Intels documenation:</strong></a><strong> (Intel's documentation is the authentic source here. But, it is incredibly difficult to read. It is as if Intel's employees were given a raise to make it "impossible to comprehend" kind of document.)</strong>
+3. <a href='https://www.agner.org/optimize/'><strong>Agner Fog:</strong></a><strong> (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong>
+4. <a href='https://github.com/torvalds/linux'><strong>Linux Source:</strong></a><strong> (If your going to trace your programmes/applications then having the Linux source is must. Tracers will tell you half the story, the other half will come from here. )</strong>
+5. <a href='https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html'><strong>Transformer:</strong></a><strong> (Modern Natural Language processing, in general, must be indebted to Transformer architecture. We, however, use an asymmetric transformer setup.)</strong>
+6. <a href='https://arxiv.org/pdf/2009.14794.pdf'><strong>Performer-A Sparse Transformer:</strong></a><strong> (This is as cutting edge as it can get. The transformer at the heart of it, is a stacked multi-headed-attention unit. As the sequences(of words or System events or stock prices or vehicle positions e.t.c.) get longer the quadratic computation and quadratic memory for matric cannot keep up. Performer, a Transformer architecture with attention mechanisms that scale linearly. The framework is implemented by Fast Attention Via Positive Orthogonal Random Features (FAVOR+) algorithm.)</strong>
+7. <a href='https://www.youtube.com/watch?v=93uE_kWWQjs&t=1178s'><strong>Ftrace: The Inner workings</strong></a><strong> ( I dont think there is a better explaination of Ftrace's inner workings.)</strong>
+8. <a href='https://lwn.net/Articles/608497/'><strong>Ftrace: The hidden light switch:</strong></a><strong> ( This article demonstrates the tools based on Ftrace.)</strong>
+9. <a href='http://www.brendangregg.com/ebpf.html'><strong>BPF:</strong></a><strong> ( eBPF or just BPF is changing the way programming is done on Linux. Linux now has observability superpowers beyond most OSes. A detailed post on BPF is need of the hour and I am planning as much. In the meantime, the attached link can be treated as virtual BPF homepage.)</strong>
 
 <!--Series-->
 [Stillwaters]: https://www.stillwaters.ai
@@ -221,27 +230,27 @@ In summary then, modern microprocessors have power saving states they enter into
 [Power:Turn things down]: MeditatingProcessor-3#Power:Turn things down
 [Power:Turn things down:P-states:Hardware Latency]: MeditatingProcessor-3#Power:Turn things down:P-states:Hardware Latency
 [Core and Uncore:Uncore]: MeditatingProcessor-3#Core and Uncore:Uncore
-[Core and Uncore:Uncore:montioring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning
-[Core and Uncore:Uncore:montioring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency
-[Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency
+[Core and Uncore:Uncore:monitoring and Tuning]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning
+[Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency
+[Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency]: MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency
 [Core and Uncore:How much power can be saved]: MeditatingProcessor-3#Core and Uncore:How much power can be saved
 [Summary3]: MeditatingProcessor-3#Summary
 
 <!--Doc4-->
 [Introduction4]: MeditatingProcessor-4#Introduction
 [Is there a solution?]: MeditatingProcessor-4#Is there a solution?
-[Is there a smarter solution?: Artificial Intelligence model based proactive descision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making
+[Is there a smarter solution?: Artificial Intelligence model based proactive decision making]: MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive decision making
 [Recognizing the pattern]: MeditatingProcessor-4#Recognizing the pattern
 [Transformer as the backbone]: MeditatingProcessor-4#Transformer as the backbone
 [Transfer Learning inspiration from NLP]: MeditatingProcessor-4#Transfer Learning inspiration from NLP
 [Fine tuning pre-trained networks]: MeditatingProcessor-4#Fine tuning pre-trained networks
-[Artificial Intelligence model based proactive and predictive descision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making
+[Artificial Intelligence model based proactive and predictive decision making]: MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive decision making
 [The Final Cut]: MeditatingProcessor-4#The Final Cut
 [Summary4]: MeditatingProcessor-4#Summary
 
 <!--Doc5-->
 [ftrace]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
-[EBPF]: MeditatingProcessor-5#EBPF: The most flexible tracer
+[EBPF]: MeditatingProcessor-5#EBPF: The most powerful and flexible tracer
 [“ftrace” is the coolest tracing dude on the planet]: MeditatingProcessor-5#Ftrace:The coolest tracing dude on the planet
 [Introduction5]: MeditatingProcessor-5#Introduction
 [Linux Tools:An incisive but limited view]: MeditatingProcessor-5#Linux Tools:An incisive but limited view
@@ -251,7 +260,7 @@ In summary then, modern microprocessors have power saving states they enter into
 [Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:The coolest tracing dude on the planet
 [Linux Tools:Extraction Tools:Ftrace:Engineering]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Engineering
 [Linux Tools:Extraction Tools:Ftrace:Summary]: MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary
-[Linux Tools:Extraction Tools:BPF:The most flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer
+[Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer
 [Linux Tools:Extraction Tools:BPF:BPF Virtual Machine]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine
 [Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures
 [Linux Tools:Extraction Tools:BPF:Stack Trace Walking]: MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:Stack Trace Walking

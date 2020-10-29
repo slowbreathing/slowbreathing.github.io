@@ -198,7 +198,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    15 mins read
+    17 mins read
   
 </span>
 
@@ -276,9 +276,9 @@
           </li>
           <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
             <ul>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning">Core and Uncore:Uncore:monitoring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency">Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency">Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency</a></li>
             </ul>
           </li>
           <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
@@ -291,12 +291,12 @@
 </strong></strong>    <ul>
       <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
       <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
-      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive decision making">Is there a smarter solution?: Artificial Intelligence model based proactive decision making</a></li>
       <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
       <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
       <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
       <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
-      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive decision making">Artificial Intelligence model based proactive and predictive decision making</a></li>
       <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
       <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
     </ul>
@@ -316,7 +316,7 @@
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
         </ul>
       </li>
-      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer">Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer</a>
         <ul>
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
@@ -339,18 +339,18 @@ In the current article, we explore the use of Artificial Intelligence to reduce 
 <h4 id="is-there-a-solution">Is there a solution?</h4>
 
 <p>Well, one solution can be the other extreme. Configure the CPU such that it can never transition out to deeper c-states or lower p-states. This is what I did in the earlier articles. However, this causes a power drain, especially if done for a long time.
-The other issue is crossing the Thermal Design Point(TDP). A TDP condition identifies this (power, frequency) pair. This is the limit, operating under which the CPU will never exceed its thermal envelope. TDP marks the worst-case real workload that a customer may run without causing thermal throttling. However, TDP is not a standard that every manufacturer agrees on and is often underestimated. This results in applications causing the CPU to exceed its TDP often times. On an average, everything still works fine but occasionally things may go wrong(I burnt one of my laptops(Not the CPU) 9-10 years ago testing things out).
+The other issue is crossing the Thermal Design Point(TDP). A TDP condition identifies this (power, frequency) pair. This is the limit, operating under which the CPU will never exceed its thermal envelope. TDP marks the worst-case real workload that a customer may run without causing thermal throttling. However, TDP is not a standard that every manufacturer agrees on and is often underestimated. This results in applications causing the CPU to exceed its TDP oftentimes. On average, everything still works fine but occasionally things may go wrong(I burnt one of my laptops(Not the CPU) 9-10 years ago testing things out).
 Lastly, long term wear and tear may be an issue if the CPU deepest state is C0 and the CPU is overclocked for a long time or permanently. That being said, most modern devices are fairly tolerant of overclocking.</p>
 
-<p><a name="Is there a smarter solution?: Artificial Intelligence model based proactive descision making"></a></p>
-<h4 id="is-there-a-smarter-solution-artificial-intelligence-model-based-proactive-descision-making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</h4>
+<p><a name="Is there a smarter solution?: Artificial Intelligence model based proactive decision making"></a></p>
+<h4 id="is-there-a-smarter-solution-artificial-intelligence-model-based-proactive-decision-making">Is there a smarter solution?: Artificial Intelligence model based proactive decision making</h4>
 
 <p>The idea is quite simple. Use Artificial Intelligence to predict an oncoming load, and change the microprocessor settings to high performance to suit the load. Isolate the high-performance settings on a fraction of cores depending on the requirement and not the complete system. Reset it back to normal once the load has passed over. If an Artificial Intelligence model can recognize a pattern of load much before it occurs then we have a winner here. <strong>And we can then call it proactive instead of reactive or causal.</strong></p>
 
 <p><a name="Recognizing the pattern"></a></p>
 <h4 id="recognizing-the-pattern">Recognizing the pattern</h4>
 
-<p><strong>This part is a bit proprietary so the details will be sketchy but the ideas will be clear.<strong> Just like a signature or fingerprint is unique to a person, is there unique signature to a load. And if a particular load has a unique signature, is there a way to identify it? Last but not least, the identification process must be least interfering. Remember, the idea is to reduce latency. If the whole process of identification of load has a huge observer effect, then it may not be worth the effort. <strong>As it turns out, there are ways to capture the pattern of load in a non intrusive way. And I take solid inspiration from NLP for that.</strong></strong></strong></p>
+<p><strong>This part is a bit proprietary so the details will be sketchy but the ideas will be clear.<strong> Just like a signature or fingerprint is unique to a person, is there a unique signature to a load. And if a particular load has a unique signature, is there a way to identify it? Last but not least, the identification process must be the least interfering. Remember, the idea is to reduce latency. If the whole process of identification of load has a huge observer effect, then it may not be worth the effort. <strong>As it turns out, there are ways to capture the pattern of load in a non-intrusive way. And I take solid inspiration from NLP for that.</strong></strong></strong></p>
 
 <p><a name="Transformer as the backbone"></a></p>
 <h4 id="transformer-as-the-backbone">Transformer as the backbone</h4>
@@ -403,7 +403,7 @@ Transformer’s architecture in many ways changed the course of NLP with a lot o
 
 <blockquote>
   <ul>
-    <li>Annotated and labeled data is difficult to find but <strong>unlabelled data is plentiful</strong>. Wikipedia, Online books are just some examples.</li>
+    <li>Annotated and labeled data are difficult to find but <strong>unlabelled data is plentiful</strong>. Wikipedia, Online books are just some examples.</li>
     <li><a href="https://ruder.io/transfer-learning/">Transfer Learning</a> exemplifies learning with unlabelled data.</li>
     <li>The NLP breakthroughs of 2018 and 2019 were triggered in a big way by Transfer Learning’s application on <a href="https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)">Transformers</a>.</li>
     <li><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a> was a breakthrough performer in NLP when it had come out in 2018.</li>
@@ -426,7 +426,7 @@ Transformer’s architecture in many ways changed the course of NLP with a lot o
     <li>The recent success of transfer learning was ignited in 2018 by <strong><a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">GPT</a></strong>, <strong><a href="https://arxiv.org/abs/1801.06146">ULMFiT</a></strong>, <strong><a href="https://arxiv.org/abs/1802.05365">ELMo</a></strong>, and <strong><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a></strong>, and 2019 saw the development of a huge diversity of new methods like <strong><a href="https://arxiv.org/abs/1906.08237">XLNet</a></strong>, <strong><a href="https://arxiv.org/abs/1907.11692">RoBERTa</a></strong>, <strong><a href="https://ai.googleblog.com/2019/12/albert-lite-bert-for-self-supervised.html">ALBERT</a></strong>, <strong><a href="https://ai.googleblog.com/2020/01/reformer-efficient-transformer.html">Reformer</a></strong>, and <strong><a href="https://arxiv.org/abs/1901.11504">MT-DNN</a></strong>.</li>
     <li>The rate of progress in the field has made it difficult to evaluate which improvements are most meaningful and how effective they are when combined.</li>
     <li>Most <strong>pre-trained models drop either encoder or decoder from the transformer stack</strong>. <strong><a href="https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html">BERT</a> drops the decoder</strong> and <strong><a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">GPT</a> drops the encoder</strong>.</li>
-    <li>However, our experiments have shown that a complete stack <strong>(encoder-decoder) generally out performs a decoder-only or an encoder-only stack</strong>. <strong><a href="https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html">T5</a></strong> from google also supports a similar architecture for generally better results.</li>
+    <li>However, our experiments have shown that a complete stack <strong>(encoder-decoder) generally outperforms a decoder-only or an encoder-only stack</strong>. <strong><a href="https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html">T5</a></strong> from google also supports a similar architecture for generally better results.</li>
     <li><strong>The above transformer networks are called pretrained networks</strong>. BERT, GPT, T5 are examples of pretrained networks.</li>
   </ul>
 </blockquote>
@@ -434,7 +434,7 @@ Transformer’s architecture in many ways changed the course of NLP with a lot o
 <p><a name="Fine tuning pre-trained networks"></a></p>
 <h4 id="fine-tuning-pre-trained-networks">Fine tuning pre-trained networks</h4>
 
-<p>Maybe it is time for another quick analogy. Let’s say that I need support staff to handle queries from our clients. When we do hire the support staff we assume a <strong>basic knowledge of conversational languages and current affairs</strong>. Post hiring however, we need to <strong>train them on our specific processes</strong>. For e.g. if a particular issue has been solved for another client, this information is likely to be found in JIRA, LOGs, mailtrail e.t.c.  <br />
+<p>Maybe it is time for another quick analogy. Let’s say that I need a support staff to handle queries from our clients. When we do hire the support staff we assume a <strong>basic knowledge of conversational languages and current affairs</strong>. Post hiring, however, we need to <strong>train them on our specific processes</strong>. For e.g. if a particular issue has been solved for another client, this information is likely to be found in JIRA, LOGs, mailtrail e.t.c.  <br />
 The <strong>pre-trained transformer</strong> of the previous section is analogous to <strong>basic knowledge of conversational languages</strong>.
 The <strong>fine-tuned transformer</strong> is analogous to <strong>post hiring training specific to our processes</strong>. The fine-tuning takes for granted pre-training and does not have to start from scratch. Also, the flexibility to train the interns for different specific tasks.</p>
 
@@ -445,8 +445,8 @@ The <strong>fine-tuned transformer</strong> is analogous to <strong>post hiring 
     <figcaption><center><span class="faded_text">figure-4: <strong>BERT:A Fine tuning example</strong></span></center></figcaption>
 </figure>
 
-<p><a name="Artificial Intelligence model based proactive and predictive descision making"></a></p>
-<h4 id="artificial-intelligence-model-based-proactive-and-predictive-descision-making">Artificial Intelligence model based proactive and predictive descision making</h4>
+<p><a name="Artificial Intelligence model based proactive and predictive decision making"></a></p>
+<h4 id="artificial-intelligence-model-based-proactive-and-predictive-decision-making">Artificial Intelligence model based proactive and predictive decision making</h4>
 
 <p>This journey has been exhausting but fruitful. Finally, We treat the sequence of events captured by a tracer similar to a sequence of words in a sentence in NLP. Apart from that, from an Artificial Intelligence perspective, the setup is nearly identical.</p>
 
@@ -501,8 +501,21 @@ The <strong>fine-tuned transformer</strong> is analogous to <strong>post hiring 
 <p><a name="Summary"></a></p>
 <h3 id="summary">Summary</h3>
 <p>In summary, <strong>this is the bird’s-eye view of the working of our system</strong>. We kept our focus on the core CPU for now but we plan to extend it to other components of the system. The Artificial Intelligence bit is quite interesting and we were helped a great deal by work done in the past on NLP. <strong>To the best of our knowledge, this has not been attempted before</strong>.
-Transformers are not the only model we have tried. We tried LSTMs with very encouraging results. However, as the data grew bigger, and with an inherent lack of parallelism in training it was a tad bit slow. Inferencing was OK though. Last but not least, Deep Reinforcement Learning is another approach that we are currently integrating. We will post results in time to come.
+Transformers are not the only model we have tried. We tried LSTMs with very encouraging results. However, as the data grew bigger, and with an inherent lack of parallelism in training, it got a tad bit slow. Inferencing was OK though. Last but not least, Deep Reinforcement Learning is another approach that we are currently integrating. We will post results in time to come.
 Last year has been phenomenal in terms of Artificial Intelligence in general and Natural Language in Particular. But many of these models can be used in cross-discipline domains. They are just waiting to be tried out.</p>
+
+<h3 id="references">References</h3>
+<ol>
+  <li><a href="https://lwn.net/Articles/250967/"><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don’t change very often.)</strong></li>
+  <li><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html"><strong>Intels documenation:</strong></a><strong> (Intel’s documentation is the authentic source here. But, it is incredibly difficult to read. It is as if Intel’s employees were given a raise to make it “impossible to comprehend” kind of document.)</strong></li>
+  <li><a href="https://www.agner.org/optimize/"><strong>Agner Fog:</strong></a><strong> (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong></li>
+  <li><a href="https://github.com/torvalds/linux"><strong>Linux Source:</strong></a><strong> (If you are going to trace your programs/applications then having the Linux source is a must. Tracers will tell you half the story, the other half will come from here. )</strong></li>
+  <li><a href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html"><strong>Transformer:</strong></a><strong> (Modern Natural Language processing, in general, must be indebted to Transformer architecture. We however, use an asymmetric transformer setup.)</strong></li>
+  <li><a href="https://arxiv.org/pdf/2009.14794.pdf"><strong>Performer-A Sparse Transformer:</strong></a><strong> (This is as cutting edge as it can get. The transformer at the heart of it is a stacked multi-headed-attention unit. As the sequences(of words or System events or stock prices or vehicle positions e.t.c.) get longer, the quadratic computation and quadratic memory for matrix cannot keep up. Performer, a Transformer architecture with attention mechanisms that scale linearly. The framework is implemented by Fast Attention Via Positive Orthogonal Random Features (FAVOR+) algorithm.)</strong></li>
+  <li><a href="https://www.youtube.com/watch?v=93uE_kWWQjs&amp;t=1178s"><strong>Ftrace: The Inner workings</strong></a><strong> ( I dont think there is a better explaination of Ftrace’s inner workings.)</strong></li>
+  <li><a href="https://lwn.net/Articles/608497/"><strong>Ftrace: The hidden light switch:</strong></a><strong> ( This article demonstrates the tools based on Ftrace.)</strong></li>
+  <li><a href="http://www.brendangregg.com/ebpf.html"><strong>BPF:</strong></a><strong> ( eBPF or just BPF is changing the way programming is done on Linux. Linux now has observability superpowers beyond most OSes. A detailed post on BPF is the need of the hour and I am planning as much. In the meantime, the attached link can be treated as a virtual BPF homepage.)</strong></li>
+</ol>
 
 <!--Series-->
 

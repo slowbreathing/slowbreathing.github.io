@@ -198,7 +198,7 @@
       <span class="read-time" title="Estimated read time">
   
   
-    19 mins read
+    21 mins read
   
 </span>
 
@@ -276,9 +276,9 @@
           </li>
           <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore">Core and Uncore:Uncore</a>
             <ul>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning">Core and Uncore:Uncore:montioring and Tuning</a></li>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Hardware Latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</a></li>
-              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning">Core and Uncore:Uncore:monitoring and Tuning</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency">Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency</a></li>
+              <li><a href="MeditatingProcessor-3#Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency">Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency</a></li>
             </ul>
           </li>
           <li><a href="MeditatingProcessor-3#Core and Uncore:How much power can be saved">Core and Uncore:How much power can be saved</a></li>
@@ -291,12 +291,12 @@
 </strong></strong>    <ul>
       <li><a href="MeditatingProcessor-4#Introduction">Introduction</a></li>
       <li><a href="MeditatingProcessor-4#Is there a solution?">Is there a solution?</a></li>
-      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive descision making">Is there a smarter solution?: Artificial Intelligence model based proactive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Is there a smarter solution?: Artificial Intelligence model based proactive decision making">Is there a smarter solution?: Artificial Intelligence model based proactive decision making</a></li>
       <li><a href="MeditatingProcessor-4#Recognizing the pattern">Recognizing the pattern</a></li>
       <li><a href="MeditatingProcessor-4#Transformer as the backbone">Transformer as the backbone</a></li>
       <li><a href="MeditatingProcessor-4#Transfer Learning inspiration from NLP">Transfer Learning inspiration from NLP</a></li>
       <li><a href="MeditatingProcessor-4#Fine tuning pre-trained networks">Fine tuning pre-trained networks</a></li>
-      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive descision making">Artificial Intelligence model based proactive and predictive descision making</a></li>
+      <li><a href="MeditatingProcessor-4#Artificial Intelligence model based proactive and predictive decision making">Artificial Intelligence model based proactive and predictive decision making</a></li>
       <li><a href="MeditatingProcessor-4#The Final Cut">The Final Cut</a></li>
       <li><a href="MeditatingProcessor-4#Summary">Summary</a></li>
     </ul>
@@ -316,7 +316,7 @@
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:Ftrace:Summary">Linux Tools:Extraction Tools:Ftrace:Summary</a></li>
         </ul>
       </li>
-      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most flexible tracer">Linux Tools:Extraction Tools:BPF:The most flexible tracer</a>
+      <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer">Linux Tools:Extraction Tools:BPF:The most powerful and flexible tracer</a>
         <ul>
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:BPF Virtual Machine">Linux Tools:Extraction Tools:BPF:BPF Virtual Machine</a></li>
           <li><a href="MeditatingProcessor-5#Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures">Linux Tools:Extraction Tools:BPF:In Kernel rich Data Structures</a></li>
@@ -373,7 +373,7 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
 
 <h1 id="-4"><a name="Power:c-states"></a></h1>
 <h4 id="powerc-states">Power:c-states</h4>
-<p>Core c-states and package(core+uncore) c-states. Abbreviated as cc-states(c-states) and pc-states. So CPU designers have developed ways for the processor to go into a lower-power state when there is nothing for it to do. Typically, when put into this state, the CPU will stop clocks and power down part or all of its circuitry until the next interrupt arrives. Intel servers commonly target a worst case of about 40 microseconds in order to restore the path to main memory for PCIe devices.</p>
+<p>Core c-states and package(core+uncore) c-states. Abbreviated as cc-states(c-states) and pc-states. So CPU designers have developed ways for the processor to go into a lower-power state when there is nothing for it to do. Typically, when put into this state, the CPU will stop clocks and power down part or all of its circuitry until the next interrupt arrives. Intel servers commonly target a worst-case of about 40 microseconds in order to restore the path to the main memory for PCIe devices.</p>
 
 <figure>
     
@@ -473,7 +473,7 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
   <ul>
     <li><strong>MSRs (model-specific registers )</strong> introduced in Sandy Bridge carried through to later microarchitecture pipelines.</li>
     <li><strong>Some register for measuring these values may change.</strong>.</li>
-    <li><strong><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html">Intel’s documentation</a> is the authentic source here. But, it is incredibly difficult to read. It is as if Intel’s employee were given a raise to make it “impossible to comprehend” kind of document.</strong></li>
+    <li><strong><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html">Intel’s documentation</a> is the authentic source here. But, it is incredibly difficult to read. It is as if Intel’s employees were given a raise to make it “impossible to comprehend” kind of document.</strong></li>
     <li><strong>Prior to <a href="https://en.wikipedia.org/wiki/Cannon_Lake_(microarchitecture)">Cannonlake</a> there was no MSR to measure C1 and had to be measure via softawre means. Post <a href="https://en.wikipedia.org/wiki/Cannon_Lake_(microarchitecture)">Cannonlake</a> it can be measured 0x660H register.</strong></li>
   </ul>
 </blockquote>
@@ -657,7 +657,7 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
 <h1 id="-15"><a name="Power:PMQOS"></a></h1>
 <h4 id="powerpmqos">Power:PMQOS</h4>
 
-<p>This interface provides a kernel and user mode interface for registering performance expectations by drivers, subsystems and user space applications on one of the parameters. Two different PM QoS(Power Management Quality of Service) frameworks are available:</p>
+<p>This interface provides a kernel and user mode interface for registering performance expectations by drivers, subsystems, and user space applications on one of the parameters. Two different PM QoS(Power Management Quality of Service) frameworks are available:</p>
 <ol>
   <li>PM QoS classes for <strong>cpu_dma_latency, network_latency, network_throughput, memory_bandwidth.</strong></li>
   <li>The per-device PM QoS framework provides the API to manage the <strong>per-device latency constraints and PM QoS flags</strong>.</li>
@@ -670,7 +670,7 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
   <li>Scalable and can be easily included early in application design</li>
 </ol>
 
-<p>Let me simplify this. Refer back to <a href="MeditatingProcessor-3#figure-8">figure-8</a> and <a href="MeditatingProcessor-3#figure-9">figure-9</a>. You’ll notice that the settings take effect for all the cores in the system. “pm_qos” is a much more fine-grained interface. Now let’s look at figure-10 below especially virtual cores 3 and 9.</p>
+<p>Let me simplify this. Refer back to <a href="MeditatingProcessor-3#figure-8">figure-8</a> and  <a href="MeditatingProcessor-3#figure-9">figure-9</a>. You’ll notice that the settings take effect for all the cores in the system. “pm_qos” is a much more fine-grained interface. Now let’s look at figure-10 below especially virtual cores 3 and 9.</p>
 
 <blockquote>
   <ul>
@@ -740,7 +740,7 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
 <h1 id="-18"><a name="Core and Uncore:Uncore"></a></h1>
 <h4 id="core-and-uncoreuncore">Core and Uncore:Uncore</h4>
 <p>We’ll look at <a href="MeditatingProcessor-2#Core">Core</a> and <a href="MeditatingProcessor-2#Uncore">Uncore</a> again but this time from the perspective of the power interface. How much
-Power can be saved and how much is the tradeoff in terms of latency.</p>
+power can be saved and how much is the tradeoff in terms of latency.</p>
 
 <blockquote>
   <ul>
@@ -749,14 +749,14 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
   </ul>
 </blockquote>
 
-<h1 id="-19"><a name="Core and Uncore:Uncore:montioring and Tuning"></a></h1>
-<h4 id="core-and-uncoreuncoremontioring-and-tuning">Core and Uncore:Uncore:montioring and Tuning</h4>
-<p>Unlike core performance monitoring, the performance monitoring architecture in the uncore is not standardized across all generations and product lines. A common architecture is used on Xeon E5/E7 products starting in the Sandy Bridge generation. Very few <strong>uncore</strong> performance monitoring capabilities have been productized on other Intel products. We read from and write to the <strong>MSRs</strong> directly. This is one of the reasons why less importance is paid to <strong>uncore</strong>. The interface to <strong>uncore</strong> is not standard. But good news is on the horizon, the Intel’s UNCORE frequency driver may be part of mainline kernel as soon as <strong>kernel version 5.6</strong>. Till such time <strong>MSRs</strong> are our only hope as we are still on <strong>kernel version 4.15</strong>. But we are itching to get on to 5 series.</p>
+<h1 id="-19"><a name="Core and Uncore:Uncore:monitoring and Tuning"></a></h1>
+<h4 id="core-and-uncoreuncoremonitoring-and-tuning">Core and Uncore:Uncore:monitoring and Tuning</h4>
+<p>Unlike core performance monitoring, the performance monitoring architecture in the uncore is not standardized across all generations and product lines. A common architecture is used on Xeon E5/E7 products starting in the Sandy Bridge generation. Very few <strong>uncore</strong> performance monitoring capabilities have been productized on other Intel products. We read from and write to the <strong>MSRs</strong> directly. This is one of the reasons why less importance is paid to <strong>uncore</strong>. The interface to <strong>uncore</strong> is not standard. But good news is on the horizon, Intel’s UNCORE frequency driver may be part of mainline kernel as soon as <strong>kernel version 5.6</strong>. Till such time <strong>MSRs</strong> are our only hope as we are still on <strong>kernel version 4.15</strong>. But we are itching to get on to 5 series.</p>
 
 <p>The <strong>uncore</strong> makes a far bigger difference because of it’s sheer size.</p>
 
-<h1 id="-20"><a name="Core and Uncore:Uncore:montioring and Tuning:Hardware Latency"></a></h1>
-<h4 id="core-and-uncoreuncoremontioring-and-tuninghardware-latency">Core and Uncore:Uncore:montioring and Tuning:Hardware Latency</h4>
+<h1 id="-20"><a name="Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency"></a></h1>
+<h4 id="core-and-uncoreuncoremonitoring-and-tuninghardware-latency">Core and Uncore:Uncore:monitoring and Tuning:Hardware Latency</h4>
 
 <blockquote>
   <ul>
@@ -786,8 +786,8 @@ Power can be saved and how much is the tradeoff in terms of latency.</p>
     <figcaption><center><span class="faded_text">figure-23: <strong>Uncore:Hardware Latency:High frequency</strong></span></center></figcaption>
 </figure>
 
-<h1 id="-21"><a name="Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency"></a></h1>
-<h4 id="core-and-uncoreuncoremontioring-and-tuningwakeup-latency">Core and Uncore:Uncore:montioring and Tuning:Wakeup Latency</h4>
+<h1 id="-21"><a name="Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency"></a></h1>
+<h4 id="core-and-uncoreuncoremonitoring-and-tuningwakeup-latency">Core and Uncore:Uncore:monitoring and Tuning:Wakeup Latency</h4>
 
 <blockquote>
   <ul>
@@ -854,8 +854,15 @@ We can meditate with the whole computer system, but that would be a much bigger 
 
 <h3 id="references">References</h3>
 <ol>
-  <li><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html"><strong>Intels documenation: (The source and comprehensive, but difficult to read)</strong></a></li>
-  <li><a href="https://www.agner.org/optimize/"><strong>Agner Fog: (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong></a></li>
+  <li><a href="https://lwn.net/Articles/250967/"><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don’t change very often.)</strong></li>
+  <li><a href="https://software.intel.com/content/www/us/en/develop/articles/intel-sdm.html"><strong>Intels documenation:</strong></a><strong> (Intel’s documentation is the authentic source here. But, it is incredibly difficult to read. It is as if Intel’s employees were given a raise to make it “impossible to comprehend” kind of document.)</strong></li>
+  <li><a href="https://www.agner.org/optimize/"><strong>Agner Fog:</strong></a><strong> (He benchmarks microprocessors using forward and reverse engineering techniques. My bible.)</strong></li>
+  <li><a href="https://github.com/torvalds/linux"><strong>Linux Source:</strong></a><strong> (If you are going to trace your programs/applications then having the Linux source is a must. Tracers will tell you half the story, the other half will come from here. )</strong></li>
+  <li><a href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html"><strong>Transformer:</strong></a><strong> (Modern Natural Language processing, in general, must be indebted to Transformer architecture. We however, use an asymmetric transformer setup.)</strong></li>
+  <li><a href="https://arxiv.org/pdf/2009.14794.pdf"><strong>Performer-A Sparse Transformer:</strong></a><strong> (This is as cutting edge as it can get. The transformer at the heart of it is a stacked multi-headed-attention unit. As the sequences(of words or System events or stock prices or vehicle positions e.t.c.) get longer, the quadratic computation and quadratic memory for matrix cannot keep up. Performer, a Transformer architecture with attention mechanisms that scale linearly. The framework is implemented by Fast Attention Via Positive Orthogonal Random Features (FAVOR+) algorithm.)</strong></li>
+  <li><a href="https://www.youtube.com/watch?v=93uE_kWWQjs&amp;t=1178s"><strong>Ftrace: The Inner workings</strong></a><strong> ( I dont think there is a better explaination of Ftrace’s inner workings.)</strong></li>
+  <li><a href="https://lwn.net/Articles/608497/"><strong>Ftrace: The hidden light switch:</strong></a><strong> ( This article demonstrates the tools based on Ftrace.)</strong></li>
+  <li><a href="http://www.brendangregg.com/ebpf.html"><strong>BPF:</strong></a><strong> ( eBPF or just BPF is changing the way programming is done on Linux. Linux now has observability superpowers beyond most OSes. A detailed post on BPF is the need of the hour and I am planning as much. In the meantime, the attached link can be treated as a virtual BPF homepage.)</strong></li>
 </ol>
 
 <!--Series-->
