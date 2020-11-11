@@ -189,7 +189,7 @@ But does this change have an impact on c-state request. Measurements are done us
 
 {%
     include image.html
-    src="/img/mwprocs/tuned-cstate1.png"
+    src="/img/mwprocs/tuned-cstate3.png"
     caption="figure-6: <strong>Tuned:Active:latency-performance</strong>"
     hight="110%"
     width="110%"

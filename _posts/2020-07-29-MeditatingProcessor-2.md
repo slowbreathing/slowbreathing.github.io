@@ -170,7 +170,7 @@ This is where the execution happens. This is the critical source of performance 
 
 Intel followed up Sandy and Ivy bridge with Haswell. The Haswell has several <strong>important but evolutionary</strong> improvements over previous designs. With a few changes, everything has been increased a little bit. Like number of execution units are 8. Compare figure-2 and figure-4 side by side.
 
-> * <strong>Evolutionary changes in Haswell. </strong
+> * <strong>Evolutionary changes in Haswell. </strong>
 
 {%
     include image.html
