@@ -360,7 +360,7 @@ Stack traces are an invaluable tool for understanding the code path that led to 
 {%
     include image.html
     src="/img/mwprocs/bpfsw1.png"
-    caption="figure-15: <strong>Coming Soon</strong>"
+    caption="figure-15: <strong>Coming Soon</strong> "
     hight="110%"
     width="110%"
 %}
