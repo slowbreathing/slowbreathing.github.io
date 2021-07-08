@@ -445,7 +445,6 @@ In summary, these are tools that we take to the trenches of performance tuning a
 [Meditating-with-microprocessors Part-2]: MeditatingProcessor-2
 [Meditating-with-microprocessors Part-3]: MeditatingProcessor-3
 [Meditating-with-microprocessors Part-4]: MeditatingProcessor-4
-
 [Meditating-with-microprocessors Part-5]: MeditatingProcessor-5
 
 <!--Doc1-->

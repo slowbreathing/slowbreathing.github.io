@@ -98,8 +98,16 @@
 <lastmod>2019-08-06T13:48:52+00:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/pdfs/bd/Join%20Optimization-1.pdf</loc>
+<lastmod>2021-06-29T13:12:43+00:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/pdfs/bd/Optimized%20Reduce%20Side%20Join.pdf</loc>
 <lastmod>2020-09-02T08:04:56+00:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/pdfs/bd/Optimizing%20Join-2.pdf</loc>
+<lastmod>2021-06-29T13:12:43+00:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/pdfs/bd/Spark%20Executor%20parallelism%20with%20Partition.pdf</loc>
