@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="This is a departure from my usual tech blog. In the current series titled Artificial-Intelligence-based-chip-design, I/we present the use of Artificial Intel...">
+  <meta name="keywords" content="blog and jekyll">
+  <meta name="author" content="Artificial Intelligence based chip design: Chip Design | Slowbreathing">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f5">
+
+  <!-- Twitter Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Artificial Intelligence based chip design: Chip Design | Slowbreathing">
+  <meta name="twitter:description" content="This is a departure from my usual tech blog. In the current series titled Artificial-Intelligence-based-chip-design, I/we present the use of Artificial Intel...">
+  
+    <meta property="twitter:image" content="http://localhost:4000/img/chipdesign/chipdesignai.png">
+  
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="http://localhost:4000/articles/2021-07/ChipDesign">
+  <meta property="og:title" content="Artificial Intelligence based chip design: Chip Design | Slowbreathing">
+  <meta property="og:description" content="This is a departure from my usual tech blog. In the current series titled Artificial-Intelligence-based-chip-design, I/we present the use of Artificial Intel...">
+  
+    <meta property="og:image" content="http://localhost:4000/img/chipdesign/chipdesignai.png">
+  
+  <title>Artificial Intelligence based chip design: Chip Design | Slowbreathing</title>
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2021-07/ChipDesign">
+  <link rel="alternate" type="application/rss+xml" title="Slowbreathing" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142206738-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142206738-1');
+  </script>-->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Slowbreathing" />
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <a href="http://localhost:4000/">
+    <img src="http://localhost:4000/img/leonids-logo.png" alt="" class="avatar">
+  </a>
+  
+  <a href="http://localhost:4000/" class="author_name">Mohit Kumar</a>
+  <span class="author_job">Researcher/Consultant/Trainer</span>
+  <span class="author_bio mbm">Programming is more than just typing.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="http://localhost:4000/">home</a>
+      </li>
+       
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">Archive</a>
+      </li>
+          
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">Categories</a>
+      </li>
+            
+      <li class="nav-item">
+        <a href="http://localhost:4000/resume/">about me</a>
+      </li>
+        
+      <li class="nav-item">
+        <a href="http://localhost:4000/tags/">Tags</a>
+      </li>
+                 
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on https://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('mohit.riverstone@gmail.com', 'Hello from website');</script>
+      </li>
+    
+    <li><a href="https://twitter.com/stillwaters_ia" class="social-link-item" target="_blank"><i class="fa fa-fw fa-twitter"></i></a></li>
+    <li><a href="https://facebook.com/mohit.kumar.965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-facebook"></i></a></li>
+    
+    <li><a href="https://linkedin.com/in/mohit-kumar-05621b62" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    
+    <li><a href="https://instagram.com/slowbreathing.github.io" class="social-link-item" target="_blank"><i class="fa fa-fw fa-instagram"></i></a></li>
+    
+    <li><a href="https://github.com/Slowbreathing" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    
+    
+    
+    <li><a href="https://www.pinterest.com/mohitkumar965" class="social-link-item" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/chipdesign/chipdesignai.png"
+  
+  alt="Artificial Intelligence based chip design: Chip Design feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Artificial Intelligence based chip design: Chip Design">Artificial Intelligence based chip design: Chip Design</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        4 JUL 2021
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    7 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <h3 id="artificial-intelligence-based-chip-design"><a href="/tags/#Artificial-Intelligence-based-chip-design">Artificial Intelligence based chip design</a></h3>
+<ol>
+  <li><a href="Transformers On Chip">Artificial Intelligence based chip design: Transformers on Chip</a> <strong>(<a href="Transformers On Chip">part-1</a>)</strong>
+    <ul>
+      <li><a href="Transformers-On-Chip#Introduction">Introduction</a></li>
+      <li><a href="Transformers-On-Chip#STT(Speech-to-Text)">STT(Speech-to-Text)</a></li>
+      <li><a href="Transformers-On-Chip#TTS(Text-to-Speech)">TTS(Text-to-Speech)</a></li>
+      <li><a href="Transformers-On-Chip#FPGAs as modern digital ShapeShifters">FPGAs as modern digital ShapeShifters</a></li>
+      <li><a href="Transformers-On-Chip#Optimizing on Hardware Accelerator">Optimizing on Hardware Accelerator</a></li>
+      <li><a href="Transformers-On-Chip#Optimizing on Hardware Accelerator(MAC Style)">Optimizing on Hardware Accelerator(MAC Style)</a></li>
+      <li><a href="Optimizing on Hardware Accelerator(Systolic Array Style)">Optimizing on Hardware Accelerator(Systolic Array Style)</a></li>
+      <li><a href="Transformers-On-Chip#Variables in the design">Variables in the design</a></li>
+      <li><a href="Transformers-On-Chip#Summary1">Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="ChipDesign">Artificial Intelligence based chip design: Chip Design</a> <strong>(<a href="ChipDesign">part-2</a>)<strong>
+</strong></strong>    <ul>
+      <li><a href="ChipDesign#Introduction">Introduction</a></li>
+      <li><a href="ChipDesign#Chip Design: Layout, Locality and Resource Allocation">Chip Design: Layout, Locality and Resource Allocation</a></li>
+      <li><a href="ChipDesign#Deep Reinforcement Learning Agent">Deep Reinforcement Learning Agent</a></li>
+      <li><a href="ChipDesign#Our Rules of the Game">Our Rules of the Game</a></li>
+      <li><a href="ChipDesign#Summary2">Summary</a></li>
+      <li><a href="ChipDesign#Future">Future</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1><a name="Introduction"></a></h1>
+<h3 id="introduction">Introduction</h3>
+<p>In part-2 we treat the resources on FPGA chips, Workload, other design parameters as design variables. Finally, we feed the <strong>design variables</strong> into the Deep Reinforcement Learning agent to learn, and then suggest <strong>optimal placement</strong> of blocks to maximize certain goals like latency, etc. This part describes a few of the hardware variables and how to <strong>co-express</strong> the <strong>software and hardware</strong> variables that share a complex relationship. This co-expression is vital. For example, <strong>reducing bit width costs accuracy but frees up hardware resources that could be used for compute or cache</strong>. The Deep Reinforcement Learning Algorithm is supposed to figure out a balance that <strong>speeds up computation for tolerable accuracy losses(if at all)</strong>. To use a boxing term, <strong>pound for pound</strong>, the <strong>same hardware micro-designed by a Deep Reinforcement Learning Agent for carrying a specific load</strong>.</p>
+
+<h1 id="-1"><a name="Chip Design: Layout, Locality and Resource Allocation"></a></h1>
+<h4 id="chip-design-layout-locality-and-resource-allocation">Chip Design: Layout, Locality and Resource Allocation</h4>
+<p>Although current FPGA accelerators have demonstrated better performance over generic processors for specific workloads, the <strong>accelerator design space</strong> has not been <strong>well exploited</strong>. One critical problem is that the <strong>computation throughput</strong> may not well match the memory bandwidth provided by FPGA platforms.</p>
+
+<p>But the bigger issue is Hardware design or even certain elements in it are usually not a variable in application design. Hardware design is a bubble, and so is software design but these don’t meet. There is a case to be made for <strong>hardware and software co-design</strong>. But a few more hardware-specific design variables first.</p>
+<blockquote>
+  <ul>
+    <li><strong>Matrix Sparsity(MS)</strong> is known to cost a lot. Checks can be built into the PE to reduce the overall cache requirement, but it comes at the cost of chip fabric space and end-to-end latency. It’s a classic trade-off.</li>
+    <li><strong>Reducing Bit Width(BW) costs accuracy</strong>
+      <ul>
+        <li>Recent developments point toward next-generation Deep Learning algorithms that exploit <strong>extremely compact data types (e.g., 1bit, 2bit, 4bit, 8bit, 12bit, etc.)</strong>.</li>
+      </ul>
+    </li>
+    <li>This is FPGAs’ backyard but was never done dynamically and as a whole with software in the loop.</li>
+  </ul>
+</blockquote>
+
+<h1 id="-2"><a name="Deep Reinforcement Learning Agent"></a></h1>
+<h4 id="deep-reinforcement-learning-agent">Deep Reinforcement Learning Agent</h4>
+
+<p>With so many <strong>design variables</strong> identified above, this essentially is a <strong>deep search</strong> problem. Many of these design variables can assume millions to billions of values and the combinatorial space is practically impossible to go through with an exhaustive search policy. Last but not least, the entire argument for Artificial Intelligence is generalization, which is the <strong>whole point of the Design Variables</strong>.</p>
+
+<figure>
+    
+    <img src="/img/chipdesign/chipdesign.png" alt="Image: figure-1: &lt;strong&gt;For most part this is a regular transfomer with a convolution in between&lt;/strong&gt;" hight="110%" width="110%" />
+    
+    <figcaption><center><span class="faded_text">figure-1: <strong>For most part this is a regular transfomer with a convolution in between</strong></span></center></figcaption>
+</figure>
+
+<h1 id="-3"><a name="Our Rules of the Game"></a></h1>
+<h4 id="our-rules-of-the-game">Our Rules of the Game</h4>
+
+<p>Essentially these are the <strong>boundary conditions</strong> asserted by the design and/or inherent in the <strong>chip</strong>. Add to that the <strong>design variables</strong> and we have the complete rules of the game.</p>
+
+<blockquote>
+  <ul>
+    <li>Express the constraints and composition of the microarchitecture as a <strong><a href="https://arxiv.org/abs/1710.10903">GAT(Graph Attention Network)</a></strong>
+      <ul>
+        <li>Such complex arrangements that take locality, composition, arrangement, and other constraints into account are easier to express using GATs. Our current implementation is custom but for the next iteration, we’d like to use the <a href="https://github.com/google-research/google-research/tree/master/graph_embedding">graph neural network</a>.</li>
+      </ul>
+    </li>
+    <li>Express the Resources and Constraints of the FPGA Chip as the “<strong><a href="https://deepmind.com/blog/article/alphago-zero-starting-scratch">Rules of the Game</a></strong>(Alphago Zero learned the game of go from scratch, with the rules of GO as boundary constraints)”
+      <ul>
+        <li>As an example, the <strong>dark blue(DSP)</strong> and the <strong>bottle green (BRAM)</strong> are pre-arranged in columns right beside each other on the FPGA chip to aid lower latency and easier integration.</li>
+        <li>The <strong>logic fabric</strong>(FPGA fabric) can be used in <strong>compute</strong> or as <strong>RAM</strong>(LUTRAM). Both Altera/Intel and Xilinx have elected to make only <strong>half of their logic blocks LUT-RAM capable</strong> in their recent architectures. This is another “rule of the game”. Similar to <strong><a href="https://en.wikipedia.org/wiki/Xiangqi">chinese chess</a></strong>, where a piece is captured and reprogrammed rather than removed from the board. A little like saying if you are not logic you are ram. And the <strong>Deep Reinforcement Learning Agent is expected to learn it over multiple training iterations</strong>.</li>
+        <li>As a general rule, the <strong>design variables identified</strong> earlier and the Resources and Constraints of the FPGA Chip are  expressed as the “Rules of Game”.</li>
+      </ul>
+    </li>
+    <li>We generate combined embeddings that are fed into the <strong>Deep Reinforcement Learning Agent for Training</strong>.</li>
+    <li>The <strong>Deep Reinforcement Agent</strong> with multiple training iterations learns not just the placement of the tiles but also the relative sizing of caches and indeed the values of the <strong>design variables</strong> identified above.
+      <ul>
+        <li>It goes without saying that the prediction for most design variables more than satisfies the <strong>primary goal(latency)</strong> and shatters the <strong>secondary goal(energy) and tertiary goal(throughput)</strong>.</li>
+        <li>But the result is fascinating for a completely different reason. This is the beginning of a recipe for the future of chip design.</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p><a name="Summary2"></a></p>
+<h3 id="summary">Summary</h3>
+<p>What started as an experiment led to something as fascinating as this was something beyond expectation at the beginning. Now that it has, it can be extended to all kinds of FPGA chips and beyond. The idea of “AI Accelerator” is not new but <strong>placing it in the same design bubble as the AI software</strong> has advantages not exploited earlier to the best of my knowledge. This is how we exploit the limits of the hardware. Specialized, purpose-built chips are set to become commonplace, not at the cost of general-purpose chips though. Deep Reinforcement Learning has been a revelation. I feel in the chip design and similar domains this is a technique that is <strong>severely underexploited</strong>.</p>
+
+<p><a name="Future"></a></p>
+<h3 id="future">Future</h3>
+<p>This is the first iteration, and the rush to the finish line hurried us up. The future looks mouthwatering and majorly because of the tech we had to leave out for this iteration. Here are a few.</p>
+<blockquote>
+  <ul>
+    <li>The modern <strong><a href="https://www.hpcwire.com/2020/06/18/intel-debuts-stratix-10-nx-fpgas-targeting-ai-workloads/">FPGA ditches the traditional DSPs for tensor blocks</a></strong> that are purpose-built for Deep Learning.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li><strong><a href="https://arxiv.org/abs/2012.03112">Processing near memory</a></strong> is moving compute to memory literally. Processing-in-memory architectures propose <strong>moving the compute into the memory that literally stores the weight matrix</strong>. Processing in memory architectures can also increase the memory bandwidth, as the number of weights that can be accessed in parallel is no longer limited by the memory interface.</li>
+  </ul>
+</blockquote>
+
+<h3 id="references">References</h3>
+<ol>
+  <li><a href="https://lwn.net/Articles/250967/"><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don’t change very often. )</strong></li>
+</ol>
+
+<!--Series-->
+
+<!--Doc1-->
+
+<!--Doc2-->
+
+<!--External references-->
+
+  </article>
+</div>
+
+<h3>Connect with me</h3>
+Hi People, Thanks a ton for your feedback and response. If you find anything interesting or would want to connect, drop me line using the side bar.
+As some of you had requested, Login has been removed from subscription form.
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2021-07/ChipDesign" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2021-07/ChipDesign" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2021-07/ChipDesign" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2021-07/ChipDesign" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2021-07/ChipDesign" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+
+<script src="https://utteranc.es/client.js"
+        repo="slowbreathing/slowbreathing.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+        <footer>
+  <strong>MIT License</strong> &copy; 2021 Mohit Kumar.
+  <div class="newsletter-container" >
+                <h4 class="newsletter-title">Subscribe</h4>
+                <!-- <p class="newsletter-text"></p> -->
+                <script type="text/javascript">var submitted=false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"onload="if(submitted) {window.location='thankyou.html';}"></iframe>
+                <form class="newsletter-form" name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSftY1olpvfsyxItLcV6kNsRSUQf3NQfPSL-RyT191nhPrfguA/formResponse"
+                                                   target="hidden_iframe" onsubmit="submitted=true">
+                    <p class="newsletter-text">Get new posts to your inbox</p>
+                    <input class="newsletter-email" type="text" name="entry.1045781291" placeholder="name@example.com" />
+                    <input class="newsletter-submit" type="submit" value="Subscribe" />
+                </form>
+  </div>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+<!-- Asynchronous Google Analytics snippet -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-142206738-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</body>
+</html>

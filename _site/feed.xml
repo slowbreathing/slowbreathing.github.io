@@ -1,4 +1,341 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-08T15:44:20+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</title><link href="http://localhost:4000/articles/2020-07/MeditatingProcessor-1" rel="alternate" type="text/html" title="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea" /><published>2020-07-29T15:07:19+00:00</published><updated>2020-07-29T15:07:19+00:00</updated><id>http://localhost:4000/articles/2020-07/MeditatingProcessor-1</id><content type="html" xml:base="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">&lt;h3 id=&quot;meditating-with-microprocessors&quot;&gt;&lt;a href=&quot;/tags/#Meditating-with-microprocessors&quot;&gt;Meditating with microprocessors&lt;/a&gt;&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-11T06:05:13+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Slowbreathing</title><subtitle>Programming is more than just typing.</subtitle><entry><title type="html">Artificial Intelligence based chip design: Chip Design</title><link href="http://localhost:4000/articles/2021-07/ChipDesign" rel="alternate" type="text/html" title="Artificial Intelligence based chip design: Chip Design" /><published>2021-07-04T15:07:19+00:00</published><updated>2021-07-04T15:07:19+00:00</updated><id>http://localhost:4000/articles/2021-07/ChipDesign</id><content type="html" xml:base="http://localhost:4000/articles/2021-07/ChipDesign">&lt;h3 id=&quot;artificial-intelligence-based-chip-design&quot;&gt;&lt;a href=&quot;/tags/#Artificial-Intelligence-based-chip-design&quot;&gt;Artificial Intelligence based chip design&lt;/a&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;Transformers On Chip&quot;&gt;Artificial Intelligence based chip design: Transformers on Chip&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;Transformers On Chip&quot;&gt;part-1&lt;/a&gt;)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#STT(Speech-to-Text)&quot;&gt;STT(Speech-to-Text)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#TTS(Text-to-Speech)&quot;&gt;TTS(Text-to-Speech)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#FPGAs as modern digital ShapeShifters&quot;&gt;FPGAs as modern digital ShapeShifters&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Optimizing on Hardware Accelerator&quot;&gt;Optimizing on Hardware Accelerator&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Optimizing on Hardware Accelerator(MAC Style)&quot;&gt;Optimizing on Hardware Accelerator(MAC Style)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Optimizing on Hardware Accelerator(Systolic Array Style)&quot;&gt;Optimizing on Hardware Accelerator(Systolic Array Style)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Variables in the design&quot;&gt;Variables in the design&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Summary1&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;ChipDesign&quot;&gt;Artificial Intelligence based chip design: Chip Design&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;ChipDesign&quot;&gt;part-2&lt;/a&gt;)&lt;strong&gt;
+&lt;/strong&gt;&lt;/strong&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Chip Design: Layout, Locality and Resource Allocation&quot;&gt;Chip Design: Layout, Locality and Resource Allocation&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Deep Reinforcement Learning Agent&quot;&gt;Deep Reinforcement Learning Agent&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Our Rules of the Game&quot;&gt;Our Rules of the Game&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Summary2&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Future&quot;&gt;Future&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1&gt;&lt;a name=&quot;Introduction&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In part-2 we treat the resources on FPGA chips, Workload, other design parameters as design variables. Finally, we feed the &lt;strong&gt;design variables&lt;/strong&gt; into the Deep Reinforcement Learning agent to learn, and then suggest &lt;strong&gt;optimal placement&lt;/strong&gt; of blocks to maximize certain goals like latency, etc. This part describes a few of the hardware variables and how to &lt;strong&gt;co-express&lt;/strong&gt; the &lt;strong&gt;software and hardware&lt;/strong&gt; variables that share a complex relationship. This co-expression is vital. For example, &lt;strong&gt;reducing bit width costs accuracy but frees up hardware resources that could be used for compute or cache&lt;/strong&gt;. The Deep Reinforcement Learning Algorithm is supposed to figure out a balance that &lt;strong&gt;speeds up computation for tolerable accuracy losses(if at all)&lt;/strong&gt;. To use a boxing term, &lt;strong&gt;pound for pound&lt;/strong&gt;, the &lt;strong&gt;same hardware micro-designed by a Deep Reinforcement Learning Agent for carrying a specific load&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;-1&quot;&gt;&lt;a name=&quot;Chip Design: Layout, Locality and Resource Allocation&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;chip-design-layout-locality-and-resource-allocation&quot;&gt;Chip Design: Layout, Locality and Resource Allocation&lt;/h4&gt;
+&lt;p&gt;Although current FPGA accelerators have demonstrated better performance over generic processors for specific workloads, the &lt;strong&gt;accelerator design space&lt;/strong&gt; has not been &lt;strong&gt;well exploited&lt;/strong&gt;. One critical problem is that the &lt;strong&gt;computation throughput&lt;/strong&gt; may not well match the memory bandwidth provided by FPGA platforms.&lt;/p&gt;
+
+&lt;p&gt;But the bigger issue is Hardware design or even certain elements in it are usually not a variable in application design. Hardware design is a bubble, and so is software design but these don’t meet. There is a case to be made for &lt;strong&gt;hardware and software co-design&lt;/strong&gt;. But a few more hardware-specific design variables first.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Matrix Sparsity(MS)&lt;/strong&gt; is known to cost a lot. Checks can be built into the PE to reduce the overall cache requirement, but it comes at the cost of chip fabric space and end-to-end latency. It’s a classic trade-off.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Reducing Bit Width(BW) costs accuracy&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Recent developments point toward next-generation Deep Learning algorithms that exploit &lt;strong&gt;extremely compact data types (e.g., 1bit, 2bit, 4bit, 8bit, 12bit, etc.)&lt;/strong&gt;.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;This is FPGAs’ backyard but was never done dynamically and as a whole with software in the loop.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;-2&quot;&gt;&lt;a name=&quot;Deep Reinforcement Learning Agent&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;deep-reinforcement-learning-agent&quot;&gt;Deep Reinforcement Learning Agent&lt;/h4&gt;
+
+&lt;p&gt;With so many &lt;strong&gt;design variables&lt;/strong&gt; identified above, this essentially is a &lt;strong&gt;deep search&lt;/strong&gt; problem. Many of these design variables can assume millions to billions of values and the combinatorial space is practically impossible to go through with an exhaustive search policy. Last but not least, the entire argument for Artificial Intelligence is generalization, which is the &lt;strong&gt;whole point of the Design Variables&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/chipdesign.png&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;For most part this is a regular transfomer with a convolution in between&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;For most part this is a regular transfomer with a convolution in between&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-3&quot;&gt;&lt;a name=&quot;Our Rules of the Game&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;our-rules-of-the-game&quot;&gt;Our Rules of the Game&lt;/h4&gt;
+
+&lt;p&gt;Essentially these are the &lt;strong&gt;boundary conditions&lt;/strong&gt; asserted by the design and/or inherent in the &lt;strong&gt;chip&lt;/strong&gt;. Add to that the &lt;strong&gt;design variables&lt;/strong&gt; and we have the complete rules of the game.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Express the constraints and composition of the microarchitecture as a &lt;strong&gt;&lt;a href=&quot;https://arxiv.org/abs/1710.10903&quot;&gt;GAT(Graph Attention Network)&lt;/a&gt;&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Such complex arrangements that take locality, composition, arrangement, and other constraints into account are easier to express using GATs. Our current implementation is custom but for the next iteration, we’d like to use the &lt;a href=&quot;https://github.com/google-research/google-research/tree/master/graph_embedding&quot;&gt;graph neural network&lt;/a&gt;.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Express the Resources and Constraints of the FPGA Chip as the “&lt;strong&gt;&lt;a href=&quot;https://deepmind.com/blog/article/alphago-zero-starting-scratch&quot;&gt;Rules of the Game&lt;/a&gt;&lt;/strong&gt;(Alphago Zero learned the game of go from scratch, with the rules of GO as boundary constraints)”
+      &lt;ul&gt;
+        &lt;li&gt;As an example, the &lt;strong&gt;dark blue(DSP)&lt;/strong&gt; and the &lt;strong&gt;bottle green (BRAM)&lt;/strong&gt; are pre-arranged in columns right beside each other on the FPGA chip to aid lower latency and easier integration.&lt;/li&gt;
+        &lt;li&gt;The &lt;strong&gt;logic fabric&lt;/strong&gt;(FPGA fabric) can be used in &lt;strong&gt;compute&lt;/strong&gt; or as &lt;strong&gt;RAM&lt;/strong&gt;(LUTRAM). Both Altera/Intel and Xilinx have elected to make only &lt;strong&gt;half of their logic blocks LUT-RAM capable&lt;/strong&gt; in their recent architectures. This is another “rule of the game”. Similar to &lt;strong&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Xiangqi&quot;&gt;chinese chess&lt;/a&gt;&lt;/strong&gt;, where a piece is captured and reprogrammed rather than removed from the board. A little like saying if you are not logic you are ram. And the &lt;strong&gt;Deep Reinforcement Learning Agent is expected to learn it over multiple training iterations&lt;/strong&gt;.&lt;/li&gt;
+        &lt;li&gt;As a general rule, the &lt;strong&gt;design variables identified&lt;/strong&gt; earlier and the Resources and Constraints of the FPGA Chip are  expressed as the “Rules of Game”.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;We generate combined embeddings that are fed into the &lt;strong&gt;Deep Reinforcement Learning Agent for Training&lt;/strong&gt;.&lt;/li&gt;
+    &lt;li&gt;The &lt;strong&gt;Deep Reinforcement Agent&lt;/strong&gt; with multiple training iterations learns not just the placement of the tiles but also the relative sizing of caches and indeed the values of the &lt;strong&gt;design variables&lt;/strong&gt; identified above.
+      &lt;ul&gt;
+        &lt;li&gt;It goes without saying that the prediction for most design variables more than satisfies the &lt;strong&gt;primary goal(latency)&lt;/strong&gt; and shatters the &lt;strong&gt;secondary goal(energy) and tertiary goal(throughput)&lt;/strong&gt;.&lt;/li&gt;
+        &lt;li&gt;But the result is fascinating for a completely different reason. This is the beginning of a recipe for the future of chip design.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a name=&quot;Summary2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;What started as an experiment led to something as fascinating as this was something beyond expectation at the beginning. Now that it has, it can be extended to all kinds of FPGA chips and beyond. The idea of “AI Accelerator” is not new but &lt;strong&gt;placing it in the same design bubble as the AI software&lt;/strong&gt; has advantages not exploited earlier to the best of my knowledge. This is how we exploit the limits of the hardware. Specialized, purpose-built chips are set to become commonplace, not at the cost of general-purpose chips though. Deep Reinforcement Learning has been a revelation. I feel in the chip design and similar domains this is a technique that is &lt;strong&gt;severely underexploited&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Future&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;future&quot;&gt;Future&lt;/h3&gt;
+&lt;p&gt;This is the first iteration, and the rush to the finish line hurried us up. The future looks mouthwatering and majorly because of the tech we had to leave out for this iteration. Here are a few.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The modern &lt;strong&gt;&lt;a href=&quot;https://www.hpcwire.com/2020/06/18/intel-debuts-stratix-10-nx-fpgas-targeting-ai-workloads/&quot;&gt;FPGA ditches the traditional DSPs for tensor blocks&lt;/a&gt;&lt;/strong&gt; that are purpose-built for Deep Learning.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://arxiv.org/abs/2012.03112&quot;&gt;Processing near memory&lt;/a&gt;&lt;/strong&gt; is moving compute to memory literally. Processing-in-memory architectures propose &lt;strong&gt;moving the compute into the memory that literally stores the weight matrix&lt;/strong&gt;. Processing in memory architectures can also increase the memory bandwidth, as the number of weights that can be accessed in parallel is no longer limited by the memory interface.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://lwn.net/Articles/250967/&quot;&gt;&lt;strong&gt;What every programmer should know about memory:&lt;/strong&gt;&lt;/a&gt; &lt;strong&gt;(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don’t change very often. )&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!--Series--&gt;
+
+&lt;!--Doc1--&gt;
+
+&lt;!--Doc2--&gt;
+
+&lt;!--External references--&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="NLP" /><category term="Microarchitecture" /><category term="UltraLowLatency" /><category term="RealTime" /><category term="Performance" /><category term="Meditating-with-microprocessors" /><category term="Artificial-Intelligence-based-chip-design" /><category term="Transformers-On-chips" /><category term="ChipDesign" /><summary type="html">This is a departure from my usual tech blog. In the current series titled Artificial-Intelligence-based-chip-design, I/we present the use of Artificial Intelligence to design FPGA chips for Ultra-Low-Latency based speech transformers. This showcases our products as well as our skills in the respective domains. This started as an experiment to lower latency for a seq-to-seq LSTM based speech synthesis system. Post a thorough analysis, we broke it down into 1. mapping the matrix multiplication of deep learning transformers into an FPGA chip(Transformers On Chip(part-1)) and 2. co-designing the FPGA chip for the appropriate workload(ChipDesign(part-2)). In part-2 we treat the resources on FPGA chip, Workload, other design parameters as design variables. Finally, we feed the design variables into the Deep Reinforcement Learning agent to learn. Post learning the expectation from Deep Reinforcement Learning agent being the optimal placement of blocks to maximize certain goals like latency, etc. The Deep Reinforcement Learning Algorithm is supposed to figure out a balance that speeds up computation for tolerable accuracy losses(if at all).To use a boxing term, pound for pound, the same hardware micro-designed by a Deep Reinforcement Learning Agent for carrying a specific load.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22chipdesign/chipdesignai.png%22%7D" /></entry><entry><title type="html">Artificial Intelligence based chip design: Transformers on Chip</title><link href="http://localhost:4000/articles/2021-07/Transformers-On-Chip" rel="alternate" type="text/html" title="Artificial Intelligence based chip design: Transformers on Chip" /><published>2021-07-03T15:07:19+00:00</published><updated>2021-07-03T15:07:19+00:00</updated><id>http://localhost:4000/articles/2021-07/Transformers-On-Chip</id><content type="html" xml:base="http://localhost:4000/articles/2021-07/Transformers-On-Chip">&lt;h3 id=&quot;artificial-intelligence-based-chip-design&quot;&gt;&lt;a href=&quot;/tags/#Artificial-Intelligence-based-chip-design&quot;&gt;Artificial Intelligence based chip design&lt;/a&gt;&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;Transformers On Chip&quot;&gt;Artificial Intelligence based chip design: Transformers on Chip&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;Transformers On Chip&quot;&gt;part-1&lt;/a&gt;)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#STT(Speech-to-Text)&quot;&gt;STT(Speech-to-Text)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#TTS(Text-to-Speech)&quot;&gt;TTS(Text-to-Speech)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#FPGAs as modern digital ShapeShifters&quot;&gt;FPGAs as modern digital ShapeShifters&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Optimizing on Hardware Accelerator&quot;&gt;Optimizing on Hardware Accelerator&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Optimizing on Hardware Accelerator(MAC Style)&quot;&gt;Optimizing on Hardware Accelerator(MAC Style)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Optimizing on Hardware Accelerator(Systolic Array Style)&quot;&gt;Optimizing on Hardware Accelerator(Systolic Array Style)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Variables in the design&quot;&gt;Variables in the design&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;Transformers-On-Chip#Summary1&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;ChipDesign&quot;&gt;Artificial Intelligence based chip design: Chip Design&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;ChipDesign&quot;&gt;part-2&lt;/a&gt;)&lt;strong&gt;
+&lt;/strong&gt;&lt;/strong&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Chip Design: Layout, Locality and Resource Allocation&quot;&gt;Chip Design: Layout, Locality and Resource Allocation&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Deep Reinforcement Learning Agent&quot;&gt;Deep Reinforcement Learning Agent&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Our Rules of the Game&quot;&gt;Our Rules of the Game&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Summary2&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;ChipDesign#Future&quot;&gt;Future&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1&gt;&lt;a name=&quot;Introduction&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;We have taken a traditional &lt;strong&gt;(TTS)Text-to-speech&lt;/strong&gt; and &lt;strong&gt;(STT)Speech-to-text&lt;/strong&gt; system and spun it on an &lt;strong&gt;FPGA microchip&lt;/strong&gt;. In the pipeline of a traditional TTS system, there is a Seq-to-Seq LSTM layer rearing its “ugly latency head”. It takes approximately &lt;strong&gt;tens of thousands&lt;/strong&gt; of iterations of this network to generate a second of audio.Sometimes this latency is not acceptable. Sometimes, this latency is not acceptable. Latency of these systems can be majorly attributed to the LSTMs, the technology of the day. LSTMs still have their uses, but for speech-based latency sensitive systems, they have limitations. LSTMs have played their part in the Deep Learning history and it is time for them to pass on the baton to the new King, The &lt;a href=&quot;https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html&quot;&gt;Transformers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;-1&quot;&gt;&lt;a name=&quot;STT(Speech-to-Text)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;sttspeech-to-text&quot;&gt;STT(Speech-to-Text)&lt;/h4&gt;
+&lt;p&gt;Firstly, we took the STT based on &lt;strong&gt;&lt;a href=&quot;https://arxiv.org/abs/2005.08100&quot;&gt;Conformer&lt;/a&gt;&lt;/strong&gt; (a &lt;strong&gt;&lt;a href=&quot;https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html&quot;&gt;transformer&lt;/a&gt;&lt;/strong&gt; variant) and rewrote it using Trax.&lt;br /&gt;
+Why Trax? Well, it has an optimizing &lt;strong&gt;Just-In-Time compiler&lt;/strong&gt; for Machine learning. We have &lt;strong&gt;extended that for FPGA&lt;/strong&gt;. But more on that later.&lt;/p&gt;
+
+&lt;p&gt;It was a huge improvement on the LSTM variant. While there was a marked improvement, it wasn’t enough. And this was running on a 2020 GPU.&lt;/p&gt;
+
+&lt;p&gt;Transformers are essentially &lt;strong&gt;(&lt;a href=&quot;https://paperswithcode.com/method/multi-head-attention&quot;&gt;(MHSA)Multi-headed-Self-Attention&lt;/a&gt;)&lt;/strong&gt; and a &lt;strong&gt;(FFM)feed forward Module&lt;strong&gt;. Both these are matrix multiplications of grand and varying scale. The Conformer has an additional CM(Convolutional Module) which is a matrix filter operation.&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/speechtotext.png&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;For most part this is a regular transfomer with a convolution in between&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;For most part this is a regular transfomer with a convolution in between&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;-2&quot;&gt;&lt;a name=&quot;TTS(Text-to-Speech)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;ttstext-to-speech&quot;&gt;TTS(Text-to-Speech)&lt;/h4&gt;
+
+&lt;p&gt;Secondly, we took the TTS based on the transformer and did exactly the same. Again it was a decent improvement on the LSTM version. But, not enough. Again, this was running on a 2020 GPU.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/texttospeech.png&quot; alt=&quot;Image: figure-2: &amp;lt;strong&amp;gt;This is a regular transformer with speech fed into the decoder, similar to NMT decoder&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: &lt;strong&gt;This is a regular transformer with speech fed into the decoder, similar to NMT decoder&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;GPUs are great at handling the “grand” part despite some transformers having billions to even trillions of parameters.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The “varying” part is proving extremely tricky for GPUs. Both MHSA and FFM have varying parallelism requirements(from one model to another).&lt;/li&gt;
+    &lt;li&gt;Also, the standard precision leads to lots of wastage energy. GPU’s SIMD/SIMT lock-step style execution model makes matters worse. Lock step style execution is prohibitive in terms of energy wastage.&lt;/li&gt;
+    &lt;li&gt;Last but not least, the extra control structure on the GPU is not useful(wasteful) for matrix multiplication.
+GPU is a general-purpose device and for something as specific as tuning a massive matrix multiplication it is found wanting. It is not a natural fit would be the right phrase.&lt;/li&gt;
+    &lt;li&gt;All of the above contribute to tons of electricity, produce a lot of heat, and use fans for cooling.
+      &lt;ul&gt;
+        &lt;li&gt;And a large number of environments where we apply deep learning like speech devices, self-driving cars, production lines, etc, are not agreeable to it.&lt;/li&gt;
+        &lt;li&gt;This also makes the maintenance and life expectancy of a GPU an issue.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;-3&quot;&gt;&lt;a name=&quot;FPGAs as modern digital ShapeShifters&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;fpgas-as-modern-digital-shapeshifters&quot;&gt;FPGAs as modern digital ShapeShifters&lt;/h4&gt;
+
+&lt;p&gt;The CPUs and especially GPUs are nearing their transistor limit.
+The world is moving toward specialized hardware to meet the exponentially growing demand for computers:&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/fpga.png&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;FPGA fabric. While there are differences from one manufacturer to the next, The resources are similar.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;FPGA fabric. While there are differences from one manufacturer to the next, The resources are similar.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Field-programmable gate arrays (FPGAs) are reconfigurable computer chips that can be programmed to implement any digital hardware circuit.&lt;/li&gt;
+    &lt;li&gt;FPGAs consist of an array of different types of programmable blocks (logic, IO, and others) that can be flexibly interconnected using prefabricated routing tracks with programmable switches between them.&lt;/li&gt;
+    &lt;li&gt;The bit-level reconfigurability of FPGAs enables implementation of the exact hardware needed for each application (e.g. datapath bit-width, pipeline stages, number of parallel compute units, memory subsystem, etc.) instead of the fixed one-size-fits-all architecture of CPUs or GPUs.&lt;/li&gt;
+    &lt;li&gt;Consequently, they can achieve higher efficiency than CPUs or GPUs by implementing instruction-free streaming hardware&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;FPGA-RAM&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;An FPGA BRAM(BlockRAM) consists of an SRAM-based memory core, with additional peripheral circuitry to make them more configurable for multiple purposes and to connect them to the programmable routing FPGA vendors can add circuitry that allows designers to repurpose the LUTs(Look Up Tables) that form the logic fabric into additional RAM blocks.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;DSP Blocks&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;With the prevalence of multipliers in FPGA designs from key application domains, and their lower area/delay/power efficiency when implemented in soft logic, they quickly became a candidate for hardening as dedicated circuits in FPGA architectures.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;-4&quot;&gt;&lt;a name=&quot;Optimizing on Hardware Accelerator&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;optimizing-on-hardware-accelerator&quot;&gt;Optimizing on Hardware Accelerator&lt;/h4&gt;
+&lt;p&gt;The idea here is to hardware accelerate the huge matrix multiplication which is the core of Transformers. Given the size of the matrices in transformers ( a few billion parameters in 2020), there is practically no chance of them fitting inside a top end FPGA board, not for at least the next decade.
+So the trick is to chop these huge matrices being multiplied into smaller tiles and reuse these tiles as much as possible before moving on to the next tile. One of the oldest tricks in a new Avatar.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;There are 4 key points of FPGA Hardware Optimization&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Play to FPGAs strength, no extra control logic&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Minimize access to OFF-chip RAM by having multi level on chip buffer made of BRAM and LUTRAM&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Maximize the compute parallelism (PE)ProcessingElements&lt;/strong&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;And the most vital, balance the above 2.&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;PEs must be well fed and not starving&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Balance cached data with streaming( weights(Mul1) may be cached more and the input will be streamed more(Mul2))&lt;/strong&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;-5&quot;&gt;&lt;a name=&quot;Optimizing on Hardware Accelerator(MAC Style)&quot;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;h4 id=&quot;optimizing-on-hardware-acceleratormac-style&quot;&gt;Optimizing on Hardware Accelerator(MAC Style)&lt;/h4&gt;
+
+&lt;p&gt;The &lt;strong&gt;hardware &lt;span style=&quot;color:#1950b6&quot;&gt;ma&lt;/span&gt;&lt;span style=&quot;color:#83f3f2&quot;&gt;pp&lt;/span&gt;&lt;span style=&quot;color:#f52a2a&quot;&gt;ing&lt;/span&gt;&lt;/strong&gt; is the most fabulous part carried out by our &lt;strong&gt;&lt;span style=&quot;color:#1950b6&quot;&gt;ma&lt;/span&gt;&lt;span style=&quot;color:#83f3f2&quot;&gt;pp&lt;/span&gt;&lt;span style=&quot;color:#f52a2a&quot;&gt;er&lt;/span&gt;&lt;/strong&gt;. It takes the code below and unrolls the MaxMul loop into the Hardware.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;There are 2 Styles&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;MAC Style(Multiply Accumulator)&lt;/strong&gt;
+          &lt;ul&gt;
+            &lt;li&gt;For a 4X4 matrix a 2X2 PE array as shown will take 24 cycles give or take.&lt;/li&gt;
+            &lt;li&gt;For a 4X4 matrix a 4X4 PE array as shown will take 6 cycles give or take.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;SA Style (Systolic Array)&lt;/strong&gt;
+          &lt;ul&gt;
+            &lt;li&gt;For a 4X4 matrix a 2X2 PE array as shown will take 24 cycles give or take.&lt;/li&gt;
+            &lt;li&gt;For a 4X4 matrix a 4X4 PE array as shown will take 6 cycles give or take.&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;We retrofit this &lt;strong&gt;&lt;span style=&quot;color:#1950b6&quot;&gt;ma&lt;/span&gt;&lt;span style=&quot;color:#83f3f2&quot;&gt;pp&lt;/span&gt;&lt;span style=&quot;color:#f52a2a&quot;&gt;er&lt;/span&gt;&lt;/strong&gt; to trax.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/macstyle.png&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;Hardware mapping MAC(Multiply Accumulator) Style&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;Hardware mapping MAC(Multiply Accumulator) Style&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Optimizing on Hardware Accelerator(Systolic Array Style)&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;optimizing-on-hardware-acceleratorsystolic-array-style&quot;&gt;Optimizing on Hardware Accelerator(Systolic Array Style)&lt;/h4&gt;
+
+&lt;p&gt;Same as above except the microarchitecture uses systolic array design with The PEs being pipelined. Follow the color coding especially the data movement(light and dark blue boxes and arrows) into the &lt;strong&gt;PEs&lt;/strong&gt;(Processing Elements) and data forwarding among PEs. The &lt;strong&gt;NOC&lt;/strong&gt;(Network On Chip) architecture which is not shown, is slightly different for both the &lt;strong&gt;MAC Style(Multiply Accumulator)&lt;/strong&gt; and the &lt;strong&gt;SA Style (Systolic Array)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;figure&gt;
+    
+    &lt;img src=&quot;/img/chipdesign/SAStyle.png&quot; alt=&quot;Image: figure-1: &amp;lt;strong&amp;gt;Hardware mapping SA(Systolic Array) Style&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
+    
+    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: &lt;strong&gt;Hardware mapping SA(Systolic Array) Style&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;a name=&quot;Variables in the design&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;variables-in-the-design&quot;&gt;Variables in the design&lt;/h4&gt;
+
+&lt;p&gt;The SA Style (Systolic Array) works better for bigger tiles when it’s pipelines are fully fed for longer durations. But not too big as the NOC feeding the buffers has its own limitations. The &lt;strong&gt;size of the tile&lt;/strong&gt; and indeed the &lt;strong&gt;style of the microarchitecture( MAC or SA)&lt;/strong&gt; are one of the many design variables that need to be configured for best results. These in turn depend on quite a few more design variables, some of them are due to &lt;strong&gt;software constraints&lt;/strong&gt; (Matrix size etc.) and others are &lt;strong&gt;hardware constraints&lt;/strong&gt; (BRAM etc). Here are a few important design variables.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;strong&gt;SGB&lt;/strong&gt;(size of Global Buffer) based on available BRAM and LUTRAM.
+      &lt;ul&gt;
+        &lt;li&gt;More LUTRAM would mean bigger buffers, better reuse, but fewer PEs and lesser parallelism.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;The &lt;strong&gt;LGB&lt;/strong&gt;(Layout(Locality) of GLobal Buffer)&lt;/li&gt;
+    &lt;li&gt;The size of the &lt;strong&gt;MT&lt;/strong&gt; (Matrix Tile) and &lt;strong&gt;PET&lt;/strong&gt;(PE Tile)&lt;/li&gt;
+    &lt;li&gt;The size of &lt;strong&gt;RF&lt;/strong&gt;(RegisterFile)
+      &lt;ul&gt;
+        &lt;li&gt;As a general rule, bigger/multi-level caching(SGB/NOC/RF are like L3/L2/L1) would better lookup performance but increase data replication and eat into logic space(PEs)&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;The layout of &lt;strong&gt;NOC&lt;/strong&gt;(Network on Chip)&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;With 100s of MBs to 1000 GBs of matrix sizes to choose from in modern transformers, myriad different Accelerator boards, Shape shifting configuration options on these boards, all the above variables to choose from, the configuration space is a serious problem of plenty.&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;A general configuration done by a domain expert(on Transformers and FPGA board) will give us &lt;strong&gt;decent improvement&lt;/strong&gt; over a software only implementation but, &lt;strong&gt;nowhere near what the hardware is capable of&lt;strong&gt; unless the configurations are done by either Ramanujam or Tesla(Only these 2, others were normal).&lt;/strong&gt;&lt;/strong&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a name=&quot;Summary1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;Migrating compute that requires extreme parallelism, or compute that can benefit from custom data path or precision should be moved to FPGA chips. Infact this is FPGA’s backyard. The overall throughput can be a few hundred times better. Latency can be a bit tricky, but still can be a lot better with the flexibility that FPGA chips offer.&lt;/p&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://lwn.net/Articles/250967/&quot;&gt;&lt;strong&gt;What every programmer should know about memory:&lt;/strong&gt;&lt;/a&gt; &lt;strong&gt;(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don’t change very often. )&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!--Series--&gt;
+
+&lt;!--Doc1--&gt;
+
+&lt;!--Doc2--&gt;
+
+&lt;!--External references--&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="NLP" /><category term="Microarchitecture" /><category term="UltraLowLatency" /><category term="RealTime" /><category term="Performance" /><category term="Meditating-with-microprocessors" /><category term="Artificial-Intelligence-based-chip-design" /><category term="Transformers-On-chips" /><category term="ChipDesign" /><summary type="html">This is departure from my usual tech blog. In the current series titled Artificial-Intelligence-based-chip-design, I/we present the use of Artificial Intelligence to design FPGA chip for Ultra-Low-Latency based speech transformers. This showcases our products as well as our skills in the respective domains. This started as an experiment to lower latency for a seq-to-seq LSTM based speech synthesis system. Post a thorough analysis, we broke it down into 1. mapping the matrix multiplication of deep learning transformers into an FPGA chip(Transformers On Chip(part-1)) and 2. co-designing the FPGA chip for the appropriate workload(ChipDesign(part-2)). In part-1 we look specifically at resources available on an FPGA chip and a few different strategies of hardware mapping of the workload(matrix multiplication) on the above chip.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/%7B%22feature%22=%3E%22chipdesign/transformersonchip.png%22%7D" /></entry><entry><title type="html">Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea</title><link href="http://localhost:4000/articles/2020-07/MeditatingProcessor-1" rel="alternate" type="text/html" title="Meditating with microprocessors Series: Part-1: Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea" /><published>2020-07-29T15:07:19+00:00</published><updated>2020-07-29T15:07:19+00:00</updated><id>http://localhost:4000/articles/2020-07/MeditatingProcessor-1</id><content type="html" xml:base="http://localhost:4000/articles/2020-07/MeditatingProcessor-1">&lt;h3 id=&quot;meditating-with-microprocessors&quot;&gt;&lt;a href=&quot;/tags/#Meditating-with-microprocessors&quot;&gt;Meditating with microprocessors&lt;/a&gt;&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;MeditatingProcessor-1&quot;&gt;Artificial Intelligence based Hardware(Microprocessor) tuning: Implementing a very simple idea&lt;/a&gt; &lt;strong&gt;(&lt;a href=&quot;MeditatingProcessor-1&quot;&gt;part-1&lt;/a&gt;)&lt;strong&gt;
 &lt;/strong&gt;&lt;/strong&gt;    &lt;ul&gt;
@@ -3799,508 +4136,4 @@ NMT:”Bas@@ anti don 't dance in front of these dogs .”&lt;/p&gt;
 
   &lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-). In a later article well demystify the multilayer LSTMcells and Bi-directional LSTMCells.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am not a trained mathematician. However, I have decent intuition and intuition by itself can only get you so far. So I used my programming skills to validate pure theoretical results often cited by pure/trained mathematicians. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-1:The Big Picture</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-1" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-1:The Big Picture" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-1</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-1">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;LSTMs today are cool. Everything, well almost everything, in the modern Deep Learning landscape is made of LSTMs. I know that might be an exaggeration but, it can only be understated that they are absolutely indispensable. They make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. Whilst there are the elites that write frameworks (Tensorflow, Pytorch, etc), but they are not surprisingly very few in number. The common “Machine learning/Deep Learning”  “man/programmer” at best knows how to use it. &lt;strong&gt;This is a &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt; that will unravel the mystery behind LSTMs. Especially it’s gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; approach for which I have pure python implementation (&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;) of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;This article will not talk about the conceptual model of LSTM, on which there is some great existing material here and here in the order of difficulty.&lt;/li&gt;
-    &lt;li&gt;This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome, if a somewhat &lt;a href=&quot;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&quot;&gt;difficult post&lt;/a&gt;, by Andrej.&lt;/li&gt;
-    &lt;li&gt;This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts &lt;a href=&quot;https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577&quot;&gt;here&lt;/a&gt; in the order of difficulty&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;what-this-article-is-about&quot;&gt;What this article is about?&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;The reason why understanding LSTM’s inner working is vital is that it underpins the most important models of modern Artificial Intelligence.&lt;/li&gt;
-    &lt;li&gt;Underpins &lt;strong&gt;memory augmented&lt;/strong&gt; models and architecture.&lt;/li&gt;
-    &lt;li&gt;Most often it is not used in its vanilla form. There is directionality involved, multiple layers involved, making it a complex moving piece in itself.&lt;/li&gt;
-    &lt;li&gt;In this multi-part series, I get under the cover of an LSTM using &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt; especially its back-propagation when it is a part of a more complex model.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;context&quot;&gt;Context&lt;/h3&gt;
-&lt;p&gt;Start with the simplest word-generation case-study. We train an LSTM network on a short story. Once trained, we ask it to generate new stories giving it a cue of a few starting words. &lt;strong&gt;The focus primarily is on the training process here.&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Picking a starting point in the story that is randomly chosen.&lt;/li&gt;
-    &lt;li&gt;The training process is feeding in a sequence of n words from the story and checking if (n+1)th word predicted by the model is correct or not. Back propagating and adjusting the weights of the model.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn.jpeg&quot; alt=&quot;Image: figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: While there are many ways in which the RNNs can be used. For this example we consider the many-to-one organization.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;training-process&quot;&gt;Training Process&lt;/h3&gt;
-&lt;p&gt;In the next few illustrations we are looking at primary the shape of input, how is the input fed in, when do we check the output before back-propagation happens, etc. All this &lt;strong&gt;without looking inside the LSTM Cell just yet&lt;/strong&gt;. Batch=1(for parallelism), sequence=3(3 words in our example), size=10(vocabulary size 10 so our representation is a one-hot of size 10).&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn.jpg&quot; alt=&quot;Image: figure-2: Batch enables parallelism, but for simplicity assumed as one.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Batch enables parallelism, but for simplicity assumed as one.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Functionally dynamic_rnn feeds in the batches of sequences but its code is written using “tf.while_loop” and not one of python’s native loop construct. With any one of python’s native loop construct only the code within an iteration be optimized on a GPU but with “tf.while_loop” the advantage is that the complete loop can be optimized on a GPU.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn1.jpg&quot; alt=&quot;Image: figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe'&amp;gt;DEEP-Breathe's&amp;lt;/a&amp;gt; &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285'&amp;gt;dynamic_rnn&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: Function logic of dynamic_rnn on the bottom right. Complete listing of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe's&lt;/a&gt; &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn.py#L214-L285&quot;&gt;dynamic_rnn&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Returns a tuple of &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt; and states(C-state and H-state for the last time step).&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn2.jpg&quot; alt=&quot;Image: figure-4: &amp;lt;strong&amp;gt;output(H-state across all time steps)&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: &lt;strong&gt;output(H-state across all time steps)&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Returns a tuple of output(H-state across all time steps) and &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn3.jpg&quot; alt=&quot;Image: figure-5: &amp;lt;strong&amp;gt;states(C-state and H-state for the lst time step)&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: &lt;strong&gt;states(C-state and H-state for the lst time step)&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Multiplier Wy and By which among other things shape the last “h” into the shape of X(10) so a comparison can be made.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn4.jpg&quot; alt=&quot;Image: figure-6: So the shape of &amp;lt;strong&amp;gt;pred&amp;lt;/strong&amp;gt;(the first return from 'RNN()' function should be that of &amp;lt;strong&amp;gt;X&amp;lt;/strong&amp;gt;)&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: So the shape of &lt;strong&gt;pred&lt;/strong&gt;(the first return from 'RNN()' function should be that of &lt;strong&gt;X&lt;/strong&gt;)&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Finally &lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;softmax&lt;/a&gt; and &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/rnn5.jpg&quot; alt=&quot;Image: figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: cross_entropy_loss and then the usual GradientDescentOptimizer or some other optimizer.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;quick-comparision-between-tensorflow-and-deep-breathe&quot;&gt;Quick Comparision between &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt;&lt;/h3&gt;
-
-&lt;p&gt;This particular branch of &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; has been designed to compare weights with &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; code every step of the way. While there are many reasons, one of the primary reasons for that is understanding. However, this is only possible if both &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;DEEP-Breathe&lt;/a&gt; must start with the same initial weights and their Y-multipliers(Wy and By) must also be identical. Consider the code below.&lt;/p&gt;
-
-&lt;h4 id=&quot;tensorflow&quot;&gt;&lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt;&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;c&quot;&gt;# RNN output node weights and biases&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.09588283&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.2044923&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.74828255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.14180686&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.32083616&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9444244&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.06826905&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9728962&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.18506959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0618515&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.156649&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;3.2738173&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.2556943&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.9079511&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.82127047&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.1448543&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.60807484&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5885713&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0378786&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7088431&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.006477&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.28033388&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1804534&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.8093307&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.36991575&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         &lt;span class=&quot;mf&quot;&gt;0.29115433&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01028167&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7357091&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.92254084&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.10753923&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.19266959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.6108299&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;2.2495654&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.5288974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0172302&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         &lt;span class=&quot;mf&quot;&gt;1.1311738&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.2666629&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.30611828&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01412263&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.44799015&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.19266959&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.6108299&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;2.2495654&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.5288974&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;1.0172302&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         &lt;span class=&quot;mf&quot;&gt;1.1311738&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.2666629&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.30611828&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01412263&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.44799015&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
-
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1458478&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3660951&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.1647317&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.9633691&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.24532059&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;mf&quot;&gt;0.14005205&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0961286&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.43737876&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;0.7028531&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.8481724&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variable_scope&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;variable_scope&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constant_initializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rnn_cell&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LayerNormBasicLSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;layer_norm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dynamic_rnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expand_dims&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matmul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;states&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'out'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weights_out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;biases_out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;The pre-initialized weights and biases in line(2) and line(16) utilized as Wy and By in line(26)&lt;/li&gt;
-    &lt;li&gt;The internal weights of LSTM initialized in line(22-23)&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;Tensorflow graph mode is the most non pythonic design done in python&lt;/strong&gt;. It sounds crazy but is true. Consider line(21-26), this function gets called multiple times in the training loop and yet the &lt;strong&gt;cell(line(24)) is the same cell instance across multiple iterations&lt;/strong&gt;. Tensorflow in the graph mode builds the DAG first and &lt;strong&gt;identifies the cell by the name in that graph&lt;/strong&gt;. That is source of confusion to most programmers, especially python programmers.&lt;/li&gt;
-    &lt;li&gt;The complete executable &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/tfwordslstm.py&quot;&gt;Listing-1&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L13&quot;&gt;execution script&lt;/a&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;deep-breathe&quot;&gt;&lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe&quot;&gt;Deep-Breathe&lt;/a&gt;&lt;/h4&gt;
-
-&lt;p&gt;I could have done without a similar behavior in Deep-Breathe but the programmer in me just could not resist. Especially since I earned my stripes in C/C++ and assembly kind of languages, python proved challenging. Without building a full-fledged graph, I associated the variable name with the corresponding weight, i.e. when the variable name is the same it fetches the same set of weights. This is difficult and not recommended but, if you care to see, then its demonstrated &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn.py#L75-L76&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/common.py#L241-L255&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/rnn_cell.py#L79-L81&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/c3b538d9c3afeeb5a15c3d91ea9063976438c810/org/mk/training/dl/core.py#L107-L112&quot;&gt;here&lt;/a&gt;. &lt;strong&gt;To summarize in the Listing-2 there is a single set of weights for the LSTMCell despite getting called multiple times in the loop.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WeightsInitializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LSTMCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dynamic_rnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;&quot;Dense in this case should be out of WeightsInitializer scope because we are passing constants&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Dense&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bias_initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_ops&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Constant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LOSS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RNN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_biases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cross_entropy_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]))&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;training_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end_offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rnd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;offset:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input_one_hot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vocab_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;symbols_in_keys:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;yhat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LOSS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbols_in_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-
-&lt;span class=&quot;n&quot;&gt;Listing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;The complete executable &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMainGraph.py&quot;&gt;graph-mode&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L15&quot;&gt;execution script&lt;/a&gt;.&lt;/li&gt;
-    &lt;li&gt;The complete executable for &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/master/org/mk/training/dl/LSTMMain.py&quot;&gt;non-graph-version&lt;/a&gt; and its &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/scripts#L14&quot;&gt;execution script&lt;/a&gt;. To make Tensorflow more pythonic, they have enabled eager mode and will be the default going forward especially from Tensorflow 2.0 onwards. However, major project as on today is still on the older version.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;In summary, then, that was the walk through of code surrounding LSTM training, without getting into LSTM or its weights just yet. That would be the topic of our next article.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">LSTMs make up everything directly or indirectly from Time Series(TS) to Neural Machine Translators(NMT) to Bidirectional Encoder Representation from Transformers(BERT) to Neural Turing Machine(NTM) to Differentiable Neural Computers(DNC) etc, and yet they are not very well understood. This is a multi-part series that will unravel the mystery behind LSTMs. Especially it's gradient calculation when participating in a more complex model like NMT, BERT, NTM, DNC, etc. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry><entry><title type="html">RNN Series:LSTM internals:Part-2:The Forward pass</title><link href="http://localhost:4000/articles/2019-07/LSTMPart-2" rel="alternate" type="text/html" title="RNN Series:LSTM internals:Part-2:The Forward pass" /><published>2019-07-09T15:07:19+00:00</published><updated>2019-07-09T15:07:19+00:00</updated><id>http://localhost:4000/articles/2019-07/LSTMPart-2</id><content type="html" xml:base="http://localhost:4000/articles/2019-07/LSTMPart-2">&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;In this &lt;a href=&quot;/tags/#LSTM&quot;&gt;multi-part series&lt;/a&gt;, we look inside LSTM forward pass.&lt;/strong&gt; If you haven’t already read it I suggest run through the previous parts (&lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;) before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. &lt;strong&gt;I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;what-this-article-is-not-about&quot;&gt;What this article is not about?&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;This article will not talk about the conceptual model of LSTM, on which there is some great existing material &lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html&quot;&gt;here&lt;/a&gt; in the order of difficulty.&lt;/li&gt;
-    &lt;li&gt;This is not about the differences between vanilla RNN and LSTMs, on which there is an awesome post by Andrej if a somewhat &lt;a href=&quot;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&quot;&gt;difficult post&lt;/a&gt;.&lt;/li&gt;
-    &lt;li&gt;This is not about how LSTMs mitigate the vanishing gradient problem, on which there is a little mathy but awesome posts &lt;a href=&quot;https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://medium.com/datadriveninvestor/how-do-lstm-networks-solve-the-problem-of-vanishing-gradients-a6784971a577&quot;&gt;here&lt;/a&gt; in the order of difficulty&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;what-this-article-is-about&quot;&gt;What this article is about?&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Using the &lt;a href=&quot;https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0&quot;&gt;first principles&lt;/a&gt; we picturize/visualize the forward pass of an LSTM cell.&lt;/li&gt;
-    &lt;li&gt;Then we associate code with the picture to make our understanding more concrete&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;context&quot;&gt;Context&lt;/h3&gt;
-&lt;p&gt;This is the same example and the context is the same as described in &lt;a href=&quot;/articles/2019-07/LSTMPart-1&quot;&gt;part-1&lt;/a&gt;. &lt;strong&gt;The focus however, this time is on LSTMCell.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;lstm-cell&quot;&gt;LSTM Cell&lt;/h3&gt;
-&lt;p&gt;While there are many variations to the LSTM cell. In the current article, we are looking at &lt;a href=&quot;https://www.tensorflow.org/api_docs/python/tf/contrib/rnn/LayerNormBasicLSTMCell&quot;&gt;LayerNormBasicLSTMCell&lt;/a&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Weights and biases of the LSTM cell.&lt;/li&gt;
-    &lt;li&gt;Shapes color-coded.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm1.jpg&quot; alt=&quot;Image: figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-1: Batch=1, State=5(internal states(C and H)), input_size=10(assuming vocab size of 10 translates to one-hot of size 10) .&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Weights, biases of the LSTM cell. Also shown is the cell state (c-state) over and above the h-state of a vanilla RNN.&lt;/li&gt;
-    &lt;li&gt;h&lt;sub&gt;t-1&lt;/sub&gt; may be initialized by default with zeros.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm2.jpg&quot; alt=&quot;Image: figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these &amp;lt;strong&amp;gt;weights&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X15&amp;lt;/strong&amp;gt; individually and stacked vertically as shown they measure &amp;lt;strong&amp;gt;20X15&amp;lt;/strong&amp;gt;. The Shapes of the &amp;lt;strong&amp;gt;biases&amp;lt;/strong&amp;gt; are &amp;lt;strong&amp;gt;5X1&amp;lt;/strong&amp;gt; individually and stacked up &amp;lt;strong&amp;gt;20X1&amp;lt;/strong&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-2: Weights and biases for all the gates f(forget), i(input), c(candidatecellstate), o(output). The Shapes of these &lt;strong&gt;weights&lt;/strong&gt; are &lt;strong&gt;5X15&lt;/strong&gt; individually and stacked vertically as shown they measure &lt;strong&gt;20X15&lt;/strong&gt;. The Shapes of the &lt;strong&gt;biases&lt;/strong&gt; are &lt;strong&gt;5X1&lt;/strong&gt; individually and stacked up &lt;strong&gt;20X1&lt;/strong&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Weights and biases in the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L76&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
-    &lt;li&gt;Often the code accepts constants as weights for comparison with &lt;a href=&quot;https://www.tensorflow.org/&quot;&gt;Tensorflow&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm3.jpg&quot; alt=&quot;Image: figure-3: &amp;lt;strong&amp;gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&amp;lt;/strong&amp;gt;. Making it &amp;lt;strong&amp;gt;20X16&amp;lt;/strong&amp;gt;, biases allocated with weights is a matter of convenience and performance.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-3: &lt;strong&gt;4*hidden_size(5),input_size(10)+hidden_size(5)+1(biases)&lt;/strong&gt;. Making it &lt;strong&gt;20X16&lt;/strong&gt;, biases allocated with weights is a matter of convenience and performance.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Equations of LSTM and their interplay with weights and biases.&lt;/li&gt;
-    &lt;li&gt;h&lt;sub&gt;t-1&lt;/sub&gt; and c&lt;sub&gt;t-1&lt;/sub&gt; may be initialized by default with zeros(Language Model) or some non-zero state for conditional language model.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm4.jpg&quot; alt=&quot;Image: figure-4: Equations of LSTM and their interplay with weights and biases.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-4: Equations of LSTM and their interplay with weights and biases.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;GEMM(General Matrix Multiplication) in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L210-L214&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;h and x concatenation is only a performance convenience.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm5.jpg&quot; alt=&quot;Image: figure-5: GEMM and running them though various gates.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-5: GEMM and running them though various gates.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;The &lt;strong&gt;mathematical reason&lt;/strong&gt; why the &lt;strong&gt;vanishing gradient&lt;/strong&gt; is &lt;strong&gt;mitigated&lt;/strong&gt;.&lt;/li&gt;
-    &lt;li&gt;There are many theories though. Look into this in detail with back-propagation.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm6.jpg&quot; alt=&quot;Image: figure-6: New cell state is a function of old cell state and new candidate state.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-6: New cell state is a function of old cell state and new candidate state.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;New cell state(c-state) in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L215&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;This is used in 2 ways as illustrated in figure-8.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm7.jpg&quot; alt=&quot;Image: figure-7: The previous steps already decided what to do, we just need to actually do it.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-7: The previous steps already decided what to do, we just need to actually do it.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;c-state&lt;sub&gt;t&lt;/sub&gt; is used to calculate the “externally visible” h-state&lt;sub&gt;t&lt;/sub&gt;&lt;/li&gt;
-    &lt;li&gt;Sometimes referred to as c&lt;sub&gt;t&lt;/sub&gt;, h&lt;sub&gt;t&lt;/sub&gt;, used as the states at the next time step.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm8.jpg&quot; alt=&quot;Image: figure-8: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case c&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-8: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case c&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;New h-state in &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/rnn_cell.py#L216&quot;&gt;code&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;The transition to the next time step is complete with h&lt;sub&gt;t&lt;/sub&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm9.jpg&quot; alt=&quot;Image: figure-9: Conceptually it is the same cell transitioning into the next state. &amp;lt;strong&amp;gt;In this case h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt;.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-9: Conceptually it is the same cell transitioning into the next state. &lt;strong&gt;In this case h&lt;sub&gt;t&lt;/sub&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;h&lt;sub&gt;t&lt;/sub&gt; multiplied by the &lt;strong&gt;“Wy”&lt;/strong&gt; and &lt;strong&gt;“by”&lt;/strong&gt; added to it.&lt;/li&gt;
-    &lt;li&gt;Traditionally we call this value “logits” or “preds”.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm10.jpg&quot; alt=&quot;Image: figure-10: Wy shape is 10X5 multiplied by h&amp;lt;sub&amp;gt;t&amp;lt;/sub&amp;gt; which is 5X1 and by added to it which is 10X1 as shown above.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-10: Wy shape is 10X5 multiplied by h&lt;sub&gt;t&lt;/sub&gt; which is 5X1 and by added to it which is 10X1 as shown above.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Usually, this is done in on the client-side code because only the clients know the model and when the loss calculation can be done.&lt;/li&gt;
-    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm11.jpg&quot; alt=&quot;Image: figure-11: DEEP-Breathe version of the &amp;lt;a href='https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109'&amp;gt;code&amp;lt;/a&amp;gt;.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-11: DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Usually done internally by “cross_entropy_loss” function.&lt;/li&gt;
-    &lt;li&gt;Shown here just so that you get an idea.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm12.jpg&quot; alt=&quot;Image: figure-12: Traditionally called yhat.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-12: Traditionally called yhat.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Does a combination of softmax(figure-12) and loss calculation(figure-13).&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;/articles/2019-05/softmax-and-its-gradient&quot;&gt;Softmax&lt;/a&gt; and a &lt;a href=&quot;/articles/2019-05/softmax-and-cross-entropy&quot;&gt;cross_entropy_loss&lt;/a&gt; to jog your memory.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm13.jpg&quot; alt=&quot;Image: figure-13: Similar to logistic regression and its cost function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-13: Similar to logistic regression and its cost function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Summary with weights&lt;/strong&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstmcelltemplate5.jpg&quot; alt=&quot;Image: figure-15: &amp;lt;strong&amp;gt;Summary with weights.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-15: &lt;strong&gt;Summary with weights.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Summary as flow diagram&lt;/strong&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstmforward.jpg&quot; alt=&quot;Image: figure-14: &amp;lt;strong&amp;gt;Summary as simple flow diagram.&amp;lt;/strong&amp;gt;&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-14: &lt;strong&gt;Summary as simple flow diagram.&lt;/strong&gt;&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;A Sequence of 3 shown below, but that can depend on the use-case.&lt;/li&gt;
-    &lt;li&gt;Tensorflow version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/tfwordslstm.py#L95-L104&quot;&gt;code&lt;/a&gt; and DEEP-Breathe version of the &lt;a href=&quot;https://github.com/slowbreathing/Deep-Breathe/blob/f9585bde9cbb61e71f67ccd936aa22a155c36709/org/mk/training/dl/LSTMMainGraph.py#L98-L109&quot;&gt;code&lt;/a&gt;.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;figure&gt;
-    
-    &lt;img src=&quot;/img/rnn/lstm14.jpg&quot; alt=&quot;Image: figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&quot; hight=&quot;110%&quot; width=&quot;110%&quot; /&gt;
-    
-    &lt;figcaption&gt;&lt;center&gt;&lt;span class=&quot;faded_text&quot;&gt;figure-16: The code below is merely shown to give you an idea of the sequence. In practice the 'dynamic_rnn' function does iteration part, the preds are multiplied 'Wy' added to 'By' by client code and then handed over to 'cross_entropy_loss' function.&lt;/span&gt;&lt;/center&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;In summary, then, that was the walk through of LSTM’s forward pass. As a study in contrast, if building a Language model that predicts the next word in the sequence, the training would be similar but we’ll calculate loss at every step. The label would be the ‘X’ just one time-step advanced. However, Let’s not get ahead of ourselves, before we get to a language model, let’s look at the backward pass(Back Propagation) for LSTM in the next post.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series, we look inside LSTM forward pass. Read the part-1's before you come back here. Once you are back, in this article, we explore the meaning, math and the implementation of an LSTM cell. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry></feed>
+&lt;p&gt;We went through “hell” and back in this article. But if you have come so far then the good news is, &lt;strong&gt;it can only get easier&lt;/strong&gt;. When we do use LSTMs in more complex architecture like Neural Machine Translators&lt;strong&gt;(NMT)&lt;/strong&gt;, Bidirectional Encoder Representation from Transformers&lt;strong&gt;(BERT)&lt;/strong&gt;, or a Differentiable Neural Computers&lt;strong&gt;(DNC)&lt;/strong&gt; &lt;strong&gt;it will be a walk in a blooming lovely park&lt;/strong&gt;. Well alomost!! ;-). In a later article well demystify the multilayer LSTMcells and Bi-directional LSTMCells.&lt;/p&gt;</content><author><name></name></author><category term="Artificial-Intelligence" /><category term="Deep-Learning" /><category term="LSTM" /><category term="RNN" /><category term="Sequence-Modelling" /><summary type="html">In this multi-part series(part-1,part-2), we look inside LSTM Backward Propagation. This would usually involve lots and lots of math. I love math but I am not a trained mathematician. However, I have decent intuition and intuition by itself can only get you so far. So I used my programming skills to validate pure theoretical results often cited by pure/trained mathematicians. I do this using the first principles approach for which I have pure python implementation Deep-Breathe of most complex Deep Learning models.</summary></entry></feed>
