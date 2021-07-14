@@ -85,7 +85,7 @@ This is the first iteration, and the rush to the finish line hurried us up. The 
 > * <strong>[Processing near memory]</strong> is moving compute to memory literally. Processing-in-memory architectures propose <strong>moving the compute into the memory that literally stores the weight matrix</strong>. Processing in memory architectures can also increase the memory bandwidth, as the number of weights that can be accessed in parallel is no longer limited by the memory interface.
 
 ### References
-1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often. )</strong>
+1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often.)</strong>
 
 
 <!--Series-->

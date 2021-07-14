@@ -167,7 +167,7 @@ The SA Style (Systolic Array) works better for bigger tiles when it’s pipeline
 Migrating compute that requires extreme parallelism, or compute that can benefit from custom data path or precision should be moved to FPGA chips. Infact this is FPGA's backyard. The overall throughput can be a few hundred times better. Latency can be a bit tricky, but still can be a lot better with the flexibility that FPGA chips offer.  
 
 ### References
-1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often. )</strong>
+1. <a href='https://lwn.net/Articles/250967/'><strong>What every programmer should know about memory:</strong></a> <strong>(This is a definitive 9 part(the links for the rest of the parts are embedded in the first one.) article on how the hardware works and, how software and data structure design can exploit it. It had a huge impact on the way I thought and still do think about design. The article first came out in 2007 but it is still relevant which is proof that basics don't change very often.)</strong>
 
 
 <!--Series-->
